@@ -31,14 +31,15 @@ def render_groq_quota_modal_content():
     div[data-testid="stDialog"] > div:first-child,
     div[role="dialog"] {
         background: var(--card-bg, #0F172A) !important;
-        border: 2.5px solid var(--border-color, #334155) !important;
+        border: 2px solid var(--border-color, #334155) !important;
         border-radius: 18px !important;
-        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75) !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45) !important;
         max-width: 680px !important;
         width: 92vw !important;
         padding: 24px !important;
         color: var(--text-color, #F8FAFC) !important;
         margin: auto !important;
+        overflow-x: hidden !important;
     }
 
     /* Force all text elements inside modal to have 100% crisp visible contrast */
@@ -56,14 +57,24 @@ def render_groq_quota_modal_content():
         font-family: 'Space Grotesk', 'Inter', sans-serif !important;
     }
 
-    /* Input Field High-Contrast Styling */
-    div[data-testid="stDialog"] input,
-    div[data-testid="stDialog"] select,
-    .groq-modal-wrapper input {
-        background: var(--bg-color, #1E293B) !important;
+    /* Input Field & Password Eye Toggle Button Matching Color Fix */
+    div[data-testid="stDialog"] div[data-testid="stTextInput"] > div,
+    div[data-testid="stDialog"] [data-baseweb="input"],
+    div[data-testid="stDialog"] [data-baseweb="input"] > div,
+    div[data-testid="stDialog"] [data-baseweb="input"] button,
+    div[data-testid="stDialog"] [data-baseweb="select"] > div {
+        background-color: var(--card-bg, #1E293B) !important;
         color: var(--text-color, #FFFFFF) !important;
-        border: 1.5px solid var(--border-color, #475569) !important;
+        border-color: var(--border-color, #475569) !important;
+        fill: var(--text-color, #FFFFFF) !important;
         border-radius: 8px !important;
+    }
+
+    div[data-testid="stDialog"] input {
+        background-color: transparent !important;
+        color: var(--text-color, #FFFFFF) !important;
+        border: none !important;
+        box-shadow: none !important;
         font-size: 0.95rem !important;
     }
 
