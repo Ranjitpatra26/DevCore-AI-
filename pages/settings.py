@@ -224,6 +224,9 @@ curl http://localhost:11434/api/tags
         
         with col_left:
             st.markdown("### Execution Provider & 4 Cloud API Keys")
+            if st.button("⚡ OPEN 4-KEY QUICK UPDATE POP-UP MODAL & KEY GUIDE", key="open_quota_modal_settings_btn", use_container_width=True, type="secondary"):
+                st.session_state["show_groq_quota_modal"] = True
+                st.rerun()
             
             def mask_api_key(key: str) -> str:
                 if not key or not key.strip():

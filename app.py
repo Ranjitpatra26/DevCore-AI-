@@ -43,7 +43,10 @@ try:
     # 3. Inject Centralized Design System Custom CSS Variables & Rules
     inject_design_system_css(st.session_state.theme)
 
-    # 4. Initialize Navigation State & Render Navbar Component & Floating AI Chatbot
+    # 4. Initialize Navigation State, Quota Modal Check & Render Navbar Component & Floating AI Chatbot
+    from components.groq_quota_modal import check_and_render_groq_quota_modal
+    check_and_render_groq_quota_modal()
+
     init_navigation_state()
     render_navigation()
     from components.chatbot import render_floating_chatbot

@@ -792,10 +792,16 @@ def render_implementation_studio(
             status_placeholder.empty()
 
             if "error" in res_holder:
+                err_str = str(res_holder["error"]).lower()
+                if "rate" in err_str or "token" in err_str or "429" in err_str or "quota" in err_str:
+                    st.session_state["show_groq_quota_modal"] = True
                 st.error(f"Generation error: {res_holder['error']}")
                 res = {"guidance_text": "Error generating implementation.", "exec_time": 0.0}
             else:
                 res = res_holder.get("res", {})
+                g_text = str(res.get("guidance_text", "")).lower()
+                if "rate limit" in g_text or "token limit" in g_text or "429" in g_text:
+                    st.session_state["show_groq_quota_modal"] = True
 
             generated_guidance = res.get("guidance_text", "")
             exec_time_s = res.get("exec_time", round(time.time() - t0, 2))

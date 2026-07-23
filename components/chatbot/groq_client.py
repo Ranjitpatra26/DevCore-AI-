@@ -150,14 +150,30 @@ def stream_groq_response(
             if yielded_tokens:
                 return
         elif resp.status_code == 401:
-            yield "⚠️ **Invalid Groq API Key**: Please check your Groq API key in **Settings** or your `.env` file."
+            try:
+                import streamlit as st
+                st.session_state["show_groq_quota_modal"] = True
+            except Exception:
+                pass
+            yield "⚠️ **Invalid Groq API Key**: Please update your Groq API key using the pop-up modal or in **Settings**."
             return
 
-        elif resp.status_code == 429:
-            yield "⚠️ **Groq Rate Limit Exceeded**: Please wait a few seconds or try a smaller model like `llama-3.1-8b-instant`."
+        elif resp.status_code == 429 or "rate_limit" in resp.text.lower() or "token" in resp.text.lower():
+            try:
+                import streamlit as st
+                st.session_state["show_groq_quota_modal"] = True
+            except Exception:
+                pass
+            yield "⚠️ **Groq API Rate / Token Limit Reached**: Maximum token limit reached on active Groq API Key. Opening update form to enter a new key..."
             return
         else:
             err_body = resp.text[:200]
+            if "rate" in err_body.lower() or "token" in err_body.lower() or "quota" in err_body.lower():
+                try:
+                    import streamlit as st
+                    st.session_state["show_groq_quota_modal"] = True
+                except Exception:
+                    pass
             yield f"⚠️ **Groq API Error ({resp.status_code})**: {err_body}"
             return
 
