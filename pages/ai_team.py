@@ -415,7 +415,7 @@ def show_specialist_modal(member: dict):
             st.rerun()
             
     with col_act2:
-        with st.expander(f"📜 Inspect Raw System Prompt ({name})"):
+        with st.popover(f"📜 Inspect Raw System Prompt ({name})", use_container_width=True):
             raw_prompt = SYSTEM_PROMPTS.get(role_key, "No prompt found.")
             safe_prompt = raw_prompt.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
             
