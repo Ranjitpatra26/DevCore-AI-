@@ -370,6 +370,21 @@ def show_specialist_modal(member: dict):
     """)
     
     # Action Buttons
+    st.html("""
+    <style>
+    /* Remove arrow_right / arrow_down text strictly from AI Specialist Inspect popup on AI Team page */
+    div[data-testid="stDialog"] div[data-testid="stExpander"] summary [data-testid="stExpanderToggleIcon"],
+    div[data-testid="stDialog"] div[data-testid="stExpander"] summary [data-testid="stExpanderToggleIcon"] *,
+    div[data-testid="stDialog"] div[data-testid="stExpander"] summary svg + span {
+        font-size: 0 !important;
+        color: transparent !important;
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+    </style>
+    """)
     col_act1, col_act2 = st.columns(2)
     with col_act1:
         if st.button(f"💬 Consult & Chat with {name}", key=f"dlg_chat_{role_key}", use_container_width=True, type="primary"):
