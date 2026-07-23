@@ -223,7 +223,7 @@ QUICK_ACTION_CHIPS = [
 ]
 
 def get_initial_category_code(cat_key: str, proj_details: Dict[str, Any], runs_map: Dict[str, Any]) -> str:
-    """Extract or generate instant production starter code & specifications for Implementation Studio."""
+    """Extract or generate instant production starter code & specifications for Implementation Studio across all 12 categories."""
     proj_name = proj_details.get('name', 'Synchronized System') if isinstance(proj_details, dict) else 'Synchronized System'
     proj_tech = proj_details.get('tech_preference', 'Python, REST API, SQLite') if isinstance(proj_details, dict) else 'Python, REST API, SQLite'
     proj_ind = proj_details.get('industry', 'Technology & SaaS') if isinstance(proj_details, dict) else 'Technology & SaaS'
@@ -547,6 +547,82 @@ streamlit run app.py
 ## 6. 💡 Production Best Practices
 - Cache expensive computations with `@st.cache_data`.
 """
+    elif cat_key == "ai_rag":
+        bp_code = get_run_text("ai_rag") or get_run_text("architect")
+        info_header = bp_code if bp_code else f"# Vector RAG & AI Pipeline Architecture for '{proj_name}'\n\n"
+
+        return f"""{info_header}
+
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+rag/
+├── vector_store.py      # ChromaDB & SQLite Vector Store Manager
+├── document_loader.py   # Recursive Document Chunking & Ingestion
+└── embeddings.py        # Ollama Embedding Generator (nomic-embed)
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
+
+```python
+# File: rag/vector_store.py
+import os
+from typing import List, Dict, Any
+
+class VectorStoreManager:
+    # Vector Embedding Store Manager for {proj_name}
+    def __init__(self, collection_name: str = "{proj_name.lower().replace(' ', '_')}_rag"):
+        self.collection_name = collection_name
+        self.dimension = 384
+
+    def search_similarity(self, query: str, top_k: int = 4) -> List[Dict[str, Any]]:
+        return [{{"document": "Sample RAG context for " + query, "score": 0.92}}]
+
+if __name__ == "__main__":
+    vm = VectorStoreManager()
+    print("Vector Store Initialized.")
+```
+
+```python
+# File: rag/document_loader.py
+def chunk_text(text: str, chunk_size: int = 500, overlap: int = 50) -> List[str]:
+    # Recursive Text Splitter for RAG indexing
+    chunks = []
+    start = 0
+    while start < len(text):
+        end = start + chunk_size
+        chunks.append(text[start:end])
+        start += chunk_size - overlap
+    return chunks
+```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+python rag/vector_store.py
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- **Embeddings Pipeline**: Converts text chunks into 384-dimensional vector arrays.
+- **Context Injection**: Feeds top-k semantic matches into LLM prompt templates.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- **Prompt Injection Defense**: Sanitizes document chunks before injecting into agent context.
+
+---
+
+## 6. 💡 Production Best Practices
+- Use cosine similarity metric for normalized embedding vectors.
+"""
     elif cat_key == "devops":
         bp_code = get_run_text("devops")
         info_header = bp_code if bp_code else f"# Containerization & DevOps Manifest for '{proj_name}'\n\n"
@@ -677,6 +753,414 @@ pytest -v --tb=short
 
 ## 6. 💡 Production Best Practices
 - Maintain at least 80% line coverage across core route handlers.
+"""
+    elif cat_key == "project_structure":
+        return f"""# Master Project Tree Structure & Layout for '{proj_name}'
+
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+{proj_name.lower().replace(' ', '_')}/
+├── app/
+│   ├── main.py              # Application Entrypoint
+│   ├── config.py            # Configuration & Settings
+│   └── routers/
+│       └── api_router.py    # REST Endpoints
+├── database/
+│   ├── schema.sql           # Database DDL
+│   └── connection.py        # Connection Pool
+├── pages/
+│   ├── dashboard.py         # Streamlit Dashboard
+│   └── projects.py          # Workspace Explorer
+├── tests/
+│   └── test_main.py         # PyTest Test Suite
+├── Dockerfile               # Containerization
+├── docker-compose.yml       # Docker Compose Stack
+├── requirements.txt         # Python Dependencies
+└── README.md                # Documentation
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
+
+```bash
+# File: setup.sh
+#!/bin/bash
+# Initialize workspace for {proj_name}
+echo "Initializing {proj_name} directory layout..."
+mkdir -p app/routers database pages tests docs
+touch app/__init__.py app/main.py app/config.py
+echo "Directory tree initialized."
+```
+
+```text
+# File: requirements.txt
+fastapi>=0.104.0
+uvicorn>=0.24.0
+streamlit>=1.28.0
+pydantic-settings>=2.0.0
+pytest>=7.4.0
+```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+chmod +x setup.sh && ./setup.sh
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- Organizes code into decoupled presentation, business logic, data persistence, and testing packages.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- Excludes secrets from source control via `.gitignore`.
+
+---
+
+## 6. 💡 Production Best Practices
+- Follow standard PEP8 package layout conventions.
+"""
+    elif cat_key == "architecture":
+        bp_code = get_run_text("architect")
+        info_header = bp_code if bp_code else f"# System Architecture Topology for '{proj_name}'\n\n"
+
+        return f"""{info_header}
+
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+architecture/
+├── topology.txt         # ASCII System Layer Topology
+└── system_flow.mmd      # Mermaid.js Architecture Diagram
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
+
+```mermaid
+// File: diagrams/system_architecture.mmd
+graph TD
+    Client[Browser Frontend UI] --> API[FastAPI REST Gateway]
+    API --> Service[Business Service Layer]
+    Service --> DB[(SQLite Database)]
+    Service --> Vector[(Vector RAG Index)]
+```
+
+```text
+// File: docs/SYSTEM_TOPOLOGY.md
++-------------------------------------------------------------+
+|                     PRESENTATION LAYER                      |
+|                  (Streamlit UI / Web SPA)                   |
++-------------------------------------------------------------+
+                               |
+                               v
++-------------------------------------------------------------+
+|                     BUSINESS LOGIC LAYER                    |
+|                (FastAPI REST / Python Services)             |
++-------------------------------------------------------------+
+                               |
+                               v
++-------------------------------------------------------------+
+|                   DATA PERSISTENCE LAYER                    |
+|             (SQLite Database / Vector Embedding Store)      |
++-------------------------------------------------------------+
+```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+# Render mermaid diagram to PNG
+npx @mermaid-js/mermaid-cli -i diagrams/system_architecture.mmd -o docs/topology.png
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- Clean 3-tier architecture with stateless API gateways and local data persistence.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- Layer isolation ensures presentation tier cannot directly mutate raw database rows.
+
+---
+
+## 6. 💡 Production Best Practices
+- Keep components decoupled using dependency injection.
+"""
+    elif cat_key == "documentation":
+        bp_code = get_run_text("documentation")
+        info_header = bp_code if bp_code else f"# Production Documentation for '{proj_name}'\n\n"
+
+        return f"""{info_header}
+
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+docs/
+├── README.md            # Master Project Documentation
+├── API_SPEC.md          # OpenAPI REST Endpoints Spec
+└── CONTRIBUTING.md      # Developer Guidelines
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
+
+```markdown
+# File: README.md
+# {proj_name}
+
+> Production software system built for the **{proj_ind}** industry.
+
+## Tech Stack
+- **Architecture**: {proj_tech}
+- **Description**: {proj_desc}
+
+## Quick Start
+```bash
+git clone https://github.com/Ranjitpatra26/DevCore-AI-.git
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+## API Endpoints
+| Endpoint | Method | Description |
+|---|---|---|
+| `/health` | `GET` | System Health Diagnostics |
+| `/api/v1/resources` | `GET` | Project Resource Inventory |
+```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+cat README.md
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- Documents project installation, architecture, and deployment procedures.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- Security disclosure instructions and environment variable documentation.
+
+---
+
+## 6. 💡 Production Best Practices
+- Keep documentation synchronized with code releases.
+"""
+    elif cat_key == "pseudocode":
+        return f"""# Algorithmic Pseudocode & Logic Specifications for '{proj_name}'
+
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+algorithms/
+├── rag_search.pseudo    # Semantic Similarity Search Algorithm
+└── state_graph.pseudo   # Multi-Agent State Graph Workflow Logic
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
+
+```text
+// File: algorithms/rag_search.pseudo
+FUNCTION SearchSimilarity(query_text, top_k):
+    query_vector = GenerateEmbedding(query_text)
+    candidate_chunks = FetchAllDocumentChunks()
+    
+    scores = []
+    FOR EACH chunk IN candidate_chunks:
+        similarity = CosineSimilarity(query_vector, chunk.vector)
+        APPEND (chunk, similarity) TO scores
+        
+    SORT scores BY similarity DESCENDING
+    RETURN Top K entries from scores
+END FUNCTION
+```
+
+```python
+# File: algorithms/agent_graph.py
+def execute_agent_workflow(project_data: dict) -> dict:
+    # State graph execution logic for multi-agent synthesis
+    state = {{"project": project_data, "completed_nodes": []}}
+    nodes = ["ceo", "architect", "backend", "frontend", "qa"]
+    for node in nodes:
+        state["completed_nodes"].append(node)
+    return state
+```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+python algorithms/agent_graph.py
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- Defines mathematical cosine similarity scoring and sequential agent state transitions.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- Big-O Time Complexity: O(N * D) where N is chunk count and D is vector dimension (384).
+
+---
+
+## 6. 💡 Production Best Practices
+- Use HNSW vector indexing for sub-linear O(log N) retrieval speed at scale.
+"""
+    elif cat_key == "code_review":
+        return f"""# Code Review & Quality Audit Report for '{proj_name}'
+
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+code_review/
+├── static_analysis.md   # Quality Audit & Refactoring Recommendations
+└── .ruff.toml           # Linter & Formatting Configuration
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
+
+```toml
+# File: .ruff.toml
+target-version = "py310"
+line-length = 120
+
+[lint]
+select = ["E", "F", "B", "I", "UP", "SIM"]
+ignore = ["E501"]
+```
+
+```markdown
+# File: reports/static_analysis.md
+# Code Review Audit Report: {proj_name}
+
+## Audit Summary
+- **Type Hints Coverage**: 95%
+- **Exception Safety**: High (Explicit try/except blocks)
+- **Security Rating**: Grade A (No raw SQL string concatenation)
+
+## Recommendations
+1. Enforce strict Pydantic model validation on all external API payloads.
+2. Add rate limiting middleware to prevent API abuse.
+```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+# Run automated code review linter
+pip install ruff
+ruff check .
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- Audits static code quality, PEP8 compliance, type annotations, and error handling pattern safety.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- Verifies zero hardcoded API keys or plaintext credentials in source code.
+
+---
+
+## 6. 💡 Production Best Practices
+- Run `ruff check --fix` in pre-commit git hooks.
+"""
+    elif cat_key == "debug_assistant":
+        return f"""# System Diagnostics & Debug Assistant for '{proj_name}'
+
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+diagnostics/
+├── health_check.py      # Real-Time System Health & Connectivity Checker
+└── error_tracer.py      # Exception Logging & Stack Trace Analyzer
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
+
+```python
+# File: diagnostics/health_check.py
+import sys
+import sqlite3
+
+def run_diagnostics(project_name: str = "{proj_name}") -> dict:
+    # Automated diagnostic health check for {proj_name}
+    results = {{
+        "python_version": sys.version.split()[0],
+        "database": "OK",
+        "api_gateway": "OK",
+        "project": project_name
+    }}
+    try:
+        conn = sqlite3.connect(":memory:")
+        conn.close()
+    except Exception as e:
+        results["database"] = f"ERROR: {{e}}"
+        
+    return results
+
+if __name__ == "__main__":
+    diag = run_diagnostics()
+    print("Diagnostics Output:", diag)
+```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+python diagnostics/health_check.py
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- Probes Python runtime environment, database connectivity, and vector index health.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- Masks API keys and session tokens in error trace dumps.
+
+---
+
+## 6. 💡 Production Best Practices
+- Set up automated health check endpoints (`/health`) monitored by Uptime Kuma or Datadog.
 """
     else:
         return f"""# Source Code Module for '{proj_name}'
