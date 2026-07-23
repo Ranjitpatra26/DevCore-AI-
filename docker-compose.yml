@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  devcore-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: devcore_ai_app
+    ports:
+      - "8501:8501"
+    restart: unless-stopped
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+    volumes:
+      - ./ai_software_company.db:/app/ai_software_company.db

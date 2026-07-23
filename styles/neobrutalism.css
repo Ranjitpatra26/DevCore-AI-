@@ -1,0 +1,461 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+/* Global variables layout resets and typography */
+html, body, [data-testid="stAppViewContainer"] {
+    background-color: var(--bg-color) !important;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    color: var(--text-color) !important;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Hide default streamlit layout elements */
+#MainMenu {visibility: hidden !important;}
+footer {visibility: hidden !important;}
+header {visibility: hidden !important;}
+div[data-testid="stHeader"] {display: none !important;}
+div[data-testid="stToolbar"] {display: none !important;}
+div[data-testid="stDecoration"] {display: none !important;}
+
+/* Custom typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 800 !important;
+    color: var(--text-color) !important;
+    letter-spacing: -0.02em;
+    margin-top: 0.5rem;
+}
+
+h1 {
+    font-size: 2.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.ai-workforce-title {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 3.8rem !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.04em !important;
+    margin: 8px 0 14px 0 !important;
+    background: var(--ai-team-gradient, linear-gradient(120deg, #F43F5E 0%, #8B5CF6 25%, #06B6D4 50%, #10B981 75%, #F43F5E 100%)) !important;
+    background-size: 200% auto !important;
+    color: transparent !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: movingGradientText 5s linear infinite !important;
+    display: block !important;
+    clear: both !important;
+}
+
+.chat-terminal-title {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 3.6rem !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.04em !important;
+    margin: 8px 0 14px 0 !important;
+    background: var(--chat-terminal-gradient, linear-gradient(120deg, #0284C7 0%, #2563EB 25%, #7C3AED 50%, #EC4899 75%, #0284C7 100%)) !important;
+    background-size: 200% auto !important;
+    color: transparent !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: movingGradientText 5s linear infinite !important;
+    display: block !important;
+    clear: both !important;
+}
+
+
+
+
+
+h2 {
+    font-size: 1.8rem !important;
+    margin-bottom: 1rem !important;
+    border-bottom: 3px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+p, span, li, label, div {
+    color: var(--text-color);
+}
+
+/* Neo-Brutalist Overrides for Streamlit Elements */
+
+/* Inputs & Textareas */
+div[data-testid="stTextInput"] input, div[data-testid="stTextArea"] textarea {
+    background-color: var(--card-bg) !important;
+    border: 3px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    color: var(--text-color) !important;
+    font-weight: 600 !important;
+    padding: 12px !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    transition: all 0.15s ease-in-out !important;
+}
+
+div[data-testid="stTextInput"] input:focus, div[data-testid="stTextArea"] textarea:focus {
+    transform: translate(-1px, -1px) !important;
+    box-shadow: 4px 4px 0px 0px var(--accent-color) !important;
+    outline: none !important;
+}
+
+/* Select Box & Dropdowns - Enforced Theme Styling for Light & Dark */
+div[data-testid="stSelectbox"] > div,
+div[data-testid="stMultiSelect"] > div {
+    border: 3.5px solid var(--border-color) !important;
+    border-radius: 10px !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    font-weight: 700 !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+div[data-testid="stSelectbox"] > div:focus-within,
+div[data-testid="stMultiSelect"] > div:focus-within {
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 6px 6px 0px 0px var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Force dropdown inner containers & text to match active theme card-bg & text-color */
+[data-baseweb="select"],
+[data-baseweb="select"] *,
+[data-baseweb="select"] > div,
+[data-baseweb="select"] > div > div,
+[data-baseweb="select"] div,
+[data-testid="stSelectbox"] [data-baseweb="select"],
+[data-testid="stSelectbox"] [data-baseweb="select"] *,
+[data-testid="stMultiSelect"] [data-baseweb="select"],
+[data-testid="stMultiSelect"] [data-baseweb="select"] * {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+}
+
+[data-baseweb="select"] svg,
+[data-baseweb="select"] svg *,
+[data-baseweb="select"] path {
+    background-color: transparent !important;
+    fill: var(--text-color) !important;
+    color: var(--text-color) !important;
+}
+
+
+
+
+/* Standard & Secondary Buttons */
+div.stButton > button:not(.st-key-floating_theme_toggle_btn) {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border: 3px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    transition: all 0.15s ease-in-out !important;
+    width: 100% !important;
+    font-size: 0.85rem !important;
+}
+
+div.stButton > button:not(.st-key-floating_theme_toggle_btn):hover {
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 6px 6px 0px 0px var(--primary-color) !important;
+    background-color: var(--hover-bg) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+div.stButton > button:not(.st-key-floating_theme_toggle_btn):active {
+    transform: translate(2px, 2px) !important;
+    box-shadow: 1px 1px 0px 0px var(--border-color) !important;
+}
+
+/* Primary Buttons */
+div.stButton > button[kind="primary"],
+div.stButton > button[data-testid="baseButton-primary"] {
+    background-color: var(--primary-color) !important;
+    color: #FFFFFF !important;
+}
+
+div.stButton > button[kind="primary"] * {
+    color: #FFFFFF !important;
+}
+
+/* Success Buttons override */
+div.success-btn > button {
+    background-color: var(--success-color) !important;
+    color: #FFFFFF !important;
+}
+
+/* Tab Styles override */
+div[data-testid="stTabBar"] button {
+    border: 2px solid var(--border-color) !important;
+    border-radius: 6px 6px 0 0 !important;
+    margin-right: 4px !important;
+    font-weight: 800 !important;
+    background-color: var(--card-bg) !important;
+    color: var(--text-secondary) !important;
+    padding: 8px 16px !important;
+}
+
+div[data-testid="stTabBar"] button[aria-selected="true"] {
+    background-color: var(--accent-color) !important;
+    color: #FFFFFF !important;
+    box-shadow: 2px 2px 0px 0px var(--border-color) !important;
+}
+
+/* Neo-Brutalist Layout Cards */
+.nb-card {
+    background-color: var(--card-bg);
+    border: 3px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 5px 5px 0px 0px var(--border-color);
+    margin-bottom: 24px;
+    transition: all 0.2s ease-in-out;
+}
+
+.nb-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0px 0px var(--border-color);
+}
+
+.nb-text-muted {
+    color: var(--text-secondary) !important;
+}
+
+/* Badges */
+.nb-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    font-weight: 800;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    border: 2px solid var(--border-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.nb-badge-primary { background-color: var(--primary-color); color: white; }
+.nb-badge-secondary { background-color: var(--accent-color); color: white; }
+.nb-badge-accent { background-color: var(--warning-color); color: #111827; }
+.nb-badge-success { background-color: var(--success-color); color: white; }
+.nb-badge-danger { background-color: var(--danger-color); color: white; }
+
+/* Custom Progress Bar */
+.nb-progress-container {
+    width: 100%;
+    background-color: var(--bg-color);
+    border: 3px solid var(--border-color);
+    border-radius: 8px;
+    height: 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 2px 2px 0px 0px var(--border-color);
+}
+
+.nb-progress-fill {
+    height: 100%;
+    background-color: var(--accent-color);
+    border-right: 3px solid var(--border-color);
+    transition: width 0.4s ease-in-out;
+}
+
+.nb-progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 800;
+    color: var(--text-color);
+    font-size: 0.85rem;
+}
+
+/* Custom Navigation Bar Styles */
+.nav-container {
+    background-color: var(--card-bg);
+    border: 3px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin-bottom: 30px;
+    box-shadow: 4px 4px 0px 0px var(--border-color);
+}
+
+/* File uploader custom style overrides */
+div[data-testid="stFileUploader"] {
+    border: 3px dashed var(--border-color) !important;
+    background-color: var(--card-bg) !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+}
+
+div[data-testid="stFileUploaderDropzone"],
+section[data-testid="stFileUploaderDropzone"] {
+    background-color: var(--hover-bg) !important;
+    border: 2px dashed var(--border-color) !important;
+    border-radius: 8px !important;
+}
+
+div[data-testid="stFileUploaderDropzone"] span,
+div[data-testid="stFileUploaderDropzone"] small,
+div[data-testid="stFileUploaderDropzone"] p {
+    color: var(--text-color) !important;
+}
+
+/* Code block customization - Clean No-Underline Terminal Styling */
+code,
+pre,
+code *,
+pre *,
+div[data-testid="stCodeBlock"] *,
+div[data-testid="stMarkdownContainer"] pre * {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-style: none !important;
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-width: 0px !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-image: none !important;
+}
+
+code:not(pre code):not(div[data-testid="stCodeBlock"] code) {
+    background-color: var(--hover-bg, #1E293B) !important;
+    color: var(--primary-color, #6366F1) !important;
+    border: 1px solid var(--border-color, #334155) !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+}
+
+pre {
+    background-color: #0F172A !important;
+    color: #F8FAFC !important;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    box-shadow: 3px 3px 0px 0px var(--border-color) !important;
+    padding: 15px !important;
+}
+
+/* Responsive breakdowns for mobile and tablet screens */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem !important;
+    }
+    h2 {
+        font-size: 1.5rem !important;
+    }
+    div.stButton > button {
+        padding: 8px 16px !important;
+        font-size: 0.8rem !important;
+    }
+    .nb-card {
+        padding: 16px;
+    }
+}
+
+/* Floating Theme Toggle Circular Button Specificity Override */
+div.stButton > button.st-key-floating_theme_toggle_btn,
+div.stButton > button[key="floating_theme_toggle_btn"],
+div.stButton:has(.st-key-floating_theme_toggle_btn) > button,
+.st-key-floating_theme_toggle_btn button,
+div[data-testid="stElementContainer"]:has(.st-key-floating_theme_toggle_btn) button {
+    border-radius: 50% !important;
+    -webkit-border-radius: 50% !important;
+    width: 56px !important;
+    min-width: 56px !important;
+    max-width: 56px !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+    aspect-ratio: 1 / 1 !important;
+    padding: 0 !important;
+    position: fixed !important;
+    bottom: 24px !important;
+    right: 24px !important;
+    z-index: 999999 !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 2.1rem !important;
+}
+
+div.stButton > button.st-key-floating_theme_toggle_btn *,
+.st-key-floating_theme_toggle_btn button * {
+    font-size: 2.1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Upper Right Toast Notifications & Popups Accessibility & Visual Styling */
+div[data-testid="stToast"],
+div[data-baseweb="toast"],
+div[data-baseweb="notification"],
+div.stToast,
+section[data-testid="stToast"],
+[data-testid="stToastContainer"] > div {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border: 3px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    padding: 14px 20px !important;
+    opacity: 1 !important;
+}
+
+div[data-testid="stToast"] *,
+div[data-baseweb="toast"] *,
+div[data-baseweb="notification"] *,
+div.stToast *,
+[data-testid="stToastContainer"] * {
+    color: var(--text-color) !important;
+}
+
+div[data-testid="stToast"] p,
+div[data-baseweb="toast"] p,
+div[data-baseweb="notification"] p,
+div.stToast p,
+div[data-testid="stToast"] span,
+div[data-baseweb="toast"] span,
+div[data-testid="stToast"] div[data-testid="stMarkdownContainer"] p,
+div[data-testid="stToast"] div[data-testid="stMarkdownContainer"] span {
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+    font-size: 0.92rem !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+}
+
+/* Close button and icons inside upper-right toast popups */
+div[data-testid="stToast"] button,
+div[data-baseweb="toast"] button,
+div[data-testid="stToast"] svg,
+div[data-baseweb="toast"] svg,
+div[data-testid="stToast"] button svg,
+div[data-baseweb="toast"] button svg {
+    color: var(--text-color) !important;
+    fill: var(--text-color) !important;
+    stroke: var(--text-color) !important;
+    opacity: 0.9 !important;
+}
+
+div[data-testid="stToast"] button:hover,
+div[data-baseweb="toast"] button:hover {
+    opacity: 1 !important;
+    background-color: var(--hover-bg) !important;
+    border-radius: 6px !important;
+}
+
+

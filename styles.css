@@ -1,0 +1,1170 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+/* Global Layout & Mesh Backgrounds */
+html, body, [data-testid="stAppViewContainer"], [data-testid="stSidebarViewContainer"] {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+    font-family: 'Outfit', sans-serif !important;
+    
+    /* Composite mesh gradient blobs, NO background dots pattern */
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 40%),
+        linear-gradient(180deg, var(--bg-color) 0%, var(--bg-color) 100%) !important;
+    background-size: 100% 100% !important;
+    background-attachment: fixed !important;
+    transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Hide default Streamlit visual headers & footer elements */
+div[data-testid="stToolbar"],
+header[data-testid="stHeader"],
+div[data-testid="stDecoration"],
+footer {
+    visibility: hidden !important;
+    height: 0px !important;
+    display: none !important;
+}
+
+/* Premium Typography Architecture */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 800 !important;
+    color: var(--text-color) !important;
+    letter-spacing: -0.04em !important;
+    margin-top: 0 !important;
+}
+h1 {
+    font-size: 3.2rem !important;
+    line-height: 1.1 !important;
+    margin-bottom: 0.5rem !important;
+}
+h2 {
+    font-size: 2.1rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 1rem !important;
+    border-bottom: 3.5px solid var(--border-color);
+    padding-bottom: 12px;
+}
+h3 {
+    font-size: 1.45rem !important;
+}
+
+/* Form and UI Widget Labels Accessibility Fix */
+label, 
+.stWidgetLabel, 
+[data-testid="stWidgetLabel"] p, 
+.stMarkdown p,
+p,
+li,
+div[data-testid="stMarkdownContainer"] p {
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+}
+
+/* Specific secondary text overrides */
+.saas-card p, 
+.nb-card p,
+.timeline-item p,
+.saas-card div,
+.nb-card div {
+    color: var(--text-secondary) !important;
+}
+
+/* Input Placeholders Accessibility */
+::placeholder {
+    color: var(--muted-color) !important;
+    opacity: 1 !important;
+}
+::-webkit-input-placeholder { color: var(--muted-color) !important; }
+:-ms-input-placeholder { color: var(--muted-color) !important; }
+
+/* Custom Accessibility Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border: 3px solid var(--bg-color);
+    border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* Bento Grid Cards (Neo-Brutalist design) */
+.saas-card, .nb-card {
+    background-color: var(--card-bg) !important;
+    border: 3.5px solid var(--border-color) !important;
+    border-radius: 14px !important;
+    padding: 26px !important;
+    box-shadow: var(--shadow-soft) !important;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    margin-bottom: 24px !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.saas-card:hover, .nb-card:hover {
+    transform: translate(-5px, -5px) !important;
+    box-shadow: 12px 12px 0px 0px var(--primary-color) !important;
+}
+
+.editorial-hero-container {
+    padding: 50px 36px;
+    background-color: var(--card-bg);
+    border: 3.5px solid var(--border-color);
+    border-radius: 18px;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 35px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-title-large {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 900;
+    font-size: 3.8rem;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    margin-bottom: 18px;
+    background: linear-gradient(
+        120deg,
+        var(--text-color) 0%,
+        var(--primary-color) 25%,
+        #EC4899 50%,
+        #8B5CF6 75%,
+        var(--text-color) 100%
+    );
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: movingGradientText 6s linear infinite;
+}
+
+.ai-workforce-title {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 3.8rem !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.04em !important;
+    margin: 8px 0 14px 0 !important;
+    background: var(--ai-team-gradient, linear-gradient(120deg, #F43F5E 0%, #8B5CF6 25%, #06B6D4 50%, #10B981 75%, #F43F5E 100%)) !important;
+    background-size: 200% auto !important;
+    color: transparent !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: movingGradientText 5s linear infinite !important;
+    display: block !important;
+    clear: both !important;
+}
+
+.chat-terminal-title {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 3.6rem !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.04em !important;
+    margin: 8px 0 14px 0 !important;
+    background: var(--chat-terminal-gradient, linear-gradient(120deg, #0284C7 0%, #2563EB 25%, #7C3AED 50%, #EC4899 75%, #0284C7 100%)) !important;
+    background-size: 200% auto !important;
+    color: transparent !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: movingGradientText 5s linear infinite !important;
+    display: block !important;
+    clear: both !important;
+}
+
+
+
+
+
+
+@keyframes movingGradientText {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+.hero-description {
+
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    line-height: 1.6;
+    max-width: 720px;
+    margin-bottom: 28px;
+}
+
+.editorial-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.asymmetrical-card {
+    background-color: var(--card-bg);
+    border: 3.5px solid var(--border-color);
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 24px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.asymmetrical-card:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 10px 10px 0px 0px var(--primary-color);
+}
+
+.feature-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    line-height: 0.8;
+    opacity: 0.3;
+    margin-bottom: 8px;
+}
+
+/* Form Controls (Inputs, Selectboxes, Textareas) */
+div[data-testid="stTextInput"] input, 
+div[data-testid="stTextArea"] textarea,
+div[data-testid="stSelectbox"] > div,
+div[data-testid="stMultiSelect"] > div {
+    background-color: var(--card-bg) !important;
+    border: 3.5px solid var(--border-color) !important;
+    border-radius: 10px !important;
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+    padding: 12px 14px !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Force dropdown inner containers & text to match active theme card-bg & text-color */
+[data-baseweb="select"],
+[data-baseweb="select"] *,
+[data-baseweb="select"] > div,
+[data-baseweb="select"] > div > div,
+[data-baseweb="select"] div,
+[data-testid="stSelectbox"] [data-baseweb="select"],
+[data-testid="stSelectbox"] [data-baseweb="select"] *,
+[data-testid="stMultiSelect"] [data-baseweb="select"],
+[data-testid="stMultiSelect"] [data-baseweb="select"] * {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+}
+
+div[data-testid="stTextInput"] input:focus, 
+div[data-testid="stTextArea"] textarea:focus,
+div[data-testid="stSelectbox"] > div:focus-within {
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 6px 6px 0px 0px var(--primary-color) !important;
+    outline: none !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Caret / Dropdown Arrow SVG Icon */
+[data-baseweb="select"] svg,
+[data-baseweb="select"] svg *,
+[data-baseweb="select"] path {
+    background-color: transparent !important;
+    fill: var(--text-color) !important;
+    color: var(--text-color) !important;
+}
+
+
+/* Dropdown popover floating container styling (BaseWeb & Streamlit) */
+div[data-baseweb="popover"],
+div[data-baseweb="popover"] > div,
+div[data-baseweb="menu"],
+ul[data-baseweb="menu"],
+ul[role="listbox"],
+div[role="listbox"] {
+    background-color: var(--card-bg) !important;
+    border: 3.5px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    box-shadow: 6px 6px 0px 0px var(--border-color) !important;
+    color: var(--text-color) !important;
+    padding: 6px !important;
+}
+
+/* Dropdown option items */
+li[data-baseweb="option"],
+div[data-baseweb="option"],
+[role="option"],
+[role="option"] div,
+[role="option"] span,
+[role="option"] p {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif !important;
+    font-size: 0.95rem !important;
+}
+
+li[data-baseweb="option"],
+div[data-baseweb="option"],
+[role="option"] {
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    margin-bottom: 3px !important;
+    transition: background-color 0.15s ease, color 0.15s ease !important;
+    cursor: pointer !important;
+}
+
+/* Dropdown option hover and selected state */
+li[data-baseweb="option"]:hover,
+li[data-baseweb="option"]:hover *,
+div[data-baseweb="option"]:hover,
+div[data-baseweb="option"]:hover *,
+[role="option"]:hover,
+[role="option"]:hover *,
+[role="option"][aria-selected="true"],
+[role="option"][aria-selected="true"] * {
+    background-color: var(--primary-color) !important;
+    color: #FFFFFF !important;
+}
+
+
+li[data-baseweb="option"]:hover *,
+div[data-baseweb="option"]:hover *,
+[role="option"]:hover * {
+    color: #FFFFFF !important;
+    background-color: transparent !important;
+}
+
+/* Alert contrast overrides (info, warning, error, success messages) */
+div[data-testid="stAlert"] {
+    background-color: var(--card-bg) !important;
+    border: 3px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--shadow-soft) !important;
+}
+
+div[data-testid="stAlert"] p,
+div[data-testid="stAlert"] div,
+div[data-testid="stAlert"] span,
+div[data-testid="stAlert"] * {
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+}
+
+/* Interactive Buttons & Download Buttons styling */
+div.stButton > button:not(.st-key-floating_theme_toggle_btn),
+div.stDownloadButton > button,
+div[data-testid="stDownloadButton"] > button {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border: 3.5px solid var(--border-color) !important;
+    border-radius: 10px !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    padding: 12px 24px !important;
+    box-shadow: 5px 5px 0px 0px var(--border-color) !important;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    width: 100% !important;
+}
+
+div.stButton > button:not(.st-key-floating_theme_toggle_btn):hover,
+div.stDownloadButton > button:hover,
+div[data-testid="stDownloadButton"] > button:hover {
+    transform: translate(-4px, -4px) !important;
+    box-shadow: 9px 9px 0px 0px var(--primary-color) !important;
+    background-color: var(--hover-bg) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+div.stButton > button:not(.st-key-floating_theme_toggle_btn):active,
+div.stDownloadButton > button:active,
+div[data-testid="stDownloadButton"] > button:active {
+    transform: translate(3px, 3px) !important;
+    box-shadow: 1px 1px 0px 0px var(--border-color) !important;
+}
+
+div.stButton > button[kind="primary"]:not(.st-key-floating_theme_toggle_btn),
+div.stButton > button[data-testid="baseButton-primary"]:not(.st-key-floating_theme_toggle_btn),
+div.stFormSubmitButton > button,
+div[data-testid="stFormSubmitButton"] > button,
+button[kind="primaryFormSubmit"],
+button[kind="secondaryFormSubmit"],
+button[type="submit"] {
+    background-color: var(--primary-color) !important;
+    color: #FFFFFF !important;
+    border: 3.5px solid var(--border-color) !important;
+    font-weight: 800 !important;
+    box-shadow: 5px 5px 0px 0px var(--border-color) !important;
+}
+
+div.stButton > button[kind="primary"] *,
+div.stButton > button[data-testid="baseButton-primary"] *,
+div.stFormSubmitButton > button *,
+div[data-testid="stFormSubmitButton"] > button *,
+button[kind="primaryFormSubmit"] *,
+button[kind="secondaryFormSubmit"] *,
+button[type="submit"] * {
+    color: #FFFFFF !important;
+}
+
+div.stFormSubmitButton > button:hover,
+div[data-testid="stFormSubmitButton"] > button:hover {
+    background-color: var(--hover-bg) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 9px 9px 0px 0px var(--primary-color) !important;
+}
+
+/* Navigation Bar container */
+.nav-container {
+    background-color: var(--card-bg);
+    border: 3.5px solid var(--border-color);
+    border-radius: 14px;
+    padding: 18px 26px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow-soft);
+}
+
+/* Modern Tab items custom style */
+div[data-testid="stTabBar"] {
+    background-color: transparent !important;
+    border-bottom: 3.5px solid var(--border-color) !important;
+    gap: 10px !important;
+}
+
+div[data-testid="stTabBar"] button {
+    border: 3.5px solid var(--border-color) !important;
+    border-bottom: none !important;
+    border-radius: 10px 10px 0 0 !important;
+    font-weight: 800 !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    background-color: var(--card-bg) !important;
+    color: var(--text-secondary) !important;
+    padding: 12px 24px !important;
+    transform: translateY(3.5px) !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+div[data-testid="stTabBar"] button[aria-selected="true"] {
+    background-color: var(--primary-color) !important;
+    color: #FFFFFF !important;
+    transform: translateY(0px) !important;
+    z-index: 10 !important;
+}
+
+/* File uploader visual style & light mode contrast fixes */
+div[data-testid="stFileUploader"] {
+    border: 3.5px dashed var(--border-color) !important;
+    background-color: var(--card-bg) !important;
+    border-radius: 14px !important;
+    padding: 20px !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    transition: border-color 0.2s ease !important;
+}
+
+div[data-testid="stFileUploader"]:hover {
+    border-color: var(--primary-color) !important;
+}
+
+/* File uploader label */
+div[data-testid="stFileUploader"] label,
+div[data-testid="stFileUploader"] [data-testid="stWidgetLabel"] p {
+    color: var(--text-color) !important;
+    font-weight: 800 !important;
+    font-size: 1rem !important;
+}
+
+/* Inner dropzone container fix for dark/light themes */
+div[data-testid="stFileUploaderDropzone"],
+section[data-testid="stFileUploaderDropzone"],
+div[data-baseweb="file-uploader"],
+div[data-baseweb="file-uploader"] > div {
+    background-color: var(--hover-bg) !important;
+    border: 2px dashed var(--border-color) !important;
+    border-radius: 10px !important;
+    padding: 16px !important;
+}
+
+/* Dropzone text colors & instructions */
+div[data-testid="stFileUploaderDropzone"] span,
+div[data-testid="stFileUploaderDropzone"] small,
+div[data-testid="stFileUploaderDropzone"] p,
+div[data-testid="stFileUploaderDropzone"] div,
+[data-testid="stFileUploaderDropzoneInstructions"],
+[data-testid="stFileUploaderDropzoneInstructions"] * {
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+}
+
+div[data-testid="stFileUploaderDropzone"] small,
+[data-testid="stFileUploaderDropzoneInstructions"] small {
+    color: var(--text-secondary) !important;
+    font-weight: 600 !important;
+}
+
+/* SVG Icon fill inside dropzone */
+div[data-testid="stFileUploaderDropzone"] svg,
+div[data-testid="stFileUploaderDropzone"] svg path,
+div[data-testid="stFileUploaderDropzone"] svg polygon {
+    fill: var(--primary-color) !important;
+    color: var(--primary-color) !important;
+}
+
+/* Inner upload button styling */
+div[data-testid="stFileUploaderDropzone"] button,
+div[data-testid="stFileUploader"] button[data-testid="stBaseButton-secondary"] {
+    background-color: var(--primary-color) !important;
+    color: #FFFFFF !important;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    font-weight: 800 !important;
+    padding: 6px 16px !important;
+    box-shadow: 2.5px 2.5px 0px 0px var(--border-color) !important;
+    transition: all 0.2s ease !important;
+}
+
+div[data-testid="stFileUploaderDropzone"] button span,
+div[data-testid="stFileUploaderDropzone"] button p,
+div[data-testid="stFileUploader"] button[data-testid="stBaseButton-secondary"] span,
+div[data-testid="stFileUploader"] button[data-testid="stBaseButton-secondary"] p {
+    color: #FFFFFF !important;
+}
+
+div[data-testid="stFileUploaderDropzone"] button:hover,
+div[data-testid="stFileUploader"] button[data-testid="stBaseButton-secondary"]:hover {
+    background-color: var(--card-bg) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 4px 4px 0px 0px var(--primary-color) !important;
+}
+
+div[data-testid="stFileUploaderDropzone"] button:hover span,
+div[data-testid="stFileUploaderDropzone"] button:hover p,
+div[data-testid="stFileUploader"] button[data-testid="stBaseButton-secondary"]:hover span,
+div[data-testid="stFileUploader"] button[data-testid="stBaseButton-secondary"]:hover p {
+    color: var(--primary-color) !important;
+}
+
+/* Uploaded File List item styling */
+[data-testid="stFileUploaderFileName"],
+[data-testid="stFileUploaderFileData"] {
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+}
+
+/* Precise Streamlit key-matching fixed floating theme toggle button on the bottom right */
+.st-key-floating_theme_toggle_btn button,
+div.stButton > button.st-key-floating_theme_toggle_btn {
+    position: fixed !important;
+    bottom: 24px !important;
+    right: 24px !important;
+    z-index: 999999 !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    max-width: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+    border-radius: 50% !important;
+    -webkit-border-radius: 50% !important;
+    border: 3.5px solid var(--border-color) !important;
+    background-color: var(--card-bg) !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    font-size: 2.1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.st-key-floating_theme_toggle_btn button *,
+div.stButton > button.st-key-floating_theme_toggle_btn * {
+    font-size: 2.1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.st-key-floating_theme_toggle_btn button:hover,
+div.stButton > button.st-key-floating_theme_toggle_btn:hover {
+    transform: translate(-3px, -3px) !important;
+    box-shadow: 7px 7px 0px 0px var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+
+
+/* Streamlit & BaseWeb Modal Dialog Popups Full Accessibility Fix */
+div[data-baseweb="modal"],
+div[data-testid="stModal"] {
+    background-color: rgba(0, 0, 0, 0.65) !important;
+}
+
+div[data-baseweb="modal"] > div,
+div[data-baseweb="modal"] [role="dialog"],
+div[data-baseweb="modal"] [data-baseweb="card"],
+div[data-baseweb="modal"] div,
+div[data-testid="stDialog"],
+div[data-testid="stDialog"] > div,
+section[role="dialog"],
+div[role="dialog"] {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+}
+
+div[data-baseweb="modal"] [role="dialog"],
+div[data-baseweb="modal"] [data-baseweb="card"],
+div[data-testid="stDialog"] {
+    border: 4px solid var(--border-color) !important;
+    border-radius: 18px !important;
+    box-shadow: 10px 10px 0px 0px var(--border-color) !important;
+}
+
+/* Modal Headers, Text, Paragraphs, Lists & Markdown Containers */
+div[data-baseweb="modal"] *,
+div[data-testid="stDialog"] * {
+    color: var(--text-color) !important;
+}
+
+/* Primary buttons & Badges inside modals exceptions */
+div[data-baseweb="modal"] button[kind="primary"],
+div[data-baseweb="modal"] button[kind="primary"] *,
+div[data-testid="stDialog"] button[kind="primary"],
+div[data-testid="stDialog"] button[kind="primary"] * {
+    color: #FFFFFF !important;
+    background-color: var(--primary-color) !important;
+}
+
+/* Streamlit Expander styling */
+div[data-testid="stExpander"],
+details,
+summary,
+div[data-testid="stExpander"] summary,
+div[data-testid="stExpander"] details {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border: 3px solid var(--border-color) !important;
+    border-radius: 12px !important;
+}
+
+div[data-testid="stExpander"] summary *,
+div[data-testid="stExpander"] summary span,
+div[data-testid="stExpander"] summary p {
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+}
+
+div[data-testid="stExpander"] summary:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+div[data-testid="stExpander"] [data-testid="stExpanderDetails"] {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+}
+
+/* Remove outlines, underlines, and bottom borders from inline code spans, lines, and tokens */
+code,
+pre,
+code *,
+pre *,
+div[data-testid="stCodeBlock"] *,
+div[data-testid="stMarkdownContainer"] code *,
+span.line,
+.stCodeBlock span,
+.token {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    border-bottom: none !important;
+    border-bottom-width: 0px !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+code span,
+code line,
+code mark,
+.stCodeBlock span,
+div[data-testid="stCodeBlock"] span,
+div[data-testid="stCodeBlock"] p,
+div[data-testid="stCodeBlock"] line,
+span[class*="token"],
+.token {
+    border: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    text-decoration: none !important;
+}
+
+/* Inline Code Elements (single word code in text) */
+code:not(pre code):not(div[data-testid="stCodeBlock"] code) {
+    background-color: var(--hover-bg, #1E293B) !important;
+    color: var(--primary-color, #6366F1) !important;
+    border: 1px solid var(--border-color, #334155) !important;
+    border-radius: 5px !important;
+    padding: 2px 6px !important;
+    font-family: 'Fira Code', 'Cascadia Code', monospace !important;
+    font-size: 0.88em !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+}
+
+/* Full Code Block Containers - High-Contrast Black & White Terminal Window */
+div[data-testid="stCodeBlock"],
+div[data-testid="stCodeBlock"] pre,
+div[data-testid="stCodeBlock"] code,
+div[data-testid="stMarkdownContainer"] pre,
+div[data-testid="stMarkdownContainer"] code,
+.stCodeBlock pre,
+.stCodeBlock code,
+pre,
+pre.stCodeBlock {
+    background-color: #0A0F1D !important;
+    color: #FFFFFF !important;
+    border: 2.5px solid var(--border-color, #334155) !important;
+    border-radius: 12px !important;
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4) !important;
+    padding: 16px !important;
+    margin: 12px 0 !important;
+}
+
+/* ABSOLUTELY ZERO BORDERS, LINE-THROUGH, STRIKE-THROUGH, OR UNDERLINES INSIDE CODE BLOCKS */
+div[data-testid="stCodeBlock"] *,
+div[data-testid="stMarkdownContainer"] pre *,
+div[data-testid="stMarkdownContainer"] code *,
+.stCodeBlock *,
+pre *,
+pre code *,
+code *,
+span.line,
+.token,
+div[class*="line"] {
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-width: 0px !important;
+    outline: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-style: none !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+    opacity: 1 !important;
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* EXPLICIT SYNTAX HIGHLIGHTING COLOURS FOR TOKEN CLASSES */
+
+/* Keywords (import, from, class, def, return, if, for, in, raise) */
+div[data-testid="stCodeBlock"] .token.keyword,
+div[data-testid="stMarkdownContainer"] pre .token.keyword,
+pre .token.keyword {
+    color: #38BDF8 !important; /* Bright Cyan */
+    font-weight: 800 !important;
+}
+
+/* Strings ("...", '...') */
+div[data-testid="stCodeBlock"] .token.string,
+div[data-testid="stMarkdownContainer"] pre .token.string,
+pre .token.string {
+    color: #4ADE80 !important; /* Vibrant Mint Green */
+    font-weight: 700 !important;
+}
+
+/* Functions & Classes (CustomSoftwareApplicationService, process_data) */
+div[data-testid="stCodeBlock"] .token.function,
+div[data-testid="stCodeBlock"] .token.class-name,
+div[data-testid="stMarkdownContainer"] pre .token.function,
+div[data-testid="stMarkdownContainer"] pre .token.class-name,
+pre .token.function,
+pre .token.class-name {
+    color: #A78BFA !important; /* Bright Violet */
+    font-weight: 800 !important;
+}
+
+/* Comments (# ...) */
+div[data-testid="stCodeBlock"] .token.comment,
+div[data-testid="stMarkdownContainer"] pre .token.comment,
+pre .token.comment {
+    color: #FACC15 !important; /* Bright Gold Yellow */
+    font-style: italic !important;
+    font-weight: 700 !important;
+}
+
+/* Numbers & Booleans (123, True, False, None) */
+div[data-testid="stCodeBlock"] .token.number,
+div[data-testid="stCodeBlock"] .token.boolean,
+div[data-testid="stMarkdownContainer"] pre .token.number,
+div[data-testid="stMarkdownContainer"] pre .token.boolean,
+pre .token.number,
+pre .token.boolean {
+    color: #FB923C !important; /* Bright Amber Orange */
+    font-weight: 800 !important;
+}
+
+/* Variables, Identifiers, Parameters, Module Names, ASCII Diagram Lines, Imports, Punctuation */
+div[data-testid="stCodeBlock"] .token.parameter,
+div[data-testid="stCodeBlock"] .token.variable,
+div[data-testid="stCodeBlock"] .token.property,
+div[data-testid="stCodeBlock"] .token.punctuation,
+div[data-testid="stCodeBlock"] .token.plain,
+div[data-testid="stCodeBlock"] .token.imports,
+div[data-testid="stCodeBlock"] .token.namespace,
+div[data-testid="stCodeBlock"] .token.operator,
+div[data-testid="stMarkdownContainer"] pre .token.parameter,
+div[data-testid="stMarkdownContainer"] pre .token.variable,
+div[data-testid="stMarkdownContainer"] pre .token.namespace,
+div[data-testid="stMarkdownContainer"] pre .token.plain,
+pre .token.parameter,
+pre .token.variable,
+pre .token.namespace,
+pre .token.plain {
+    color: #FFFFFF !important; /* Pure Crisp Bright White */
+    font-weight: 700 !important;
+}
+
+/* Copy to Clipboard Button in Code Blocks & Streamlit Containers */
+div[data-testid="stCodeBlock"] button,
+button[aria-label*="Copy"],
+button[aria-label*="copy"],
+button[data-testid="stCopyButton"],
+div[data-testid="stCopyButton"] button,
+[data-testid="stCodeBlock"] [data-testid="stCopyButton"] {
+    background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%) !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 6px 12px !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+}
+
+/* Explicit "📋 COPY CODE" Text Label so users instantly understand the button */
+div[data-testid="stCodeBlock"] button::after,
+button[aria-label*="Copy"]::after,
+button[aria-label*="copy"]::after,
+button[data-testid="stCopyButton"]::after {
+    content: "📋 COPY CODE" !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 0.78rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.05em !important;
+    color: #FFFFFF !important;
+    display: inline-block !important;
+}
+
+/* Hide confusing default SVG square icon */
+div[data-testid="stCodeBlock"] button svg,
+button[aria-label*="Copy"] svg,
+button[aria-label*="copy"] svg,
+button[data-testid="stCopyButton"] svg {
+    display: none !important;
+}
+
+div[data-testid="stCodeBlock"] button:hover,
+button[aria-label*="Copy"]:hover,
+button[aria-label*="copy"]:hover,
+button[data-testid="stCopyButton"]:hover {
+    background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%) !important;
+    transform: translateY(-2px) scale(1.05) !important;
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.6) !important;
+    border-color: #FFFFFF !important;
+}
+
+/* Hide Black Tooltip Pop-ups Completely */
+div[data-testid="stTooltipContent"],
+div[role="tooltip"],
+div[data-baseweb="tooltip"],
+.stTooltipContent {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    pointer-events: none !important;
+}
+
+/* JSON Viewer (st.json / 3rd Box Visibility Fix) */
+div[data-testid="stJson"],
+div[data-testid="stJson"] pre,
+div[data-testid="stJson"] code,
+div[data-json-tree="true"] {
+    background-color: #0F172A !important;
+    color: #F8FAFC !important;
+    border: 2px solid var(--border-color, #334155) !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2) !important;
+}
+div[data-testid="stJson"] span,
+div[data-testid="stJson"] div,
+div[data-testid="stJson"] label,
+div[data-json-tree="true"] span {
+    color: #F8FAFC !important;
+    font-weight: 700 !important;
+}
+div[data-testid="stJson"] span[class*="key"],
+div[data-json-tree="true"] span[class*="key"] {
+    color: #38BDF8 !important; /* Bright Cyan */
+}
+div[data-testid="stJson"] span[class*="string"],
+div[data-json-tree="true"] span[class*="string"] {
+    color: #FACC15 !important; /* Bright Yellow */
+}
+
+/* Modal header bar & close icon */
+div[data-baseweb="modal"] header,
+div[data-testid="stDialog"] header {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border-bottom: 2px solid var(--border-color) !important;
+}
+
+div[data-baseweb="modal"] button[aria-label="Close"],
+div[data-testid="stDialog"] button[aria-label="Close"],
+div[data-baseweb="modal"] button[aria-label="Close"] svg,
+div[data-testid="stDialog"] button[aria-label="Close"] svg {
+    color: var(--text-color) !important;
+    fill: var(--text-color) !important;
+}
+
+/* Responsive details */
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem !important; }
+    h2 { font-size: 1.8rem !important; }
+    .saas-card, .nb-card { padding: 20px !important; }
+}
+
+/* Floating Theme Toggle Circular Button Specificity Override */
+div.stButton > button.st-key-floating_theme_toggle_btn,
+div.stButton > button[key="floating_theme_toggle_btn"],
+div.stButton:has(.st-key-floating_theme_toggle_btn) > button,
+.st-key-floating_theme_toggle_btn button,
+div[data-testid="stElementContainer"]:has(.st-key-floating_theme_toggle_btn) button {
+    border-radius: 50% !important;
+    -webkit-border-radius: 50% !important;
+    width: 56px !important;
+    min-width: 56px !important;
+    max-width: 56px !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+    aspect-ratio: 1 / 1 !important;
+    padding: 0 !important;
+    position: fixed !important;
+    bottom: 24px !important;
+    right: 24px !important;
+    z-index: 999999 !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Dynamic Animated Progress Bar for Multi-Agent Workflow Console */
+.nb-progress-container {
+    width: 100% !important;
+    background-color: var(--hover-bg, #1E293B) !important;
+    border: 2.5px solid var(--border-color, #334155) !important;
+    border-radius: 12px !important;
+    height: 32px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    box-shadow: 2px 2px 0px 0px var(--border-color, #334155) !important;
+    margin: 14px 0 !important;
+}
+
+.nb-progress-fill {
+    height: 100% !important;
+    background: linear-gradient(90deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%) !important;
+    border-right: 2px solid var(--border-color, #334155) !important;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.5) !important;
+}
+
+.nb-progress-text {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    font-weight: 800 !important;
+    color: #FFFFFF !important;
+    font-size: 0.85rem !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    letter-spacing: 0.03em !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+}
+
+/* Upper Right Toast Notifications & Popups Accessibility & Visual Styling */
+div[data-testid="stToast"],
+div[data-baseweb="toast"],
+div[data-baseweb="notification"],
+div.stToast,
+section[data-testid="stToast"],
+[data-testid="stToastContainer"] > div {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border: 3px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    padding: 14px 20px !important;
+    opacity: 1 !important;
+}
+
+div[data-testid="stToast"] *,
+div[data-baseweb="toast"] *,
+div[data-baseweb="notification"] *,
+div.stToast *,
+[data-testid="stToastContainer"] * {
+    color: var(--text-color) !important;
+}
+
+div[data-testid="stToast"] p,
+div[data-baseweb="toast"] p,
+div[data-baseweb="notification"] p,
+div.stToast p,
+div[data-testid="stToast"] span,
+div[data-baseweb="toast"] span,
+div[data-testid="stToast"] div[data-testid="stMarkdownContainer"] p,
+div[data-testid="stToast"] div[data-testid="stMarkdownContainer"] span {
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+    font-size: 0.92rem !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+}
+
+/* Close button and icons inside upper-right toast popups */
+div[data-testid="stToast"] button,
+div[data-baseweb="toast"] button,
+div[data-testid="stToast"] svg,
+div[data-baseweb="toast"] svg,
+div[data-testid="stToast"] button svg,
+div[data-baseweb="toast"] button svg {
+    color: var(--text-color) !important;
+    fill: var(--text-color) !important;
+    stroke: var(--text-color) !important;
+    opacity: 0.9 !important;
+}
+
+/* Implementation Studio Workspace High-Contrast Banner Styling */
+.impl-workspace-banner {
+    background-color: #0F172A !important;
+    border: 1.5px solid #334155 !important;
+    color: #F8FAFC !important;
+}
+.impl-workspace-banner * {
+    color: #F8FAFC !important;
+}
+.impl-workspace-banner span.impl-proj-title {
+    color: #38BDF8 !important;
+    font-weight: 700 !important;
+}
+.impl-workspace-banner strong.impl-mode-title {
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+}
+.impl-workspace-banner span.impl-tech-title {
+    color: #CBD5E1 !important;
+    font-size: 0.82rem !important;
+}
+.impl-workspace-banner span.impl-badge-sync {
+    background-color: #064E3B !important;
+    color: #34D399 !important;
+    border: 1.5px solid #10B981 !important;
+    font-weight: 800 !important;
+    padding: 4px 12px !important;
+    border-radius: 20px !important;
+    font-size: 0.8rem !important;
+    white-space: nowrap !important;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.4) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+/* Implementation Studio Skeleton Card Loader High-Contrast Rules */
+.impl-skeleton-card {
+    background-color: #0F172A !important;
+    border: 1.5px solid #38BDF8 !important;
+    color: #F8FAFC !important;
+    padding: 20px !important;
+    border-radius: 10px !important;
+    margin-bottom: 20px !important;
+    box-shadow: 0 4px 20px rgba(56, 189, 248, 0.15) !important;
+}
+.impl-skeleton-card * {
+    color: #F8FAFC !important;
+}
+.impl-skeleton-card .impl-pulse-text {
+    color: #38BDF8 !important;
+    font-weight: 700 !important;
+    font-size: 1.05rem !important;
+}
+.impl-skeleton-card .impl-pulse-line {
+    background: linear-gradient(90deg, #1E293B 25%, #475569 50%, #1E293B 75%) !important;
+    background-size: 200% 100% !important;
+    animation: skeletonShimmer 1.5s infinite linear !important;
+}
+@keyframes skeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+@keyframes skeletonPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+
+
+
+
+
+
+
+

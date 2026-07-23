@@ -1,0 +1,204 @@
+/* DevCore AI Floating Assistant - Isolated Dedicated Stylesheet */
+
+/* Precise Streamlit popover button fixed at bottom: 96px, right: 24px */
+.st-key-devcore_chatbot_popover,
+.st-key-devcore_chatbot_popover > button,
+div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover),
+div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover) > button,
+div.stPopover:has(.st-key-devcore_chatbot_popover),
+div.stPopover:has(.st-key-devcore_chatbot_popover) > button,
+div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover),
+div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover) > button {
+    position: fixed !important;
+    bottom: 96px !important;
+    right: 24px !important;
+    left: auto !important;
+    top: auto !important;
+    margin: 0 !important;
+    z-index: 999999 !important;
+    width: 60px !important;
+    min-width: 60px !important;
+    max-width: 60px !important;
+    height: 60px !important;
+    min-height: 60px !important;
+    max-height: 60px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    -webkit-border-radius: 50% !important;
+    border: 3.5px solid var(--border-color, #1A2238) !important;
+    background-color: var(--card-bg, #FAF5EB) !important;
+    color: var(--text-color, #1A2238) !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color, #1A2238) !important;
+    font-size: 2.1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    animation: none !important;
+    transition: transform 0.15s ease !important;
+    overflow: hidden !important;
+}
+
+/* Eliminate dark background rectangle overlay on popover button in both Light & Dark themes */
+.st-key-devcore_chatbot_popover *,
+div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover) button *,
+div.stPopover:has(.st-key-devcore_chatbot_popover) > button * {
+    background: transparent !important;
+    background-color: transparent !important;
+    border-radius: 50% !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Hide Streamlit default popover chevron SVG & material icons inside trigger button */
+div.stPopover:has(.st-key-devcore_chatbot_popover) > button svg,
+div.stPopover:has(.st-key-devcore_chatbot_popover) > button span[data-testid="stIconMaterial"],
+div.stPopover:has(.st-key-devcore_chatbot_popover) > button [data-testid="stIconMaterial"],
+.st-key-devcore_chatbot_popover button svg,
+.st-key-devcore_chatbot_popover button span[data-testid="stIconMaterial"],
+.st-key-devcore_chatbot_popover button [data-testid="stIconMaterial"] {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Force the icon/emoji inside popover button to be crisp, large (~40px), visible, and centered */
+.st-key-devcore_chatbot_popover button p,
+.st-key-devcore_chatbot_popover button span,
+.st-key-devcore_chatbot_popover button div,
+.st-key-devcore_chatbot_popover button [data-testid="stMarkdownContainer"],
+.st-key-devcore_chatbot_popover button [data-testid="stMarkdownContainer"] p,
+div.stPopover:has(.st-key-devcore_chatbot_popover) button p,
+div.stPopover:has(.st-key-devcore_chatbot_popover) button span,
+div.stPopover:has(.st-key-devcore_chatbot_popover) button [data-testid="stMarkdownContainer"] p {
+    font-size: 3.0rem !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Hover State Animation */
+.st-key-devcore_chatbot_popover button:hover,
+div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover) button:hover,
+div.stPopover:has(.st-key-devcore_chatbot_popover) > button:hover {
+    transform: scale(1.08) translateY(-2px) !important;
+    border-color: var(--primary-color, #6366F1) !important;
+    box-shadow: 6px 6px 0px 0px var(--border-color, #1A2238) !important;
+}
+
+/* Tactile Click Press Animation */
+.st-key-devcore_chatbot_popover button:active,
+div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover) button:active,
+div.stPopover:has(.st-key-devcore_chatbot_popover) > button:active {
+    transform: scale(0.92) translate(3px, 3px) !important;
+    box-shadow: 1px 1px 0px 0px var(--border-color, #1A2238) !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+}
+
+/* Black Terminal Popover Container Window (Comfortable Top Breathing Room for Visible Outline) */
+div[data-testid="stPopoverBody"] {
+    background-color: #090D16 !important;
+    border: 2.5px solid #334155 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.95), 0 0 30px rgba(99, 102, 241, 0.3) !important;
+    width: 580px !important;
+    max-width: calc(100vw - 32px) !important;
+    max-height: calc(100vh - 160px) !important;
+    padding: 16px !important;
+    z-index: 999998 !important;
+    overflow-y: auto !important;
+}
+
+
+
+/* Complete High-Contrast Text Overrides inside Popover for Markdown, Lists, Code & Text */
+div[data-testid="stPopoverBody"] p,
+div[data-testid="stPopoverBody"] span,
+div[data-testid="stPopoverBody"] label,
+div[data-testid="stPopoverBody"] div,
+div[data-testid="stPopoverBody"] li,
+div[data-testid="stPopoverBody"] ul,
+div[data-testid="stPopoverBody"] ol,
+div[data-testid="stPopoverBody"] strong,
+div[data-testid="stPopoverBody"] b,
+div[data-testid="stPopoverBody"] em,
+div[data-testid="stPopoverBody"] i,
+div[data-testid="stPopoverBody"] a,
+div[data-testid="stPopoverBody"] [data-testid="stMarkdownContainer"],
+div[data-testid="stPopoverBody"] [data-testid="stMarkdownContainer"] * {
+    color: #F8FAFC !important;
+}
+
+/* Inline Code tags inside terminal messages */
+div[data-testid="stPopoverBody"] code {
+    background-color: #1E293B !important;
+    color: #38BDF8 !important;
+    border: 1px solid #334155 !important;
+    border-radius: 4px !important;
+    padding: 2px 6px !important;
+    font-family: 'Fira Code', monospace !important;
+    font-size: 0.84rem !important;
+}
+
+/* Multi-line Pre Code Blocks inside terminal messages */
+div[data-testid="stPopoverBody"] pre {
+    background-color: #0F172A !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+}
+
+div[data-testid="stPopoverBody"] pre code {
+    color: #F8FAFC !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* Terminal Dark Buttons inside Popover Window */
+div[data-testid="stPopoverBody"] div.stButton > button {
+    background-color: #1E293B !important;
+    color: #F8FAFC !important;
+    border: 1.5px solid #334155 !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    font-size: 0.82rem !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
+    transition: all 0.15s ease !important;
+}
+
+div[data-testid="stPopoverBody"] div.stButton > button:hover {
+    background-color: rgba(99, 102, 241, 0.25) !important;
+    border-color: #6366F1 !important;
+    color: #818CF8 !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Style Model Selector Selectbox inside Popover */
+div[data-testid="stPopoverBody"] div[data-baseweb="select"] > div,
+div[data-testid="stPopoverBody"] div[data-baseweb="select"] span {
+    background-color: #1E293B !important;
+    color: #F8FAFC !important;
+    border: 1.5px solid #334155 !important;
+    border-radius: 10px !important;
+}
+
+/* Style Text Input Form inside Popover */
+div[data-testid="stPopoverBody"] input {
+    background-color: #1E293B !important;
+    color: #F8FAFC !important;
+    border: 1.5px solid #334155 !important;
+    border-radius: 10px !important;
+}
+
+div[data-testid="stPopoverBody"] input::placeholder {
+    color: #94A3B8 !important;
+}

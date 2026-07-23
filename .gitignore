@@ -1,0 +1,21 @@
+# Environment & Secret files
+.env
+.env.*
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Database & SQLite files
+*.db
+*.sqlite3
+
+# Virtual Environments
+venv/
+env/
+ENV/
+
+# Streamlit Local Runtime
+.streamlit/secrets.toml
