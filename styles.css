@@ -279,10 +279,25 @@ div[data-testid="stSelectbox"] > div:focus-within {
     border-color: var(--primary-color) !important;
 }
 
-/* Caret / Dropdown Arrow SVG Icon */
+/* Caret / Dropdown Arrow & Password Eye Visibility Button Icon Fix */
+div[data-baseweb="input"] > div:last-child,
+div[data-baseweb="input"] button,
+button[aria-label*="visibility" i],
+button[title*="visibility" i],
+div[data-baseweb="select"] > div:last-child,
+div[data-baseweb="select"] [data-baseweb="icon"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
 [data-baseweb="select"] svg,
 [data-baseweb="select"] svg *,
-[data-baseweb="select"] path {
+[data-baseweb="select"] path,
+div[data-baseweb="input"] button svg,
+div[data-baseweb="input"] button *,
+button[aria-label*="visibility" i] svg {
     background-color: transparent !important;
     fill: var(--text-color) !important;
     color: var(--text-color) !important;

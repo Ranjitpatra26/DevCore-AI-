@@ -57,6 +57,27 @@ def render_groq_quota_modal_content():
         font-family: 'Space Grotesk', 'Inter', sans-serif !important;
     }
 
+    /* Password Eye Visibility Button & Dropdown Arrow Transparent Fix */
+    div[data-baseweb="input"] > div:last-child,
+    div[data-baseweb="input"] button,
+    button[aria-label*="visibility" i],
+    button[title*="visibility" i],
+    div[data-baseweb="select"] > div:last-child,
+    div[data-baseweb="select"] [data-baseweb="icon"] {
+        background: transparent !important;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    div[data-baseweb="input"] button svg,
+    div[data-baseweb="input"] button *,
+    button[aria-label*="visibility" i] svg,
+    div[data-baseweb="select"] svg {
+        fill: var(--text-color) !important;
+        color: var(--text-color) !important;
+    }
+
     /* Modal Callout Header */
     .groq-quota-alert-banner {
         background: rgba(239, 68, 68, 0.15) !important;
