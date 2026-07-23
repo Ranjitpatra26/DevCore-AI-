@@ -383,7 +383,11 @@ CRITICAL PERSONA & CONVERSATION RULES:
             groq_key = os.getenv("GROQ_API_KEY_CONSULTATION") or os.getenv("GROQ_API_KEY") or ""
 
 
-        if provider == "groq" and groq_key:
+        from utils.config import ensure_ollama_server_online
+        is_ollama_up = ensure_ollama_server_online()
+        use_groq = (provider == "groq" or not is_ollama_up or os.getenv("EXECUTION_PROVIDER") == "groq") and bool(groq_key)
+
+        if use_groq:
             from components.chatbot.groq_client import stream_groq_response
             res_chunks = list(stream_groq_response(
                 messages=messages_payload,

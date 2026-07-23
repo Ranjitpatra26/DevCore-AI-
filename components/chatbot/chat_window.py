@@ -92,7 +92,7 @@ def render_chat_window_content():
     # 3. Model Selector & Status Pill
     hdr_cols = st.columns([1.5, 2.5])
     with hdr_cols[0]:
-        if active_provider == "groq" and active_groq_key:
+        if (active_provider == "groq" or not is_online or os.getenv("EXECUTION_PROVIDER") == "groq") and active_groq_key:
             st.html("""
             <span style="font-size: 0.74rem; font-weight: 700; color: #38BDF8; background: rgba(56,189,248,0.15); padding: 4px 10px; border-radius: 12px; border: 1px solid rgba(56,189,248,0.3); display: inline-flex; align-items: center; gap: 4px;">
                 ⚡ Groq LPU Active
@@ -112,7 +112,7 @@ def render_chat_window_content():
             """)
 
     with hdr_cols[1]:
-        if active_provider == "groq" and active_groq_key:
+        if (active_provider == "groq" or not is_online or os.getenv("EXECUTION_PROVIDER") == "groq") and active_groq_key:
             from components.chatbot.groq_client import AVAILABLE_GROQ_MODELS
             selected_groq = st.selectbox(
                 "Groq Model",
@@ -243,13 +243,18 @@ def render_chat_window_content():
                         groq_key = os.getenv("GROQ_API_KEY_CHATBOT") or os.getenv("GROQ_API_KEY") or ""
 
 
-                    if provider == "groq" and groq_key:
+                    from utils.config import ensure_ollama_server_online
+                    is_ollama_up = ensure_ollama_server_online()
+                    use_groq = (provider == "groq" or not is_ollama_up or os.getenv("EXECUTION_PROVIDER") == "groq") and bool(groq_key)
+
+                    if use_groq:
                         from components.chatbot.groq_client import stream_groq_response
                         response_stream = stream_groq_response(
                             messages=st.session_state.devcore_chat_messages,
                             api_key=groq_key,
                             model=groq_model,
-                            system_prompt=system_prompt
+                            system_prompt=system_prompt,
+                            is_chatbot=True
                         )
                     else:
                         active_model = st.session_state.devcore_chat_model or "qwen3.5:9b"
