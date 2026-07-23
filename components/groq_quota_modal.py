@@ -57,25 +57,36 @@ def render_groq_quota_modal_content():
         font-family: 'Space Grotesk', 'Inter', sans-serif !important;
     }
 
-    /* Password Eye Visibility Button & Dropdown Arrow Transparent Fix */
-    div[data-baseweb="input"] > div:last-child,
-    div[data-baseweb="input"] button,
-    button[aria-label*="visibility" i],
-    button[title*="visibility" i],
-    div[data-baseweb="select"] > div:last-child,
-    div[data-baseweb="select"] [data-baseweb="icon"] {
-        background: transparent !important;
-        background-color: transparent !important;
+    /* Password Eye Visibility Button & Dropdown Arrow Inherit Background & High Contrast Fix */
+    div[data-testid="stDialog"] [data-baseweb="input"] > div,
+    div[data-testid="stDialog"] [data-baseweb="input"] > div:last-child,
+    div[data-testid="stDialog"] [data-baseweb="input"] button,
+    div[data-testid="stDialog"] [data-baseweb="select"] > div,
+    div[data-testid="stDialog"] [data-baseweb="select"] > div:last-child,
+    [data-baseweb="input"] > div:last-child,
+    [data-baseweb="input"] button,
+    [data-baseweb="select"] > div:last-child {
+        background-color: inherit !important;
+        background: inherit !important;
         border: none !important;
         box-shadow: none !important;
     }
 
-    div[data-baseweb="input"] button svg,
-    div[data-baseweb="input"] button *,
-    button[aria-label*="visibility" i] svg,
-    div[data-baseweb="select"] svg {
-        fill: var(--text-color) !important;
-        color: var(--text-color) !important;
+    div[data-testid="stDialog"] [data-baseweb="input"] button svg,
+    div[data-testid="stDialog"] [data-baseweb="input"] button svg *,
+    div[data-testid="stDialog"] [data-baseweb="input"] svg,
+    div[data-testid="stDialog"] [data-baseweb="input"] svg path,
+    div[data-testid="stDialog"] [data-baseweb="select"] svg,
+    div[data-testid="stDialog"] [data-baseweb="select"] svg path,
+    [data-baseweb="input"] button svg,
+    [data-baseweb="input"] button svg *,
+    [data-baseweb="select"] svg,
+    [data-baseweb="select"] svg path {
+        fill: var(--text-color, #1E293B) !important;
+        color: var(--text-color, #1E293B) !important;
+        stroke: var(--text-color, #1E293B) !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     /* Modal Callout Header */
