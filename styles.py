@@ -31,12 +31,15 @@ def inject_design_system_css(theme_name: str):
     """
     st.html(root_vars)
     
+    import time
+    ts = int(time.time())
+
     # 2. Load styles.css static sheet from file root
     css_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "styles.css")
     if os.path.exists(css_file_path):
         with open(css_file_path, "r", encoding="utf-8") as f:
             styles_content = f.read()
-        st.html(f"<style>{styles_content}</style>")
+        st.html(f"<style>/* v={ts} */\n{styles_content}</style>")
     else:
         # Fallback if path resolved incorrectly
         st.html("<style>/* CSS file missing */</style>")
@@ -46,14 +49,14 @@ def inject_design_system_css(theme_name: str):
     if os.path.exists(neobrutalism_css_path):
         with open(neobrutalism_css_path, "r", encoding="utf-8") as f:
             neobrutalism_css_content = f.read()
-        st.html(f"<style>{neobrutalism_css_content}</style>")
+        st.html(f"<style>/* v={ts} */\n{neobrutalism_css_content}</style>")
 
     # 4. Load dedicated chatbot.css stylesheet
     chatbot_css_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "styles", "chatbot.css")
     if os.path.exists(chatbot_css_path):
         with open(chatbot_css_path, "r", encoding="utf-8") as f:
             chatbot_css_content = f.read()
-        st.html(f"<style>{chatbot_css_content}</style>")
+        st.html(f"<style>/* v={ts} */\n{chatbot_css_content}</style>")
 
 
 
