@@ -145,7 +145,38 @@ def show_settings():
         </div>
         """)
         with st.expander("📖 OPEN EXHAUSTIVE MAX POWER MODEL & INSTALLATION GUIDE", expanded=True):
+            st.html("""
+            <div style="background: rgba(99, 102, 241, 0.12); border: 2.5px solid #6366F1; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                <div>
+                    <strong style="color: var(--text-color); font-size: 0.98rem; font-weight: 800;">📦 Download Source Files for Local Execution:</strong>
+                    <div style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 2px;">Access full codebase, SQLite database, and run locally with local Ollama.</div>
+                </div>
+                <a href="https://github.com/Ranjitpatra26/DevCore-AI-" target="_blank" style="background: #6366F1; color: #FFFFFF !important; text-decoration: none; padding: 9px 18px; border-radius: 8px; font-weight: 800; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);">
+                    🐙 Open GitHub Repository
+                </a>
+            </div>
+            """)
             st.markdown("""
+### 📦 Step 0: Download & Clone Source Code from GitHub
+
+To run DevCore AI locally with your local Ollama engine, clone or download the official source repository:
+
+👉 **GitHub Link:** [https://github.com/Ranjitpatra26/DevCore-AI-](https://github.com/Ranjitpatra26/DevCore-AI-)
+
+```bash
+# 1. Clone the repository from GitHub:
+git clone https://github.com/Ranjitpatra26/DevCore-AI-.git
+cd DevCore-AI-
+
+# 2. Install required Python dependencies:
+pip install -r requirements.txt
+
+# 3. Launch DevCore AI application:
+streamlit run app.py
+```
+
+---
+
 ### ⚡ Why Running Local Ollama Unlocks Maximum Power & Value
 
 1. **Uncapped Output Depth (8,192 Tokens)**: Cloud APIs enforce Tokens-Per-Minute (TPM) limits. Local Ollama allows models to utilize full **8,192 token capacity per request**, generating massive, complete blueprints and multi-file source code.
@@ -167,7 +198,7 @@ def show_settings():
 
 ---
 
-### 💻 Step-by-Step Installation & Setup Commands
+### 💻 Step-by-Step Local Installation Commands
 
 ```bash
 # 1. Download & Install Ollama from official site: https://ollama.com/download
@@ -432,8 +463,38 @@ curl http://localhost:11434/api/tags
     # TAB 2: Max Power Local Installation Guide
     with tab_guide:
         st.markdown("## 🚀 How to Run DevCore AI at 100% Maximum Local Laptop Power")
+        st.html("""
+        <div style="background: rgba(99, 102, 241, 0.12); border: 2.5px solid #6366F1; border-radius: 12px; padding: 16px 20px; margin-top: 10px; margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+            <div>
+                <strong style="color: var(--text-color); font-size: 1.05rem; font-weight: 800;">📦 GitHub Source Code Repository:</strong>
+                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 2px;">Download or clone the source files to run DevCore AI locally with your local Ollama instance.</div>
+            </div>
+            <a href="https://github.com/Ranjitpatra26/DevCore-AI-" target="_blank" style="background: #6366F1; color: #FFFFFF !important; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 800; font-size: 0.92rem; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);">
+                🐙 Download from GitHub Repository
+            </a>
+        </div>
+        """)
         st.markdown("""
         Running DevCore AI with a **Local Ollama Engine** unlocks **uncapped 8,192 token output depth**, **zero API costs**, **no rate limits**, and **100% privacy** directly on your computer.
+
+        ---
+
+        ### 📦 Step 0: Clone & Download Source Code from GitHub
+        To run DevCore AI locally on your computer, clone or download the official GitHub repository:
+
+        👉 **Official GitHub Repository Link:** [https://github.com/Ranjitpatra26/DevCore-AI-](https://github.com/Ranjitpatra26/DevCore-AI-)
+
+        ```bash
+        # 1. Clone the repository from GitHub:
+        git clone https://github.com/Ranjitpatra26/DevCore-AI-.git
+        cd DevCore-AI-
+
+        # 2. Install required Python dependencies:
+        pip install -r requirements.txt
+
+        # 3. Launch DevCore AI application:
+        streamlit run app.py
+        ```
 
         ---
 
