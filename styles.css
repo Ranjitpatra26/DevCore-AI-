@@ -1219,29 +1219,11 @@ div[role="dialog"] {
     border: 2.5px solid var(--border-color, #334155) !important;
     border-radius: 18px !important;
     box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75) !important;
-    max-width: 860px !important;
-    width: 88vw !important;
+    max-width: 920px !important;
+    width: 90vw !important;
     padding: 24px !important;
     color: var(--text-color, #F8FAFC) !important;
     margin: auto !important;
-}
-
-/* Expander summary text single-line nowrap & clean arrow alignment */
-div[data-testid="stExpander"] summary {
-    font-size: 0.92rem !important;
-    font-weight: 700 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    align-items: center !important;
-}
-
-div[data-testid="stExpander"] summary p,
-div[data-testid="stExpander"] summary div,
-div[data-testid="stExpander"] summary span {
-    white-space: nowrap !important;
-    font-size: 0.92rem !important;
-    font-weight: 700 !important;
 }
 
 div[data-testid="stDialog"] h1,
