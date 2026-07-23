@@ -23,10 +23,15 @@ def render_groq_quota_modal_content():
     st.html("""
     <style>
     /* Centering & Contrast Fixes for Dialog Pop-up Container */
+    div[data-testid="stDialog"] {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
     div[data-testid="stDialog"] > div:first-child,
     div[role="dialog"] {
         background: var(--card-bg, #0F172A) !important;
-        border: 2.5px solid var(--primary-color, #6366F1) !important;
+        border: 2.5px solid var(--border-color, #334155) !important;
         border-radius: 18px !important;
         box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75) !important;
         max-width: 680px !important;
