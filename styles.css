@@ -1272,12 +1272,18 @@ div[data-testid="stDialog"] input::placeholder {
     div[data-testid="stElementContainer"]:has(.st-key-floating_theme_toggle_btn),
     div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover),
     div[data-testid="stElementContainer"]:has(#devcore_chatbot_popover),
-    div.stPopover:has(.st-key-devcore_chatbot_popover) {
+    div.stPopover:has(.st-key-devcore_chatbot_popover),
+    div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover) {
         position: fixed !important;
         bottom: 75px !important;
         right: 16px !important;
+        left: auto !important;
+        top: auto !important;
         width: 0px !important;
         height: 0px !important;
+        max-width: 0px !important;
+        min-width: 0px !important;
+        transform: none !important;
         margin: 0 !important;
         padding: 0 !important;
         border: none !important;
@@ -1309,6 +1315,7 @@ div[data-testid="stDialog"] input::placeholder {
         -webkit-border-radius: 50% !important;
         border: 3px solid var(--border-color) !important;
         box-shadow: 3px 3px 0px 0px var(--border-color) !important;
+        transform: none !important;
         margin: 0 !important;
         padding: 0 !important;
         z-index: 999999 !important;
@@ -1339,6 +1346,7 @@ div[data-testid="stDialog"] input::placeholder {
         -webkit-border-radius: 50% !important;
         border: 3px solid var(--border-color) !important;
         box-shadow: 3px 3px 0px 0px var(--border-color) !important;
+        transform: none !important;
         margin: 0 !important;
         padding: 0 !important;
         z-index: 999999 !important;

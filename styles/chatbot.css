@@ -231,24 +231,81 @@ div[data-testid="stPopoverBody"] input::placeholder {
         padding: 12px !important;
     }
     
-    .st-key-devcore_chatbot_popover,
-    .st-key-devcore_chatbot_popover > button,
-    div.stPopover:has(.st-key-devcore_chatbot_popover) > button {
+    /* Lock popover container and button to a perfect 50px circle on mobile screens */
+    div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover),
+    div[data-testid="stElementContainer"]:has(#devcore_chatbot_popover),
+    div.stPopover:has(.st-key-devcore_chatbot_popover),
+    div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover),
+    .st-key-devcore_chatbot_popover {
+        position: fixed !important;
         bottom: 135px !important;
         right: 16px !important;
+        left: auto !important;
+        top: auto !important;
         width: 50px !important;
         min-width: 50px !important;
         max-width: 50px !important;
         height: 50px !important;
         min-height: 50px !important;
         max-height: 50px !important;
+        transform: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        z-index: 999999 !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+    }
+
+    .st-key-devcore_chatbot_popover > button,
+    div.stPopover:has(.st-key-devcore_chatbot_popover) > button,
+    div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover) > button {
+        position: fixed !important;
+        bottom: 135px !important;
+        right: 16px !important;
+        left: auto !important;
+        top: auto !important;
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+        height: 50px !important;
+        min-height: 50px !important;
+        max-height: 50px !important;
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 50% !important;
+        -webkit-border-radius: 50% !important;
+        border: 3px solid var(--border-color, #1A2238) !important;
+        background-color: var(--card-bg, #FAF5EB) !important;
         box-shadow: 3px 3px 0px 0px var(--border-color, #1A2238) !important;
+        transform: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        z-index: 999999 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
     }
 
     .st-key-devcore_chatbot_popover button p,
     .st-key-devcore_chatbot_popover button span,
-    div.stPopover:has(.st-key-devcore_chatbot_popover) button p {
-        font-size: 2.1rem !important;
+    div.stPopover:has(.st-key-devcore_chatbot_popover) button p,
+    div.stPopover:has(.st-key-devcore_chatbot_popover) button span {
+        font-size: 1.8rem !important;
+        line-height: 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    div[data-testid="stPopoverBody"]:has(.st-key-devcore_popover_groq_model_selector),
+    div[data-testid="stPopoverBody"]:has(.st-key-devcore_popover_model_selector) {
+        width: 92vw !important;
+        max-width: 380px !important;
     }
 
     div[data-testid="stPopoverBody"] div[data-testid="column"] {
