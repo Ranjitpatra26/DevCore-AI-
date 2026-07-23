@@ -731,6 +731,8 @@ python app/service.py
 def parse_multi_files(response_text: str, default_lang: str = "python") -> List[Dict[str, str]]:
     """Parse generated LLM response into virtual independent source files for the VS Code Explorer."""
     parsed_files: List[Dict[str, str]] = []
+    seen_paths = set()
+    ascii_tree_added = False
     
     # Extract code fences ```lang ... ```
     raw_blocks = re.findall(r'```(\w+)?\n(.*?)```', response_text or "", re.DOTALL)
@@ -750,29 +752,36 @@ def parse_multi_files(response_text: str, default_lang: str = "python") -> List[
         lang = lang_tag.strip().lower() if lang_tag else "text"
         code_str = code_body.strip() if code_body else ""
         lines = code_str.splitlines()
-        first_line = lines[0] if lines else ""
+        
         file_path = ""
         
-        # Check if first line contains explicit filename header
-        if first_line.startswith(("# ", "// ", "-- ", "### ", "/* ", "<!-- ")):
-            candidate = first_line.lstrip("#-/ *<!!--").rstrip("-->*/ ").strip()
-            if candidate.lower().startswith("file:"):
-                candidate = candidate[5:].strip()
-            if "." in candidate and len(candidate) < 60 and " " not in candidate:
-                file_path = candidate
-                
-        # Detect ASCII folder tree / architecture diagram blocks
-        is_ascii_tree = bool(
-            lang in ["text", "ascii", "tree"] or
-            ("+" in first_line and "|" in code_str) or
+        # Check first 3 lines for explicit filename header (# File: path/to/file.ext)
+        for check_line in lines[:3]:
+            check_line_clean = check_line.strip()
+            if check_line_clean.startswith(("# ", "// ", "-- ", "### ", "/* ", "<!-- ", "#File:", "# File:")):
+                candidate = check_line_clean.lstrip("#-/ *<!!--").rstrip("-->*/ ").strip()
+                if candidate.lower().startswith("file:"):
+                    candidate = candidate[5:].strip()
+                if "." in candidate and len(candidate) < 70 and " " not in candidate:
+                    file_path = candidate
+                    break
+        
+        # Check for explicit ASCII diagram or folder structure
+        is_ascii_diagram = bool(
             ("PRESENTATION LAYER" in code_str) or
             ("ORCHESTRATION LAYER" in code_str) or
             ("BUSINESS LOGIC" in code_str) or
-            (code_str.count("+") > 4 and code_str.count("|") > 4)
+            (code_str.count("+--") > 3) or
+            (code_str.count("├──") > 2)
         )
         
-        if is_ascii_tree:
-            file_path = "docs/file_structure_architecture.txt"
+        if is_ascii_diagram:
+            if not file_path:
+                if not ascii_tree_added:
+                    file_path = "docs/file_structure_architecture.txt"
+                    ascii_tree_added = True
+                else:
+                    file_path = f"docs/architecture_diagram_{idx+1}.txt"
             lang = "text"
         elif not file_path:
             ext = lang if lang not in ["text", "code", ""] else "py"
@@ -817,21 +826,27 @@ def parse_multi_files(response_text: str, default_lang: str = "python") -> List[
             elif ext in ["mermaid", "mmd"]:
                 file_path = "diagrams/architecture.mmd" if code_idx == 0 else f"diagrams/data_flow_{code_idx+1}.mmd"
             else:
-                file_path = "config/.env.example" if code_idx == 0 else f"requirements.txt"
+                file_path = f"docs/notes_{code_idx+1}.txt"
 
-        # Determine folder & filename
-        parts = file_path.split("/")
-        filename = parts[-1]
-        folder = parts[0] if len(parts) > 1 else "root"
+        filename = file_path.split("/")[-1] if "/" in file_path else file_path
+        folder = "/".join(file_path.split("/")[:-1]) if "/" in file_path else "root"
         
-        parsed_files.append({
+        file_obj = {
             "path": file_path,
             "filename": filename,
             "folder": folder,
-            "lang": lang if lang != "code" else "text",
+            "lang": lang,
             "content": code_str
-        })
-        
+        }
+
+        # Deduplicate files by path so generating single files replaces older versions
+        existing_idx = next((i for i, f in enumerate(parsed_files) if f["path"] == file_path), -1)
+        if existing_idx >= 0:
+            parsed_files[existing_idx] = file_obj
+        else:
+            parsed_files.append(file_obj)
+            seen_paths.add(file_path)
+
     return parsed_files
 
 def render_mermaid_diagram(mermaid_code: str):
@@ -1460,13 +1475,32 @@ def render_implementation_studio(
                                 active_mode=active_mode,
                                 cat_data=cat_data,
                                 active_module_name=f"Source Code for File {selected_single_file}",
-                                user_input=f"Generate the full, complete, production-grade, un-truncated working source code for file '{selected_single_file}' in project '{proj_name}' ({proj_ind}) using tech stack '{proj_tech}'. Include comments, imports, and complete functions.",
+                                user_input=f"Generate the full, complete, production-grade, un-truncated working source code for file '{selected_single_file}' in project '{proj_name}' ({proj_ind}) using tech stack '{proj_tech}'. Include comments, imports, class definitions, and complete functions.",
                                 project_details=proj_details,
                                 runs_map=runs_map
                             )
                             sf_guidance = sf_res.get("guidance_text", "")
                             if sf_guidance:
-                                updated_text = guidance_text + "\n\n" + sf_guidance
+                                ext = selected_single_file.split(".")[-1] if "." in selected_single_file else "py"
+                                if ext in ["py", "python"]: lang = "python"
+                                elif ext in ["js", "javascript"]: lang = "javascript"
+                                elif ext in ["ts", "tsx", "typescript"]: lang = "typescript"
+                                elif ext in ["sql"]: lang = "sql"
+                                elif ext in ["yml", "yaml"]: lang = "yaml"
+                                elif ext in ["dockerfile"]: lang = "dockerfile"
+                                elif ext in ["css"]: lang = "css"
+                                elif ext in ["html"]: lang = "html"
+                                else: lang = "python"
+
+                                if f"# File: {selected_single_file}" not in sf_guidance:
+                                    clean_code = sf_guidance.strip().lstrip("`").rstrip("`").strip()
+                                    if clean_code.startswith("python") or clean_code.startswith("javascript") or clean_code.startswith("sql"):
+                                        clean_code = clean_code.split("\n", 1)[-1]
+                                    formatted_block = f"\n\n```{lang}\n# File: {selected_single_file}\n{clean_code}\n```\n"
+                                else:
+                                    formatted_block = f"\n\n{sf_guidance.strip()}\n"
+
+                                updated_text = guidance_text + formatted_block
                                 if out_state_key not in st.session_state:
                                     st.session_state[out_state_key] = {}
                                 st.session_state[out_state_key][output_key] = updated_text
