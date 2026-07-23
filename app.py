@@ -32,26 +32,26 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. Database Auto-Migration / Seeding
-init_db()
-
-# Initialize session state theme if not present
-if "theme" not in st.session_state:
-    st.session_state.theme = get_current_theme()
-
-# 3. Inject Centralized Design System Custom CSS Variables & Rules
-inject_design_system_css(st.session_state.theme)
-
-# 4. Initialize Navigation State & Render Navbar Component & Floating AI Chatbot
-init_navigation_state()
-render_navigation()
-from components.chatbot import render_floating_chatbot
-render_floating_chatbot()
-
-# 5. SPA Route Map Handling
-page = st.session_state.current_page
-
 try:
+    # 2. Database Auto-Migration / Seeding
+    init_db()
+
+    # Initialize session state theme if not present
+    if "theme" not in st.session_state:
+        st.session_state.theme = get_current_theme()
+
+    # 3. Inject Centralized Design System Custom CSS Variables & Rules
+    inject_design_system_css(st.session_state.theme)
+
+    # 4. Initialize Navigation State & Render Navbar Component & Floating AI Chatbot
+    init_navigation_state()
+    render_navigation()
+    from components.chatbot import render_floating_chatbot
+    render_floating_chatbot()
+
+    # 5. SPA Route Map Handling
+    page = st.session_state.get("current_page", "Dashboard")
+
     if page == "Dashboard":
         show_dashboard()
     elif page == "New Project":
@@ -68,10 +68,8 @@ try:
         st.session_state.current_page = "Dashboard"
         st.rerun()
 except Exception as err:
-    st.error(f"Routing Exception Encountered: {str(err)}")
-    if st.button("Return to Safety Dashboard"):
-        st.session_state.current_page = "Dashboard"
-        st.rerun()
+    st.error(f"⚠️ Application Exception Encountered: {str(err)}")
+    st.exception(err)
 
 # 6. Clean & Professional Enterprise Footer
 st.html("<div class='saas-divider' style='margin: 45px 0 25px 0;'></div>")
