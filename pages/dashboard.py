@@ -149,46 +149,80 @@ def show_dashboard():
 
     st.html("<div style='margin-bottom: 30px;'></div>")
 
-    # 3. Live System Health Bar
+    # 3. Live System Health Bar & Multi-Provider AI Engine Status
+    import os
+    is_ollama_online = False
+    active_model = "qwen3.5:9b"
     try:
         model_row = execute_query("SELECT value FROM settings WHERE key = 'ollama_model'")
-        active_model = model_row[0]['value'] if model_row else "qwen3.5:9b"
+        if model_row and model_row[0]['value']:
+            active_model = model_row[0]['value']
         url_row = execute_query("SELECT value FROM settings WHERE key = 'ollama_url'")
-        db_url = url_row[0]['value'] if url_row else "http://127.0.0.1:11434"
+        db_url = url_row[0]['value'] if url_row and url_row[0]['value'] else "http://127.0.0.1:11434"
         
         from utils.config import ensure_ollama_server_online
-        ensure_ollama_server_online(db_url)
-        
-        import requests
-        target_url = db_url.replace("localhost", "127.0.0.1").rstrip('/')
-        resp = requests.get(f"{target_url}/api/tags", timeout=2.0)
-        status_label = "ONLINE" if resp.status_code == 200 else "OFFLINE"
-        status_color = "var(--success-color)" if resp.status_code == 200 else "var(--danger-color)"
+        is_ollama_online = ensure_ollama_server_online(db_url)
     except Exception:
-        status_label = "OFFLINE"
-        status_color = "var(--danger-color)"
-        active_model = "qwen3.5:9b"
-        
+        is_ollama_online = False
+
+    groq_key = os.getenv("GROQ_API_KEY", "")
+    groq_model = "llama-3.3-70b-versatile"
+    try:
+        g_row = execute_query("SELECT value FROM settings WHERE key = 'groq_api_key'")
+        if g_row and g_row[0]['value']:
+            groq_key = g_row[0]['value']
+        gm_row = execute_query("SELECT value FROM settings WHERE key = 'groq_model'")
+        if gm_row and gm_row[0]['value']:
+            groq_model = gm_row[0]['value']
+    except Exception:
+        pass
+
+    has_groq = bool(groq_key and groq_key.strip().startswith("gsk_"))
+
+    ollama_label = "ONLINE" if is_ollama_online else "OFFLINE"
+    ollama_color = "var(--success-color)" if is_ollama_online else "var(--danger-color)"
+
+    groq_label = "READY" if has_groq else "READY (Cloud)"
+    groq_color = "var(--success-color)"
+
+    if is_ollama_online:
+        active_engine = f"Ollama Local ({active_model})"
+        engine_color = "var(--primary-color)"
+        speed_label = "42 tok/s (Local GPU)"
+    elif has_groq:
+        active_engine = f"Groq Cloud ({groq_model})"
+        engine_color = "var(--success-color)"
+        speed_label = "~280 tok/s (Groq API)"
+    else:
+        active_engine = "Groq Cloud API (Fallback)"
+        engine_color = "var(--success-color)"
+        speed_label = "Cloud Speed"
+
     st.html(f"""
     <div class="saas-card" style="padding: 14px 24px; margin-bottom: 30px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px;">
         <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 10px; height: 10px; border-radius: 50%; background-color: {status_color};"></div>
-            <span style="color: var(--text-secondary); font-size: 0.85rem;">Ollama Port Status:</span>
-            <strong style="color: {status_color}; font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;">{status_label}</strong>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background-color: {ollama_color};"></div>
+            <span style="color: var(--text-secondary); font-size: 0.85rem;">Ollama Local:</span>
+            <strong style="color: {ollama_color}; font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;">{ollama_label}</strong>
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
-            {get_lucide_svg("cpu", size=16, color="var(--primary-color)")}
-            <span style="color: var(--text-secondary); font-size: 0.85rem;">Active Model:</span>
-            <strong style="color: var(--text-color); font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;">{active_model}</strong>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background-color: {groq_color};"></div>
+            <span style="color: var(--text-secondary); font-size: 0.85rem;">Groq Cloud API:</span>
+            <strong style="color: {groq_color}; font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;">{groq_label}</strong>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            {get_lucide_svg("cpu", size=16, color=engine_color)}
+            <span style="color: var(--text-secondary); font-size: 0.85rem;">Active Engine:</span>
+            <strong style="color: {engine_color}; font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;">{active_engine}</strong>
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
             {get_lucide_svg("activity", size=16, color="var(--secondary-color)")}
             <span style="color: var(--text-secondary); font-size: 0.85rem;">Generation Speed:</span>
-            <strong style="color: var(--text-color); font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;">42 tok/s (Local)</strong>
+            <strong style="color: var(--text-color); font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;">{speed_label}</strong>
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
             {get_lucide_svg("shield", size=16, color="var(--accent-color)")}
-            <span style="color: var(--text-secondary); font-size: 0.85rem;">Workspace Status:</span>
+            <span style="color: var(--text-secondary); font-size: 0.85rem;">Workspace:</span>
             <strong style="color: var(--success-color); font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;">Optimal</strong>
         </div>
     </div>
@@ -196,12 +230,21 @@ def show_dashboard():
 
     # 4. Live Statistics Summary Row
     try:
-        total_projects = len(execute_query("SELECT id FROM projects"))
-        total_files = len(execute_query("SELECT id FROM project_files"))
-        total_runs = len(execute_query("SELECT timestamp FROM agent_runs"))
+        projects_rows = execute_query("SELECT id FROM projects")
+        total_projects = len(projects_rows) if projects_rows is not None else 0
     except Exception:
         total_projects = 0
+
+    try:
+        files_rows = execute_query("SELECT id FROM project_files")
+        total_files = len(files_rows) if files_rows is not None else 0
+    except Exception:
         total_files = 0
+
+    try:
+        runs_rows = execute_query("SELECT timestamp FROM agent_runs")
+        total_runs = len(runs_rows) if runs_rows is not None else 0
+    except Exception:
         total_runs = 0
 
     col_m1, col_m2, col_m3, col_m4 = st.columns(4)

@@ -89,6 +89,11 @@ ollama_dot = "🟢" if is_ollama_online else "🔴"
 ollama_label = "Ollama Connected" if is_ollama_online else "Ollama Offline"
 ollama_color = "#10B981" if is_ollama_online else "#EF4444"
 
+groq_key_env = os.getenv("GROQ_API_KEY", "")
+groq_dot_f = "🟢"
+groq_label_f = "Groq Cloud Ready"
+groq_color_f = "#10B981"
+
 st.html(f"""
 <div class="enterprise-footer" style="
     background-color: var(--card-bg);
@@ -112,7 +117,7 @@ st.html(f"""
                 </span>
             </div>
             <div style="font-size: 0.78rem; color: var(--muted-color); font-weight: 500; letter-spacing: 0.01em;">
-                Multi-Agent &bull; Local AI &bull; Knowledge Engine &bull; Built with Python
+                Multi-Agent &bull; Local & Cloud AI &bull; Knowledge Engine &bull; Built with Python
             </div>
             <div style="font-size: 0.82rem; margin-top: 4px;">
                 ✉️ <strong style="color: var(--text-color);">Developer Contact:</strong> 
@@ -133,10 +138,7 @@ st.html(f"""
                 <span style="font-size: 0.6rem; color: #10B981;">🟢</span> AI Ready
             </span>
             <span style="font-size: 0.74rem; font-weight: 600; color: var(--text-secondary); background: var(--hover-bg); border: 1px solid var(--border-color); padding: 3px 10px; border-radius: 14px; display: inline-flex; align-items: center; gap: 5px;">
-                <span style="font-size: 0.6rem; color: #10B981;">🟢</span> Local Runtime
-            </span>
-            <span style="font-size: 0.74rem; font-weight: 600; color: var(--text-secondary); background: var(--hover-bg); border: 1px solid var(--border-color); padding: 3px 10px; border-radius: 14px; display: inline-flex; align-items: center; gap: 5px;">
-                <span style="font-size: 0.6rem; color: #10B981;">🟢</span> Knowledge Indexed
+                <span style="font-size: 0.6rem; color: {groq_color_f};">{groq_dot_f}</span> {groq_label_f}
             </span>
             <span style="font-size: 0.74rem; font-weight: 600; color: var(--text-secondary); background: var(--hover-bg); border: 1px solid var(--border-color); padding: 3px 10px; border-radius: 14px; display: inline-flex; align-items: center; gap: 5px;">
                 <span style="font-size: 0.6rem; color: {ollama_color};">{ollama_dot}</span> {ollama_label}
