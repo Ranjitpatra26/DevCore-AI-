@@ -370,6 +370,25 @@ def show_specialist_modal(member: dict):
     """)
     
     # Action Buttons
+    st.html("""
+    <style>
+    /* Shift text to the middle strictly inside AI Specialist Inspect popup on AI Team page */
+    div[data-testid="stDialog"] div[data-testid="stExpander"] summary {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    div[data-testid="stDialog"] div[data-testid="stExpander"] summary > * {
+        text-align: center !important;
+        margin: 0 auto !important;
+    }
+    div[data-testid="stDialog"] div[data-testid="stExpander"] summary [data-testid="stExpanderToggleIcon"] {
+        display: none !important;
+    }
+    </style>
+    """)
     col_act1, col_act2 = st.columns(2)
     with col_act1:
         if st.button(f"💬 Consult & Chat with {name}", key=f"dlg_chat_{role_key}", use_container_width=True, type="primary"):
