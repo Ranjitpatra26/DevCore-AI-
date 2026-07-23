@@ -1,6 +1,7 @@
 """
 Groq API Quota & Rate Limit Modal Dialog Component for DevCore AI.
 Provides step-by-step instructions for getting a free Groq API key and an interactive form for all 4 Groq API keys.
+Guarantees 100% centered modal positioning, high-contrast text, and zero color visibility issues.
 """
 
 import os
@@ -18,16 +19,74 @@ def mask_api_key(key: str) -> str:
     return f"{k[:4]}••••••••{k[-4:]}"
 
 def render_groq_quota_modal_content():
-    """Render the step-by-step guide and 4-key update form."""
+    """Render the step-by-step guide and 4-key update form with high contrast CSS."""
     st.html("""
-    <div style="background: rgba(239, 68, 68, 0.12); border: 2.5px solid #EF4444; border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
-        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <span style="font-size: 2rem;">⚠️</span>
-            <div>
-                <h3 style="color: var(--text-color) !important; margin: 0 0 4px 0 !important; font-size: 1.25rem !important; font-weight: 800 !important; font-family: 'Space Grotesk', sans-serif;">Groq API Token / Rate Limit Exceeded</h3>
-                <p style="color: var(--text-secondary) !important; margin: 0 !important; font-size: 0.9rem !important;">
-                    Your active Groq Cloud API key reached its maximum token capacity or rate limit. Update your API keys below to resume instant generation.
-                </p>
+    <style>
+    /* Centering & Contrast Fixes for Dialog Pop-up Container */
+    div[data-testid="stDialog"] > div:first-child,
+    div[role="dialog"] {
+        background: var(--card-bg, #0F172A) !important;
+        border: 2.5px solid var(--primary-color, #6366F1) !important;
+        border-radius: 18px !important;
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75) !important;
+        max-width: 680px !important;
+        width: 92vw !important;
+        padding: 24px !important;
+        color: var(--text-color, #F8FAFC) !important;
+        margin: auto !important;
+    }
+
+    /* Force all text elements inside modal to have 100% crisp visible contrast */
+    .groq-modal-wrapper,
+    .groq-modal-wrapper h1,
+    .groq-modal-wrapper h2,
+    .groq-modal-wrapper h3,
+    .groq-modal-wrapper h4,
+    .groq-modal-wrapper p,
+    .groq-modal-wrapper span,
+    .groq-modal-wrapper li,
+    .groq-modal-wrapper strong,
+    .groq-modal-wrapper label {
+        color: var(--text-color, #F8FAFC) !important;
+        font-family: 'Space Grotesk', 'Inter', sans-serif !important;
+    }
+
+    /* Input Field High-Contrast Styling */
+    div[data-testid="stDialog"] input,
+    div[data-testid="stDialog"] select,
+    .groq-modal-wrapper input {
+        background: var(--bg-color, #1E293B) !important;
+        color: var(--text-color, #FFFFFF) !important;
+        border: 1.5px solid var(--border-color, #475569) !important;
+        border-radius: 8px !important;
+        font-size: 0.95rem !important;
+    }
+
+    div[data-testid="stDialog"] input::placeholder {
+        color: var(--text-secondary, #94A3B8) !important;
+        opacity: 0.85 !important;
+    }
+
+    /* Modal Callout Header */
+    .groq-quota-alert-banner {
+        background: rgba(239, 68, 68, 0.15) !important;
+        border: 2.5px solid #EF4444 !important;
+        border-radius: 14px !important;
+        padding: 16px 20px !important;
+        margin-bottom: 20px !important;
+    }
+    </style>
+
+    <div class="groq-modal-wrapper">
+        <div class="groq-quota-alert-banner">
+            <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+                <span style="font-size: 2.2rem;">⚠️</span>
+                <div style="flex: 1;">
+                    <h3 style="color: var(--text-color, #F8FAFC) !important; margin: 0 0 4px 0 !important; font-size: 1.25rem !important; font-weight: 800 !important;">Groq API Token / Rate Limit Reached</h3>
+                    <p style="color: var(--text-secondary, #CBD5E1) !important; margin: 0 !important; font-size: 0.9rem !important; line-height: 1.4;">
+                        Your active Groq Cloud API key reached its maximum token capacity or rate limit. Update your API keys below to resume instant AI generation.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -36,10 +95,11 @@ def render_groq_quota_modal_content():
     st.markdown("""
 ### 🔑 Step-by-Step Guide to Get a FREE Groq API Key:
 
-1. **Step 1:** Visit the official Groq Console: 👉 [**https://console.groq.com/keys**](https://console.groq.com/keys)
+1. **Step 1:** Visit official Groq Console: 👉 [**https://console.groq.com/keys**](https://console.groq.com/keys)
 2. **Step 2:** Sign in with Google, GitHub, or Email.
-3. **Step 3:** Click **"Create API Key"**, enter a label name, and copy your key (starts with `gsk_...`).
+3. **Step 3:** Click **"Create API Key"**, type a name label, and copy your key (starts with `gsk_...`).
 4. **Step 4:** Paste your new key in the form below and click **Save & Update All 4 Keys**.
+
 ---
 """)
 
@@ -65,7 +125,7 @@ def render_groq_quota_modal_content():
             "Blueprint API Key",
             value="",
             type="password",
-            placeholder=f"Active: ({mask_api_key(db_bp)}). Enter new key...",
+            placeholder=f"Active Key: ({mask_api_key(db_bp)}). Enter new key...",
             key="popup_bp_key_input",
             label_visibility="collapsed"
         )
@@ -76,7 +136,7 @@ def render_groq_quota_modal_content():
             "Studio API Key",
             value="",
             type="password",
-            placeholder=f"Active: ({mask_api_key(db_studio)}). Enter new key...",
+            placeholder=f"Active Key: ({mask_api_key(db_studio)}). Enter new key...",
             key="popup_studio_key_input",
             label_visibility="collapsed"
         )
@@ -87,7 +147,7 @@ def render_groq_quota_modal_content():
             "Chatbot API Key",
             value="",
             type="password",
-            placeholder=f"Active: ({mask_api_key(db_chatbot)}). Enter new key...",
+            placeholder=f"Active Key: ({mask_api_key(db_chatbot)}). Enter new key...",
             key="popup_chatbot_key_input",
             label_visibility="collapsed"
         )
@@ -98,7 +158,7 @@ def render_groq_quota_modal_content():
             "Consultation API Key",
             value="",
             type="password",
-            placeholder=f"Active: ({mask_api_key(db_consult)}). Enter new key...",
+            placeholder=f"Active Key: ({mask_api_key(db_consult)}). Enter new key...",
             key="popup_consult_key_input",
             label_visibility="collapsed"
         )
@@ -110,7 +170,15 @@ def render_groq_quota_modal_content():
             index=model_opts.index(db_model) if db_model in model_opts else 0
         )
 
-        submit_save = st.form_submit_button("💾 Save & Update All 4 API Keys", type="primary", use_container_width=True)
+        col_sub1, col_sub2 = st.columns([2, 1])
+        with col_sub1:
+            submit_save = st.form_submit_button("💾 Save & Update All 4 API Keys", type="primary", use_container_width=True)
+        with col_sub2:
+            cancel_btn = st.form_submit_button("✖ Close", type="secondary", use_container_width=True)
+
+    if cancel_btn:
+        st.session_state["show_groq_quota_modal"] = False
+        st.rerun()
 
     if submit_save:
         bp_new = bp_val.strip() or db_bp

@@ -1160,6 +1160,45 @@ div[data-baseweb="toast"] button svg {
     50% { opacity: 0.4; transform: scale(0.85); }
 }
 
+/* Modal Dialog Global Centering & Text Contrast Rules */
+div[data-testid="stDialog"],
+div[role="dialog"] {
+    background: var(--card-bg, #0F172A) !important;
+    border: 2.5px solid var(--primary-color, #6366F1) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75) !important;
+    max-width: 680px !important;
+    width: 92vw !important;
+    padding: 20px !important;
+    color: var(--text-color, #F8FAFC) !important;
+    margin: auto !important;
+}
+
+div[data-testid="stDialog"] h1,
+div[data-testid="stDialog"] h2,
+div[data-testid="stDialog"] h3,
+div[data-testid="stDialog"] h4,
+div[data-testid="stDialog"] p,
+div[data-testid="stDialog"] span,
+div[data-testid="stDialog"] li,
+div[data-testid="stDialog"] strong,
+div[data-testid="stDialog"] label {
+    color: var(--text-color, #F8FAFC) !important;
+    font-family: 'Space Grotesk', 'Inter', sans-serif !important;
+}
+
+div[data-testid="stDialog"] input {
+    background: var(--bg-color, #1E293B) !important;
+    color: var(--text-color, #FFFFFF) !important;
+    border: 1.5px solid var(--border-color, #475569) !important;
+    border-radius: 8px !important;
+}
+
+div[data-testid="stDialog"] input::placeholder {
+    color: var(--text-secondary, #94A3B8) !important;
+    opacity: 0.9 !important;
+}
+
 /* Comprehensive Mobile & Tablet Responsive Overrides (@media max-width: 991px)
    DESKTOP & LAPTOP UI LAYOUT IS 100% UNTOUCHED! */
 @media (max-width: 991px) {
