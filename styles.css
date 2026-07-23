@@ -971,20 +971,50 @@ div[data-json-tree="true"] span[class*="string"] {
     color: #FACC15 !important; /* Bright Yellow */
 }
 
-/* Modal header bar & close icon */
+/* Modal header bar & close icon positioning (no border clashing) */
 div[data-baseweb="modal"] header,
 div[data-testid="stDialog"] header {
-    background-color: var(--card-bg) !important;
+    background-color: transparent !important;
     color: var(--text-color) !important;
-    border-bottom: 2px solid var(--border-color) !important;
+    border-bottom: 1.5px solid var(--border-color) !important;
+    padding: 16px 20px !important;
+    position: relative !important;
 }
 
 div[data-baseweb="modal"] button[aria-label="Close"],
-div[data-testid="stDialog"] button[aria-label="Close"],
-div[data-baseweb="modal"] button[aria-label="Close"] svg,
-div[data-testid="stDialog"] button[aria-label="Close"] svg {
+div[data-testid="stDialog"] button[aria-label="Close"] {
+    position: absolute !important;
+    top: 12px !important;
+    right: 16px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1.5px solid var(--border-color) !important;
+    border-radius: 50% !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     color: var(--text-color) !important;
     fill: var(--text-color) !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    z-index: 99999 !important;
+}
+
+div[data-baseweb="modal"] button[aria-label="Close"]:hover,
+div[data-testid="stDialog"] button[aria-label="Close"]:hover {
+    background: #EF4444 !important;
+    color: #FFFFFF !important;
+    border-color: #EF4444 !important;
+    transform: scale(1.1) !important;
+}
+
+div[data-baseweb="modal"] button[aria-label="Close"] svg,
+div[data-testid="stDialog"] button[aria-label="Close"] svg {
+    color: inherit !important;
+    fill: currentColor !important;
+    width: 16px !important;
+    height: 16px !important;
 }
 
 /* Responsive details */

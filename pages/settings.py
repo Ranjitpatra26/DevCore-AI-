@@ -256,6 +256,7 @@ curl http://localhost:11434/api/tags
                 )
 
                 st.divider()
+                st.info("💡 **Automatic Token Quota & Rate Limit Protection**: IF any Groq Cloud API key reaches its token capacity, daily quota, or rate limit (HTTP 429), DevCore AI automatically triggers a Warning Pop-up Modal to update your API keys for instant zero-downtime key rotation.")
                 st.subheader("🔑 4 Dedicated Groq API Keys (Cloud Mode & Fallback)")
 
                 # 1. 13-Node Blueprint Generation Groq API Key Input
