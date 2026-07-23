@@ -1327,6 +1327,7 @@ div[data-testid="stDialog"] input::placeholder {
 
     /* 4. Floating Chatbot Trigger Circular FAB (Bottom Right Above Theme Switcher) */
     .st-key-devcore_chatbot_popover,
+    .st-key-devcore_chatbot_popover button,
     .st-key-devcore_chatbot_popover > button,
     div.stPopover:has(.st-key-devcore_chatbot_popover) > button,
     div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover) > button {
@@ -1342,6 +1343,8 @@ div[data-testid="stDialog"] input::placeholder {
         min-height: 50px !important;
         max-height: 50px !important;
         aspect-ratio: 1 / 1 !important;
+        flex-shrink: 0 !important;
+        flex-grow: 0 !important;
         border-radius: 50% !important;
         -webkit-border-radius: 50% !important;
         border: 3px solid var(--border-color) !important;
@@ -1350,11 +1353,6 @@ div[data-testid="stDialog"] input::placeholder {
         margin: 0 !important;
         padding: 0 !important;
         z-index: 999999 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        box-sizing: border-box !important;
-        overflow: hidden !important;
     }
 
     /* 5. Mobile Typography & Header Scaling */
