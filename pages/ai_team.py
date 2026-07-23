@@ -303,34 +303,6 @@ def show_specialist_modal(member: dict):
     icon = member["icon"]
     step = member["step"]
     
-    st.html("""
-    <style>
-    /* Widen AI Specialist Operational Dossier Modal popup toward left & right on AI Team page */
-    div[data-testid="stDialog"] > div:first-child,
-    div[role="dialog"] {
-        max-width: 1150px !important;
-        width: 94vw !important;
-    }
-
-    /* Ensure stExpander inside stDialog renders clean native > / v chevron arrow toggle on the left */
-    div[data-testid="stDialog"] div[data-testid="stExpander"] summary {
-        display: flex !important;
-        align-items: center !important;
-        gap: 10px !important;
-        cursor: pointer !important;
-    }
-
-    div[data-testid="stDialog"] div[data-testid="stExpander"] summary [data-testid="stExpanderToggleIcon"] {
-        display: inline-flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        font-size: 1rem !important;
-        width: auto !important;
-        height: auto !important;
-        color: var(--text-color, #1E293B) !important;
-    }
-    </style>
-    """)
     st.html(f"""
     <div style="background-color: var(--hover-bg); border: 3.5px solid var(--border-color); border-radius: 14px; padding: 18px 22px; margin-bottom: 24px;">
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap;">

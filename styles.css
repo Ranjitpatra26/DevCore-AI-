@@ -1231,29 +1231,12 @@ div[data-testid="stDialog"] h2,
 div[data-testid="stDialog"] h3,
 div[data-testid="stDialog"] h4,
 div[data-testid="stDialog"] p,
-div[data-testid="stDialog"] span:not([data-testid="stExpanderToggleIcon"]):not([class*="icon"]),
+div[data-testid="stDialog"] span,
 div[data-testid="stDialog"] li,
 div[data-testid="stDialog"] strong,
 div[data-testid="stDialog"] label {
     color: var(--text-color, #F8FAFC) !important;
     font-family: 'Space Grotesk', 'Inter', sans-serif !important;
-}
-
-/* Ensure stExpander inside stDialog renders clean native > / v chevron arrow toggle on the left */
-div[data-testid="stDialog"] div[data-testid="stExpander"] summary {
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-}
-
-div[data-testid="stDialog"] div[data-testid="stExpander"] summary [data-testid="stExpanderToggleIcon"],
-div[data-testid="stDialog"] div[data-testid="stExpander"] summary svg {
-    display: inline-flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    font-size: 1rem !important;
-    width: auto !important;
-    height: auto !important;
 }
 
 div[data-testid="stDialog"] input {
