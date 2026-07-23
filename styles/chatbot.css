@@ -20,8 +20,28 @@ div.stPopover:has(.st-key-devcore_chatbot_popover) {
     overflow: visible !important;
 }
 
-/* Precise Streamlit popover button fixed at bottom: 145px, right: 20px */
+/* Precise Streamlit popover button container fixed at bottom: 145px, right: 20px */
 .st-key-devcore_chatbot_popover,
+div.stPopover:has(.st-key-devcore_chatbot_popover),
+div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover) {
+    position: fixed !important;
+    bottom: 145px !important;
+    right: 20px !important;
+    left: auto !important;
+    top: auto !important;
+    margin: 0 !important;
+    z-index: 999999 !important;
+    width: 58px !important;
+    height: 58px !important;
+    border: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+/* Apply visual border, background, and shadow strictly to the button only */
+.st-key-devcore_chatbot_popover button,
 .st-key-devcore_chatbot_popover > button,
 div.stPopover:has(.st-key-devcore_chatbot_popover) > button,
 div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover) > button {
@@ -57,7 +77,7 @@ div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover) > button {
 }
 
 /* Eliminate dark background rectangle overlay on popover button in both Light & Dark themes */
-.st-key-devcore_chatbot_popover *,
+.st-key-devcore_chatbot_popover button *,
 div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover) button *,
 div.stPopover:has(.st-key-devcore_chatbot_popover) > button * {
     background: transparent !important;
@@ -262,6 +282,10 @@ div[data-testid="stPopoverBody"] input::placeholder {
         z-index: 999999 !important;
         box-sizing: border-box !important;
         overflow: visible !important;
+        border: none !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
     }
 
     .st-key-devcore_chatbot_popover button,
