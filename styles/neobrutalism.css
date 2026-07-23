@@ -99,6 +99,32 @@ div[data-testid="stTextInput"] input:focus, div[data-testid="stTextArea"] textar
     outline: none !important;
 }
 
+/* Fix password eye button & selectbox arrow dark background box in Neobrutalism theme */
+div[data-baseweb="input"],
+div[data-baseweb="input"] > div,
+div[data-baseweb="input"] button,
+button[aria-label*="visibility" i],
+button[title*="visibility" i],
+div[data-baseweb="select"],
+div[data-baseweb="select"] > div,
+div[data-baseweb="select"] [data-baseweb="icon"] {
+    background-color: var(--card-bg) !important;
+    background: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+    fill: var(--text-color) !important;
+}
+
+div[data-baseweb="input"] button svg,
+div[data-baseweb="input"] button *,
+button[aria-label*="visibility" i] svg,
+div[data-baseweb="select"] svg,
+div[data-baseweb="select"] path {
+    background-color: transparent !important;
+    fill: var(--text-color) !important;
+    color: var(--text-color) !important;
+}
+
 /* Select Box & Dropdowns - Enforced Theme Styling for Light & Dark */
 div[data-testid="stSelectbox"] > div,
 div[data-testid="stMultiSelect"] > div {
