@@ -83,6 +83,17 @@ def run_agent(project_id: str, agent_role: str, state: Dict[str, Any]) -> str:
     """Execute a single agent's node in the planning pipeline and store results in SQLite."""
     start_time = time.time()
     
+    # 0. Reuse existing blueprint output from database if already generated (saves API calls)
+    try:
+        existing = execute_query(
+            "SELECT output_markdown FROM agent_runs WHERE project_id = ? AND agent_role = ? AND output_markdown IS NOT NULL AND length(output_markdown) > 50",
+            (project_id, agent_role)
+        )
+        if existing and existing[0].get('output_markdown'):
+            return existing[0]['output_markdown']
+    except Exception:
+        pass
+
     # 1. Retrieve system prompt for the role
     system_prompt = SYSTEM_PROMPTS.get(agent_role.lower(), "You are a helpful software engineer.")
     

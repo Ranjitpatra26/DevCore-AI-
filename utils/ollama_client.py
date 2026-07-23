@@ -87,11 +87,17 @@ def query_groq_api_fallback(
         if g_rows:
             key_map = {r['key']: r['value'] for r in g_rows if r.get('value')}
             if is_consultation:
-                groq_k = key_map.get("groq_api_key_consultation") or key_map.get("groq_api_key_chatbot") or key_map.get("groq_api_key_blueprint") or key_map.get("groq_api_key_studio")
+                groq_k = key_map.get("groq_api_key_consultation") or key_map.get("groq_api_key_chatbot") or key_map.get("groq_api_key")
+            elif "studio" in str(agent_role).lower() or "implementation" in str(agent_role).lower():
+                groq_k = key_map.get("groq_api_key_studio") or key_map.get("groq_api_key_blueprint") or key_map.get("groq_api_key")
             else:
                 groq_k = key_map.get("groq_api_key_blueprint") or key_map.get("groq_api_key_studio") or key_map.get("groq_api_key")
+
         if not groq_k:
-            groq_k = os.getenv("GROQ_API_KEY_BLUEPRINT") or os.getenv("GROQ_API_KEY_STUDIO") or os.getenv("GROQ_API_KEY_CONSULTATION") or os.getenv("GROQ_API_KEY") or ""
+            if is_consultation:
+                groq_k = os.getenv("GROQ_API_KEY_CONSULTATION") or os.getenv("GROQ_API_KEY_CHATBOT") or os.getenv("GROQ_API_KEY") or ""
+            else:
+                groq_k = os.getenv("GROQ_API_KEY_BLUEPRINT") or os.getenv("GROQ_API_KEY_STUDIO") or os.getenv("GROQ_API_KEY") or ""
 
         if groq_k:
             groq_m_rows = execute_query("SELECT value FROM settings WHERE key = 'groq_model'")
