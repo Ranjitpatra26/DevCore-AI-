@@ -1243,7 +1243,9 @@ div[data-testid="stDialog"] label {
 div[data-testid="stDialog"] [data-testid="stExpanderToggleIcon"],
 div[data-testid="stExpander"] [data-testid="stExpanderToggleIcon"],
 div[data-testid="stExpander"] summary [data-baseweb="icon"],
-div[data-testid="stExpander"] summary svg + span {
+div[data-testid="stExpander"] summary svg + span,
+div[data-testid="stExpander"] details summary > span:nth-child(n+2),
+div[data-testid="stExpander"] details summary > div:nth-child(n+2) {
     display: none !important;
     visibility: hidden !important;
     font-size: 0 !important;

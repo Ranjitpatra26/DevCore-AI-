@@ -315,7 +315,9 @@ def show_specialist_modal(member: dict):
     /* Completely eliminate arrow_right / arrow_down text in stExpander summary */
     div[data-testid="stExpander"] details summary [data-testid="stExpanderToggleIcon"],
     div[data-testid="stExpander"] details summary [data-baseweb="icon"],
-    div[data-testid="stExpander"] details summary svg + span {
+    div[data-testid="stExpander"] details summary svg + span,
+    div[data-testid="stExpander"] details summary > span:nth-child(n+2),
+    div[data-testid="stExpander"] details summary > div:nth-child(n+2) {
         font-size: 0 !important;
         color: transparent !important;
         display: none !important;
