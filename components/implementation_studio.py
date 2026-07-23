@@ -331,22 +331,108 @@ CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 """
     elif cat_key == "frontend":
         bp_code = get_run_text("frontend") or get_run_text("ui_ux")
-        if bp_code and "```" in bp_code:
+        if bp_code and "```" in bp_code and ("class " in bp_code or "def " in bp_code or "import " in bp_code or "function " in bp_code or "const " in bp_code):
             return bp_code
-        return f"""# UI Component Architecture for '{proj_name}'
+        return f"""# UI Component Architecture & Production Source Code for '{proj_name}'
+
+```text
+# File: docs/file_structure_architecture.txt
+frontend/
+├── pages/
+│   ├── dashboard.py     # Main operational metrics & project list
+│   ├── new_project.py   # Spatial project initialization studio
+│   ├── projects.py      # Workspace explorer & diagram renderer
+│   ├── ai_team.py       # 13 Senior Agent profile studio
+│   ├── chat.py          # Real-time multi-agent consultation chat
+│   └── settings.py      # System preferences & Ollama configuration
+└── components/
+    ├── ui.py            # Reusable SaaS cards, metrics & badges
+    ├── navigation.py    # Top navigation header & theme switcher
+    ├── implementation.py # Source code synthesis studio
+    └── styles.css       # Central design system CSS tokens & rules
+```
 
 ```python
-# File: components/dashboard_view.py
+# File: pages/projects.py
+import streamlit as st
+from database.connection import execute_query
+
+def show_projects():
+    """Workspace Explorer & Architecture Renderer for {proj_name}."""
+    st.title("🚀 Workspace Explorer - {proj_name}")
+    st.caption("Industry Domain: {proj_ind} | Tech Stack: {proj_tech}")
+    
+    projects = execute_query("SELECT id, name, description, created_at FROM projects ORDER BY created_at DESC")
+    
+    if not projects:
+        st.info("No active projects found in SQLite database.")
+        return
+        
+    st.subheader(f"Saved Workspaces ({{len(projects)}})")
+    for proj in projects:
+        with st.expander(f"📁 {{proj['name']}}", expanded=True):
+            st.write(proj['description'])
+            st.caption(f"Initialized on {{proj['created_at']}}")
+
+if __name__ == "__main__":
+    show_projects()
+```
+
+```python
+# File: pages/dashboard.py
 import streamlit as st
 
-def render_project_header(title: str, subtitle: str):
-    st.markdown(f"# 🚀 {{title}}")
-    st.caption(subtitle)
-    st.divider()
+def show_dashboard():
+    """Operational Metrics & System Diagnostics Dashboard for {proj_name}."""
+    st.markdown("## 📊 System Diagnostics: {proj_name}")
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric(label="Active AI Workforce", value="13 Agents", delta="100% Online")
+    with col2:
+        st.metric(label="Inference Latency", value="42ms", delta="GPU Accelerated")
+    with col3:
+        st.metric(label="Vector Knowledge Store", value="384 Dim", delta="SQLite / Chroma")
 
-def show_component():
-    render_project_header("{proj_name}", "Production Workspace ({proj_ind})")
-    st.success("Component loaded and synchronized with backend API services.")
+    st.success("Synchronized with {proj_tech} Backend Services.")
+
+if __name__ == "__main__":
+    show_dashboard()
+```
+
+```python
+# File: components/ui.py
+import streamlit as st
+
+def saas_card(title: str, content: str, badge_text: str = "Active", status: str = "success"):
+    """Reusable SaaS Card UI Component for {proj_name}."""
+    st.html(f'''
+    <div style="background: #0F172A; border: 1.5px solid #334155; border-radius: 12px; padding: 18px; margin-bottom: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <h4 style="margin: 0; color: #F8FAFC;">{{title}}</h4>
+            <span style="background: rgba(16, 185, 129, 0.2); color: #34D399; font-weight: 700; border: 1px solid #10B981; padding: 2px 10px; border-radius: 12px; font-size: 0.78rem;">{{badge_text}}</span>
+        </div>
+        <p style="margin: 0; color: #94A3B8; font-size: 0.9rem;">{{content}}</p>
+    </div>
+    ''')
+```
+
+```css
+/* File: styles.css */
+/* Central Design Tokens for {proj_name} */
+:root {{
+    --primary-color: #6366F1;
+    --card-bg: #0F172A;
+    --text-color: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --border-color: #334155;
+}}
+
+body {{
+    background-color: #020617;
+    color: var(--text-color);
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+}}
 ```
 """
     elif cat_key == "devops":
@@ -1170,6 +1256,68 @@ def render_implementation_studio(
                     mime="text/markdown",
                     use_container_width=True
                 )
+
+            # Interactive Single-File Code Generator Toolbar
+            st.html("""
+            <div style="background: rgba(99, 102, 241, 0.12); border: 2.5px solid #6366F1; border-radius: 12px; padding: 16px 20px; margin-top: 14px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <strong style="color: var(--text-color); font-size: 1.05rem; font-weight: 800;">⚡ Single-File Source Code Generator:</strong>
+                        <div style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 2px;">
+                            Select any file from your project structure to generate its full, complete, production-grade source code.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            """)
+
+            cat_file_presets = {
+                "frontend": ["pages/projects.py", "pages/dashboard.py", "pages/new_project.py", "pages/ai_team.py", "pages/chat.py", "pages/settings.py", "components/ui.py", "components/navigation.py", "styles.css"],
+                "backend": ["app/main.py", "app/config.py", "routers/auth_router.py", "services/app_service.py", "repository/db_repository.py", "schemas/domain_schemas.py"],
+                "database": ["database/schema.sql", "database/connection.py", "database/migrations.sql"],
+                "devops": ["Dockerfile", "docker-compose.yml", ".dockerignore", "k8s/deployment.yaml"],
+                "testing": ["tests/test_main.py", "tests/test_api.py", "tests/conftest.py"],
+                "documentation": ["README.md", "docs/API_SPEC.md", "docs/ARCHITECTURE.md"],
+                "architecture": ["docs/file_structure_architecture.txt", "docs/SYSTEM_TOPOLOGY.md"],
+                "ai_rag": ["rag/vector_store.py", "rag/document_loader.py", "rag/embeddings.py"]
+            }
+
+            available_files = cat_file_presets.get(current_cat_key, ["main.py", "config.py", "schema.sql", "Dockerfile", "README.md"])
+
+            sf_col1, sf_col2 = st.columns([2.5, 1.3])
+            with sf_col1:
+                selected_single_file = st.selectbox(
+                    "Select Target File to Synthesize Code:",
+                    options=available_files,
+                    key=f"sf_select_{output_key}_{active_id}",
+                    label_visibility="collapsed"
+                )
+            with sf_col2:
+                if st.button(f"⚡ Generate Code for {selected_single_file.split('/')[-1]}", key=f"sf_btn_{output_key}_{active_id}", type="primary", use_container_width=True):
+                    with st.spinner(f"⚡ Generating full production code for {selected_single_file}..."):
+                        try:
+                            from utils.implementation_engine import execute_implementation_module
+                            sf_res = execute_implementation_module(
+                                project_id=active_id,
+                                active_mode=active_mode,
+                                cat_data=cat_data,
+                                active_module_name=f"Source Code for File {selected_single_file}",
+                                user_input=f"Generate the full, complete, production-grade, un-truncated working source code for file '{selected_single_file}' in project '{proj_name}' ({proj_ind}) using tech stack '{proj_tech}'. Include comments, imports, and complete functions.",
+                                project_details=proj_details,
+                                runs_map=runs_map
+                            )
+                            sf_guidance = sf_res.get("guidance_text", "")
+                            if sf_guidance:
+                                updated_text = guidance_text + "\n\n" + sf_guidance
+                                if out_state_key not in st.session_state:
+                                    st.session_state[out_state_key] = {}
+                                st.session_state[out_state_key][output_key] = updated_text
+                                st.toast(f"🎉 Code generated for {selected_single_file}!")
+                                st.rerun()
+                        except Exception as sf_err:
+                            st.error(f"Error generating code for {selected_single_file}: {sf_err}")
+
+            st.html("<div style='margin-top: 14px;'></div>")
 
             # Production Code Viewer (IDE Blocks)
             if parsed_files:
