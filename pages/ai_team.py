@@ -308,8 +308,8 @@ def show_specialist_modal(member: dict):
     /* Widen AI Specialist Operational Dossier Modal popup toward left & right on AI Team page */
     div[data-testid="stDialog"] > div:first-child,
     div[role="dialog"] {
-        max-width: 840px !important;
-        width: 88vw !important;
+        max-width: 980px !important;
+        width: 92vw !important;
     }
     </style>
     """)
