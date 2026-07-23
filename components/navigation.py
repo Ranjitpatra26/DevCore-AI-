@@ -46,10 +46,10 @@ def render_navigation():
 
     # Floating Bottom-Right Theme Switcher Control
     current_theme = st.session_state.get("theme", "light")
-    theme_label = "🌙" if current_theme == "light" else "☀️"
+    theme_label = "🌙" if str(current_theme).lower() == "light" else "☀️"
     
     if st.button(theme_label, key="floating_theme_toggle_btn"):
-        new_theme = toggle_theme_db()
+        new_theme = toggle_theme_db(current_theme)
         st.session_state.theme = new_theme
         from styles import inject_design_system_css
         inject_design_system_css(new_theme)

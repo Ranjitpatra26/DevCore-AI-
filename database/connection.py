@@ -33,10 +33,14 @@ def get_current_theme() -> str:
     except Exception:
         return 'light'
 
-def toggle_theme_db() -> str:
+def toggle_theme_db(current_theme: Optional[str] = None) -> str:
     """Toggle the theme from light to dark or vice versa in settings database and return the new value."""
-    current = get_current_theme()
-    new_theme = 'dark' if current == 'light' else 'light'
-    execute_update("UPDATE settings SET value = ? WHERE key = 'theme'", (new_theme,))
+    if not current_theme:
+        current_theme = get_current_theme()
+    new_theme = 'light' if str(current_theme).lower() == 'dark' else 'dark'
+    try:
+        execute_update("UPDATE settings SET value = ? WHERE key = 'theme'", (new_theme,))
+    except Exception:
+        pass
     return new_theme
 

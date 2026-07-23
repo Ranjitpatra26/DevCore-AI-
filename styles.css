@@ -573,7 +573,7 @@ div[data-testid="stFileUploader"] button[data-testid="stBaseButton-secondary"]:h
 .st-key-floating_theme_toggle_btn button,
 div.stButton > button.st-key-floating_theme_toggle_btn {
     position: fixed !important;
-    bottom: 24px !important;
+    bottom: 80px !important;
     right: 24px !important;
     z-index: 999999 !important;
     width: 56px !important;
