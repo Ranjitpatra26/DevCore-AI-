@@ -1325,7 +1325,7 @@ div[data-testid="stDialog"] input::placeholder {
     div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover),
     .st-key-devcore_chatbot_popover {
         position: fixed !important;
-        bottom: 135px !important;
+        bottom: 145px !important;
         right: 16px !important;
         left: auto !important;
         top: auto !important;
@@ -1352,7 +1352,7 @@ div[data-testid="stDialog"] input::placeholder {
     div.stPopover:has(.st-key-devcore_chatbot_popover) > button,
     div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover) > button {
         position: fixed !important;
-        bottom: 135px !important;
+        bottom: 145px !important;
         right: 16px !important;
         left: auto !important;
         top: auto !important;

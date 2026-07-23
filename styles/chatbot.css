@@ -238,7 +238,7 @@ div[data-testid="stPopoverBody"] input::placeholder {
     div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover),
     .st-key-devcore_chatbot_popover {
         position: fixed !important;
-        bottom: 135px !important;
+        bottom: 145px !important;
         right: 16px !important;
         left: auto !important;
         top: auto !important;
@@ -265,7 +265,7 @@ div[data-testid="stPopoverBody"] input::placeholder {
     div.stPopover:has(.st-key-devcore_chatbot_popover) > button,
     div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover) > button {
         position: fixed !important;
-        bottom: 135px !important;
+        bottom: 145px !important;
         right: 16px !important;
         left: auto !important;
         top: auto !important;
@@ -294,17 +294,16 @@ div[data-testid="stPopoverBody"] input::placeholder {
         overflow: hidden !important;
     }
 
-    .st-key-devcore_chatbot_popover button p,
-    .st-key-devcore_chatbot_popover button span,
-    div.stPopover:has(.st-key-devcore_chatbot_popover) button p,
-    div.stPopover:has(.st-key-devcore_chatbot_popover) button span {
-        font-size: 1.8rem !important;
+    .st-key-devcore_chatbot_popover button *,
+    div.stPopover:has(.st-key-devcore_chatbot_popover) button * {
+        font-size: 1.6rem !important;
         line-height: 1 !important;
         margin: 0 !important;
         padding: 0 !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+        text-align: center !important;
         width: 100% !important;
         height: 100% !important;
     }
