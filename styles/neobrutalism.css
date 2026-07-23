@@ -375,7 +375,7 @@ div[data-testid="stElementContainer"]:has(.st-key-floating_theme_toggle_btn) but
     aspect-ratio: 1 / 1 !important;
     padding: 0 !important;
     position: fixed !important;
-    bottom: 24px !important;
+    bottom: 80px !important;
     right: 24px !important;
     z-index: 999999 !important;
     box-shadow: 4px 4px 0px 0px var(--border-color) !important;

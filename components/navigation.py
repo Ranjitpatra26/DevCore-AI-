@@ -45,12 +45,14 @@ def render_navigation():
                 st.rerun()
 
     # Floating Bottom-Right Theme Switcher Control
-    current_theme = st.session_state.theme
+    current_theme = st.session_state.get("theme", "light")
     theme_label = "🌙" if current_theme == "light" else "☀️"
     
     if st.button(theme_label, key="floating_theme_toggle_btn"):
         new_theme = toggle_theme_db()
         st.session_state.theme = new_theme
+        from styles import inject_design_system_css
+        inject_design_system_css(new_theme)
         st.rerun()
 
     st.html("<div class='saas-divider'></div>")
