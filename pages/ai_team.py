@@ -370,6 +370,24 @@ def show_specialist_modal(member: dict):
     """)
     
     # Action Buttons
+    st.html("""
+    <style>
+    /* Fix stExpander arrow icon text overflow in Specialist Inspect Dialog */
+    div[data-testid="stExpander"] summary {
+        font-size: 0.9rem !important;
+        font-weight: 700 !important;
+        white-space: nowrap !important;
+    }
+    div[data-testid="stExpander"] summary p,
+    div[data-testid="stExpander"] summary span {
+        white-space: nowrap !important;
+    }
+    div[data-testid="stExpander"] summary [data-testid="stExpanderToggleIcon"],
+    div[data-testid="stExpander"] summary svg {
+        font-family: 'Material Symbols Rounded', 'StreamlitIcons', sans-serif !important;
+    }
+    </style>
+    """)
     col_act1, col_act2 = st.columns(2)
     with col_act1:
         if st.button(f"💬 Consult & Chat with {name}", key=f"dlg_chat_{role_key}", use_container_width=True, type="primary"):
@@ -378,7 +396,7 @@ def show_specialist_modal(member: dict):
             st.rerun()
             
     with col_act2:
-        with st.expander(f"📜 Inspect Raw System Prompt ({name})"):
+        with st.expander("📜 Inspect System Prompt"):
             raw_prompt = SYSTEM_PROMPTS.get(role_key, "No prompt found.")
             safe_prompt = raw_prompt.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
             
