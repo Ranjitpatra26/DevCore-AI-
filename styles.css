@@ -240,65 +240,48 @@ div[data-testid="stMarkdownContainer"] p {
     margin-bottom: 8px;
 }
 
-/* Form Controls (Inputs, Selectboxes, Textareas) */
-div[data-testid="stTextInput"] input, 
-div[data-testid="stTextArea"] textarea,
+/* Form Controls (Inputs, Selectboxes, Textareas) - Unified Outer Container Styling */
+div[data-testid="stTextInput"] > div,
+div[data-testid="stTextArea"] > div,
 div[data-testid="stSelectbox"] > div,
-div[data-testid="stMultiSelect"] > div {
+div[data-baseweb="input"],
+div[data-baseweb="select"] {
     background-color: var(--card-bg) !important;
+    background: var(--card-bg) !important;
     border: 3.5px solid var(--border-color) !important;
     border-radius: 10px !important;
-    color: var(--text-color) !important;
-    font-weight: 700 !important;
-    padding: 12px 14px !important;
     box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    color: var(--text-color) !important;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Force dropdown inner containers & text to match active theme card-bg & text-color */
-[data-baseweb="select"],
-[data-baseweb="select"] *,
-[data-baseweb="select"] > div,
-[data-baseweb="select"] > div > div,
-[data-baseweb="select"] div,
-[data-testid="stSelectbox"] [data-baseweb="select"],
-[data-testid="stSelectbox"] [data-baseweb="select"] *,
-[data-testid="stMultiSelect"] [data-baseweb="select"],
-[data-testid="stMultiSelect"] [data-baseweb="select"] * {
-    background-color: var(--card-bg) !important;
+div[data-testid="stTextInput"] input,
+div[data-testid="stTextArea"] textarea {
+    background-color: transparent !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
     color: var(--text-color) !important;
     font-weight: 700 !important;
+    padding: 12px 14px !important;
 }
 
 div[data-testid="stTextInput"] input:focus, 
 div[data-testid="stTextArea"] textarea:focus,
 div[data-testid="stSelectbox"] > div:focus-within {
-    transform: translate(-2px, -2px) !important;
-    box-shadow: 6px 6px 0px 0px var(--primary-color) !important;
     outline: none !important;
     border-color: var(--primary-color) !important;
 }
 
 /* Caret / Dropdown Arrow & Password Eye Visibility Button Icon Fix */
-div[data-baseweb="input"],
-div[data-baseweb="input"] > div,
-div[data-baseweb="select"],
-div[data-baseweb="select"] > div {
-    background-color: var(--card-bg) !important;
-    background: var(--card-bg) !important;
-    color: var(--text-color) !important;
-    border-color: var(--border-color) !important;
-}
-
-div[data-baseweb="input"] button,
-div[data-baseweb="input"] [data-baseweb="button"],
-div[data-baseweb="input"] > div:last-child,
+div[data-testid="stTextInput"] button,
+div[data-testid="stTextInput"] [data-baseweb="button"],
+div[data-testid="stTextInput"] [data-baseweb="input"] > div,
+div[data-testid="stTextInput"] [data-baseweb="input"] > div:last-child,
+div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+div[data-testid="stSelectbox"] [data-baseweb="select"] [data-baseweb="icon"],
 button[aria-label*="password" i],
-button[aria-label*="visibility" i],
-button[title*="password" i],
-button[title*="visibility" i],
-div[data-baseweb="select"] > div:last-child,
-div[data-baseweb="select"] [data-baseweb="icon"] {
+button[aria-label*="visibility" i] {
     background: transparent !important;
     background-color: transparent !important;
     border: none !important;
@@ -306,13 +289,11 @@ div[data-baseweb="select"] [data-baseweb="icon"] {
     outline: none !important;
 }
 
-[data-baseweb="select"] svg,
-[data-baseweb="select"] svg *,
-[data-baseweb="select"] path,
-div[data-baseweb="input"] button svg,
-div[data-baseweb="input"] button svg *,
-div[data-baseweb="input"] svg,
-div[data-baseweb="input"] path,
+div[data-testid="stTextInput"] svg,
+div[data-testid="stTextInput"] svg path,
+div[data-testid="stTextInput"] svg *,
+div[data-testid="stSelectbox"] svg,
+div[data-testid="stSelectbox"] svg path,
 button[aria-label*="password" i] svg,
 button[aria-label*="visibility" i] svg {
     background-color: transparent !important;
@@ -320,6 +301,7 @@ button[aria-label*="visibility" i] svg {
     color: var(--text-color, #1E293B) !important;
     stroke: var(--text-color, #1E293B) !important;
     opacity: 1 !important;
+    visibility: visible !important;
 }
 
 
