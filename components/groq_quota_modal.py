@@ -58,9 +58,12 @@ def render_groq_quota_modal_content():
     }
 
     /* Password Eye Visibility Button & Dropdown Arrow Transparent Fix */
-    div[data-baseweb="input"] > div:last-child,
     div[data-baseweb="input"] button,
+    div[data-baseweb="input"] [data-baseweb="button"],
+    div[data-baseweb="input"] > div:last-child,
+    button[aria-label*="password" i],
     button[aria-label*="visibility" i],
+    button[title*="password" i],
     button[title*="visibility" i],
     div[data-baseweb="select"] > div:last-child,
     div[data-baseweb="select"] [data-baseweb="icon"] {
@@ -68,14 +71,22 @@ def render_groq_quota_modal_content():
         background-color: transparent !important;
         border: none !important;
         box-shadow: none !important;
+        outline: none !important;
     }
 
     div[data-baseweb="input"] button svg,
-    div[data-baseweb="input"] button *,
+    div[data-baseweb="input"] button svg *,
+    div[data-baseweb="input"] svg,
+    div[data-baseweb="input"] path,
+    button[aria-label*="password" i] svg,
     button[aria-label*="visibility" i] svg,
-    div[data-baseweb="select"] svg {
-        fill: var(--text-color) !important;
-        color: var(--text-color) !important;
+    div[data-baseweb="select"] svg,
+    div[data-baseweb="select"] path {
+        background-color: transparent !important;
+        fill: var(--text-color, #1E293B) !important;
+        color: var(--text-color, #1E293B) !important;
+        stroke: var(--text-color, #1E293B) !important;
+        opacity: 1 !important;
     }
 
     /* Modal Callout Header */
