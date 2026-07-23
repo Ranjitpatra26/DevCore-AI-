@@ -172,8 +172,8 @@ def render_chat_window_content():
                         st.session_state.devcore_chat_messages.pop()
                         st.rerun()
 
-    # 6. Terminal Scrollable Chat Messages Container (Height: 210)
-    msg_container = st.container(height=210)
+    # 6. Terminal Scrollable Chat Messages Container (Height: 165 for top clearance)
+    msg_container = st.container(height=165)
     with msg_container:
         render_chat_messages(st.session_state.devcore_chat_messages)
 

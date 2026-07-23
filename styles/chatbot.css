@@ -130,7 +130,7 @@ div[data-testid="stPopoverBody"]:has(.st-key-devcore_popover_model_selector) {
     box-shadow: 0 25px 65px rgba(0, 0, 0, 0.95), 0 0 35px rgba(99, 102, 241, 0.35) !important;
     width: 550px !important;
     max-width: calc(100vw - 32px) !important;
-    max-height: calc(100vh - 180px) !important;
+    max-height: calc(100vh - 250px) !important;
     margin-bottom: 20px !important;
     margin-right: 15px !important;
     padding: 16px !important;
