@@ -370,32 +370,6 @@ def show_specialist_modal(member: dict):
     """)
     
     # Action Buttons
-    st.html("""
-    <style>
-    /* Make AI Specialist Inspect modal pop a little bit bigger strictly on AI Team page */
-    div[data-testid="stDialog"] > div:first-child,
-    div[role="dialog"] {
-        max-width: 840px !important;
-        width: 88vw !important;
-    }
-    /* Fix stExpander arrow icon text overflow in Specialist Inspect Dialog */
-    div[data-testid="stExpander"] summary {
-        font-size: 0.88rem !important;
-        font-weight: 700 !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-    }
-    div[data-testid="stExpander"] summary p,
-    div[data-testid="stExpander"] summary span {
-        white-space: nowrap !important;
-    }
-    div[data-testid="stExpander"] summary [data-testid="stExpanderToggleIcon"],
-    div[data-testid="stExpander"] summary svg {
-        font-family: 'Material Symbols Rounded', 'StreamlitIcons', sans-serif !important;
-    }
-    </style>
-    """)
     col_act1, col_act2 = st.columns(2)
     with col_act1:
         if st.button(f"💬 Consult & Chat with {name}", key=f"dlg_chat_{role_key}", use_container_width=True, type="primary"):
