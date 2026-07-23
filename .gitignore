@@ -11,6 +11,7 @@ __pycache__/
 # Database & SQLite files
 *.db
 *.sqlite3
+!ai_software_company.db
 
 # Virtual Environments
 venv/
