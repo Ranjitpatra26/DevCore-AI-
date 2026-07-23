@@ -120,7 +120,7 @@ div.stPopover:has(.st-key-devcore_chatbot_popover) > button:active {
     transition: transform 0.08s ease, box-shadow 0.08s ease !important;
 }
 
-/* Black Terminal Popover Container Window (Guaranteed Upward & Left Positioned Clear of Floating Button) */
+/* Black Terminal Popover Container Window (Clean Upward & Left Clearance Offset) */
 div[data-testid="stPopoverBody"],
 div[data-testid="stPopoverBody"]:has(.st-key-devcore_popover_groq_model_selector),
 div[data-testid="stPopoverBody"]:has(.st-key-devcore_popover_model_selector) {
@@ -128,15 +128,11 @@ div[data-testid="stPopoverBody"]:has(.st-key-devcore_popover_model_selector) {
     border: 2.5px solid #334155 !important;
     border-radius: 16px !important;
     box-shadow: 0 25px 65px rgba(0, 0, 0, 0.95), 0 0 35px rgba(99, 102, 241, 0.35) !important;
-    width: 560px !important;
-    max-width: calc(100vw - 40px) !important;
-    max-height: calc(100vh - 235px) !important;
-    top: 75px !important;
-    bottom: 218px !important;
-    right: 85px !important;
-    left: auto !important;
-    position: fixed !important;
-    margin: 0 !important;
+    width: 550px !important;
+    max-width: calc(100vw - 32px) !important;
+    max-height: calc(100vh - 180px) !important;
+    margin-bottom: 20px !important;
+    margin-right: 15px !important;
     padding: 16px !important;
     z-index: 999998 !important;
     overflow-y: auto !important;
@@ -230,13 +226,9 @@ div[data-testid="stPopoverBody"] input::placeholder {
     div[data-testid="stPopoverBody"] {
         width: calc(100vw - 20px) !important;
         max-width: calc(100vw - 20px) !important;
-        max-height: calc(100vh - 210px) !important;
-        top: 70px !important;
-        bottom: 195px !important;
-        right: 10px !important;
-        left: 10px !important;
+        max-height: calc(100vh - 170px) !important;
+        margin-bottom: 15px !important;
         padding: 12px !important;
-        position: fixed !important;
     }
     
     .st-key-devcore_chatbot_popover,
