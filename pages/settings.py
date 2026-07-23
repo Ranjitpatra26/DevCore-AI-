@@ -474,3 +474,19 @@ curl http://localhost:11434/api/tags
         3. Select **🦙 Local Ollama Engine** as your Primary Execution Engine.
         4. Click **Save Engine Configurations**. Your system is now running at 100% uncapped maximum power!
         """)
+
+    st.markdown("---")
+    st.html("""
+    <div style="background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 20px 24px; margin-top: 20px;">
+        <h4 style="margin: 0 0 8px 0; color: var(--text-color); font-family: 'Space Grotesk', sans-serif;">✉️ Developer Support & Contact</h4>
+        <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">
+            If you encounter any exceptions, errors, or have feature requests, feel free to reach out directly to the lead developer:
+        </p>
+        <div style="margin-top: 10px; font-size: 0.95rem;">
+            📬 <strong>Email:</strong> 
+            <a href="mailto:ranjitspatra9077@gmail.com?subject=DevCore%20AI%20Developer%20Support" style="color: var(--primary-color); font-weight: 800; text-decoration: underline;">
+                ranjitspatra9077@gmail.com
+            </a>
+        </div>
+    </div>
+    """)

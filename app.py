@@ -70,6 +70,15 @@ try:
 except Exception as err:
     st.error(f"⚠️ Application Exception Encountered: {str(err)}")
     st.exception(err)
+    st.html("""
+    <div style="background: rgba(239,68,68,0.1); border: 1.5px solid #EF4444; padding: 14px 18px; border-radius: 10px; margin-top: 10px;">
+        <span style="font-weight: 700; color: #F8FAFC;">✉️ Encountered an issue or need developer support?</span><br>
+        <span style="font-size: 0.88rem; color: #CBD5E1;">Contact lead developer: </span>
+        <a href="mailto:ranjitspatra9077@gmail.com?subject=DevCore%20AI%20Support%20Request" style="color: #38BDF8; font-weight: 800; text-decoration: underline;">
+            ranjitspatra9077@gmail.com
+        </a>
+    </div>
+    """)
 
 # 6. Clean & Professional Enterprise Footer
 st.html("<div class='saas-divider' style='margin: 45px 0 25px 0;'></div>")
@@ -104,6 +113,12 @@ st.html(f"""
             </div>
             <div style="font-size: 0.78rem; color: var(--muted-color); font-weight: 500; letter-spacing: 0.01em;">
                 Multi-Agent &bull; Local AI &bull; Knowledge Engine &bull; Built with Python
+            </div>
+            <div style="font-size: 0.82rem; margin-top: 4px;">
+                ✉️ <strong style="color: var(--text-color);">Developer Contact:</strong> 
+                <a href="mailto:ranjitspatra9077@gmail.com" style="color: var(--primary-color); font-weight: 700; text-decoration: none;">
+                    ranjitspatra9077@gmail.com
+                </a>
             </div>
         </div>
 
