@@ -1380,6 +1380,18 @@ div[data-testid="stDialog"] input::placeholder {
         overflow: hidden !important;
     }
 
+    .st-key-devcore_chatbot_popover button *,
+    div.stPopover:has(.st-key-devcore_chatbot_popover) button * {
+        font-size: 24px !important;
+        line-height: 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: inline-block !important;
+        text-align: center !important;
+        width: auto !important;
+        height: auto !important;
+    }
+
     /* 5. Mobile Typography & Header Scaling */
     h1 {
         font-size: 1.75rem !important;

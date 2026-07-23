@@ -296,16 +296,14 @@ div[data-testid="stPopoverBody"] input::placeholder {
 
     .st-key-devcore_chatbot_popover button *,
     div.stPopover:has(.st-key-devcore_chatbot_popover) button * {
-        font-size: 1.6rem !important;
+        font-size: 24px !important;
         line-height: 1 !important;
         margin: 0 !important;
         padding: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
+        display: inline-block !important;
         text-align: center !important;
-        width: 100% !important;
-        height: 100% !important;
+        width: auto !important;
+        height: auto !important;
     }
 
     div[data-testid="stPopoverBody"] div[data-testid="column"] {
