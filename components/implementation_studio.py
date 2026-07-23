@@ -781,20 +781,8 @@ def render_implementation_studio(
     sec_summary = get_run_output('security')[:1000]
     qa_summary = get_run_output('qa')[:1000]
 
-    is_grounded = bool(has_valid_blueprint and (arch_summary or backend_summary or db_summary or fe_summary or agent_runs))
-
-    if not is_grounded:
-        st.html("""
-        <div style="padding: 24px; background: #0F172A; border: 2px dashed #EF4444; border-radius: 12px; margin-bottom: 24px; text-align: center;">
-            <div style="font-size: 2.2rem; margin-bottom: 10px;">⚠</div>
-            <h3 style="margin: 0 0 10px 0; color: #F8FAFC;">Blueprint Synchronization Incomplete</h3>
-            <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 16px;">
-                Please generate the missing project artifacts in the <strong>Projects</strong> tab before Implementation Studio can generate production code.
-            </p>
-            <span style="background: rgba(239, 68, 68, 0.2); color: #F87171 !important; font-weight: 700; border: 1.5px solid #EF4444; padding: 4px 14px; border-radius: 20px; font-size: 0.85rem; white-space: nowrap; display: inline-block;">⚠️ Missing Artifacts</span>
-        </div>
-        """)
-        return
+    if not proj_name or not str(proj_name).strip():
+        proj_name = "DevCore AI System"
 
     # Extract Grounded Source of Truth Blueprint Details
     proj_tech = proj_details.get('tech_preference', 'Modern Full-Stack Architecture')
