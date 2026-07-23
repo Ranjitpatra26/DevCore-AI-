@@ -1309,8 +1309,28 @@ div[data-baseweb="toast"] button svg {
     }
 
     .saas-card:hover, .nb-card:hover, .asymmetrical-card:hover {
-        transform: none !important;
-        box-shadow: 3px 3px 0px 0px var(--primary-color) !important;
+        transform: translate(-3px, -3px) !important;
+        box-shadow: 5px 5px 0px 0px var(--primary-color) !important;
+        transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    }
+
+    /* Tactile Floating FAB Hover & Press Animations on Mobile */
+    .st-key-devcore_chatbot_popover button:hover,
+    div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover) button:hover,
+    div.stPopover:has(.st-key-devcore_chatbot_popover) > button:hover,
+    .st-key-floating_theme_toggle_btn button:hover,
+    div.stButton > button.st-key-floating_theme_toggle_btn:hover {
+        transform: scale(1.08) translateY(-2px) !important;
+        box-shadow: 5px 5px 0px 0px var(--primary-color) !important;
+        transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+    }
+
+    .st-key-devcore_chatbot_popover button:active,
+    .st-key-floating_theme_toggle_btn button:active,
+    div.stButton > button:active {
+        transform: scale(0.95) translate(2px, 2px) !important;
+        box-shadow: 1px 1px 0px 0px var(--border-color) !important;
+        transition: transform 0.08s ease, box-shadow 0.08s ease !important;
     }
 
     /* 7. Column Stacking & Grid Adaptation */
