@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ENV_PATH = BASE_DIR / ".env"
 
 def load_env_file() -> Dict[str, str]:
-    """Load environment variables from .env file into os.environ."""
+    """Load environment variables from .env file and Streamlit secrets into os.environ."""
     env_vars = {}
     if ENV_PATH.exists():
         try:
@@ -33,6 +33,18 @@ def load_env_file() -> Dict[str, str]:
                     os.environ[key] = value
         except Exception:
             pass
+
+    # Read from Streamlit Cloud secrets if available
+    try:
+        import streamlit as st
+        if hasattr(st, "secrets"):
+            for k, v in st.secrets.items():
+                if isinstance(v, str) and v.strip():
+                    os.environ[k] = v.strip()
+                    env_vars[k] = v.strip()
+    except Exception:
+        pass
+
     return env_vars
 
 def update_env_file(key_values: Dict[str, str]) -> bool:
