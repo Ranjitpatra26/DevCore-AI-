@@ -34,8 +34,8 @@ def render_groq_quota_modal_content():
         border: 2px solid var(--border-color, #334155) !important;
         border-radius: 18px !important;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45) !important;
-        max-width: 680px !important;
-        width: 92vw !important;
+        max-width: 920px !important;
+        width: 90vw !important;
         padding: 24px !important;
         color: var(--text-color, #F8FAFC) !important;
         margin: auto !important;
