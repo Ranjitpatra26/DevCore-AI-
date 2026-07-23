@@ -333,7 +333,10 @@ CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
         bp_code = get_run_text("frontend") or get_run_text("ui_ux")
         if bp_code and "```" in bp_code and ("class " in bp_code or "def " in bp_code or "import " in bp_code or "function " in bp_code or "const " in bp_code):
             return bp_code
-        return f"""# UI Component Architecture & Production Source Code for '{proj_name}'
+        
+        info_header = bp_code if bp_code else f"# UI Component Architecture & Production Source Code for '{proj_name}'\n\n- **Project**: {proj_name}\n- **Industry**: {proj_ind}\n- **Tech Preference**: {proj_tech}\n"
+
+        return f"""{info_header}
 
 ```text
 # File: docs/file_structure_architecture.txt
@@ -358,7 +361,7 @@ import streamlit as st
 from database.connection import execute_query
 
 def show_projects():
-    """Workspace Explorer & Architecture Renderer for {proj_name}."""
+    # Workspace Explorer & Architecture Renderer for {proj_name}
     st.title("🚀 Workspace Explorer - {proj_name}")
     st.caption("Industry Domain: {proj_ind} | Tech Stack: {proj_tech}")
     
@@ -383,7 +386,7 @@ if __name__ == "__main__":
 import streamlit as st
 
 def show_dashboard():
-    """Operational Metrics & System Diagnostics Dashboard for {proj_name}."""
+    # Operational Metrics & System Diagnostics Dashboard for {proj_name}
     st.markdown("## 📊 System Diagnostics: {proj_name}")
     
     col1, col2, col3 = st.columns(3)
@@ -405,7 +408,7 @@ if __name__ == "__main__":
 import streamlit as st
 
 def saas_card(title: str, content: str, badge_text: str = "Active", status: str = "success"):
-    """Reusable SaaS Card UI Component for {proj_name}."""
+    # Reusable SaaS Card UI Component for {proj_name}
     st.html(f'''
     <div style="background: #0F172A; border: 1.5px solid #334155; border-radius: 12px; padding: 18px; margin-bottom: 14px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
