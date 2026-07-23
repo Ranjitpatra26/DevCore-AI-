@@ -42,7 +42,7 @@ def render_groq_quota_modal_content():
         overflow-x: hidden !important;
     }
 
-    /* Force all text elements inside modal to have 100% crisp visible contrast */
+    /* Modal Text Formatting */
     .groq-modal-wrapper,
     .groq-modal-wrapper h1,
     .groq-modal-wrapper h2,
@@ -53,34 +53,8 @@ def render_groq_quota_modal_content():
     .groq-modal-wrapper li,
     .groq-modal-wrapper strong,
     .groq-modal-wrapper label {
-        color: var(--text-color, #F8FAFC) !important;
+        color: var(--text-color) !important;
         font-family: 'Space Grotesk', 'Inter', sans-serif !important;
-    }
-
-    /* Input Field & Password Eye Toggle Button Matching Color Fix */
-    div[data-testid="stDialog"] div[data-testid="stTextInput"] > div,
-    div[data-testid="stDialog"] [data-baseweb="input"],
-    div[data-testid="stDialog"] [data-baseweb="input"] > div,
-    div[data-testid="stDialog"] [data-baseweb="input"] button,
-    div[data-testid="stDialog"] [data-baseweb="select"] > div {
-        background-color: var(--card-bg, #1E293B) !important;
-        color: var(--text-color, #FFFFFF) !important;
-        border-color: var(--border-color, #475569) !important;
-        fill: var(--text-color, #FFFFFF) !important;
-        border-radius: 8px !important;
-    }
-
-    div[data-testid="stDialog"] input {
-        background-color: transparent !important;
-        color: var(--text-color, #FFFFFF) !important;
-        border: none !important;
-        box-shadow: none !important;
-        font-size: 0.95rem !important;
-    }
-
-    div[data-testid="stDialog"] input::placeholder {
-        color: var(--text-secondary, #94A3B8) !important;
-        opacity: 0.85 !important;
     }
 
     /* Modal Callout Header */
