@@ -222,6 +222,268 @@ QUICK_ACTION_CHIPS = [
     ("📁 Project Tree", "project_structure")
 ]
 
+def get_initial_category_code(cat_key: str, proj_details: Dict[str, Any], runs_map: Dict[str, Any]) -> str:
+    """Extract or generate instant production starter code & specifications for Implementation Studio."""
+    proj_name = proj_details.get('name', 'Synchronized System') if isinstance(proj_details, dict) else 'Synchronized System'
+    proj_tech = proj_details.get('tech_preference', 'Python, REST API, SQLite') if isinstance(proj_details, dict) else 'Python, REST API, SQLite'
+    proj_ind = proj_details.get('industry', 'Technology & SaaS') if isinstance(proj_details, dict) else 'Technology & SaaS'
+    proj_desc = proj_details.get('description', 'Application Platform') if isinstance(proj_details, dict) else 'Application Platform'
+
+    def get_run_text(role: str) -> str:
+        if not runs_map or not isinstance(runs_map, dict): return ""
+        r = runs_map.get(role, {})
+        if isinstance(r, str): return r
+        if isinstance(r, dict): return r.get('output_markdown', '') or ""
+        return ""
+
+    if cat_key == "backend":
+        bp_code = get_run_text("backend") or get_run_text("architect")
+        if bp_code and "```" in bp_code:
+            return bp_code
+        return f"""# Production Backend API Implementation for '{proj_name}'
+
+```python
+# File: app/main.py
+from fastapi import FastAPI, HTTPException, Depends, status
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+from typing import List, Optional
+import os
+
+app = FastAPI(
+    title="{proj_name} API Services",
+    description="Production REST API backend for {proj_name} ({proj_ind})",
+    version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class HealthStatus(BaseModel):
+    status: str = Field(default="online")
+    system: str = Field(default="{proj_name}")
+    environment: str = Field(default="production")
+
+@app.get("/health", response_model=HealthStatus, tags=["Health"])
+async def health_check():
+    return {{"status": "online", "system": "{proj_name}", "environment": "production"}}
+
+@app.get("/api/v1/resources", tags=["Resources"])
+async def list_resources():
+    return {{"project": "{proj_name}", "tech_stack": "{proj_tech}", "status": "active"}}
+```
+
+```python
+# File: app/config.py
+import os
+from pydantic_settings import BaseSettings
+
+class Settings(BaseSettings):
+    PROJECT_NAME: str = "{proj_name}"
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./{proj_name.lower().replace(' ', '_')}.db")
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "super-secret-key-change-in-production")
+
+settings = Settings()
+```
+"""
+    elif cat_key == "database":
+        bp_code = get_run_text("database")
+        if bp_code and "```" in bp_code:
+            return bp_code
+        return f"""# Database Schema & DDL Migration Script for '{proj_name}'
+
+```sql
+-- File: database/schema.sql
+-- Production Relational Schema DDL for {proj_name}
+
+CREATE TABLE IF NOT EXISTS projects (
+    id VARCHAR(36) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    industry VARCHAR(100),
+    tech_preference VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id VARCHAR(36) PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(50) DEFAULT 'user',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS audit_logs (
+    id SERIAL PRIMARY KEY,
+    project_id VARCHAR(36) REFERENCES projects(id) ON DELETE CASCADE,
+    action VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_projects_name ON projects(name);
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+```
+"""
+    elif cat_key == "frontend":
+        bp_code = get_run_text("frontend") or get_run_text("ui_ux")
+        if bp_code and "```" in bp_code:
+            return bp_code
+        return f"""# UI Component Architecture for '{proj_name}'
+
+```python
+# File: components/dashboard_view.py
+import streamlit as st
+
+def render_project_header(title: str, subtitle: str):
+    st.markdown(f"# 🚀 {{title}}")
+    st.caption(subtitle)
+    st.divider()
+
+def show_component():
+    render_project_header("{proj_name}", "Production Workspace ({proj_ind})")
+    st.success("Component loaded and synchronized with backend API services.")
+```
+"""
+    elif cat_key == "devops":
+        bp_code = get_run_text("devops")
+        if bp_code and "```" in bp_code:
+            return bp_code
+        return f"""# Containerization & DevOps Manifest for '{proj_name}'
+
+```dockerfile
+# File: Dockerfile
+FROM python:3.10-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+
+EXPOSE 8000
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+```yaml
+# File: docker-compose.yml
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PROJECT_NAME={proj_name}
+    restart: unless-stopped
+```
+"""
+    elif cat_key == "testing":
+        bp_code = get_run_text("qa")
+        if bp_code and "```" in bp_code:
+            return bp_code
+        return f"""# PyTest Suite for '{proj_name}'
+
+```python
+# File: tests/test_main.py
+import pytest
+from fastapi.testclient import TestClient
+from app.main import app
+
+client = TestClient(app)
+
+def test_health_check():
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json()["status"] == "online"
+
+def test_list_resources():
+    response = client.get("/api/v1/resources")
+    assert response.status_code == 200
+    assert "project" in response.json()
+```
+"""
+    elif cat_key == "documentation":
+        bp_code = get_run_text("documentation")
+        if bp_code:
+            return bp_code
+        return f"""# Production Documentation for '{proj_name}'
+
+## Overview
+**{proj_name}** is a software platform built for the **{proj_ind}** industry.
+
+### Tech Stack
+- **Architecture**: {proj_tech}
+- **Description**: {proj_desc}
+
+### Quick Start
+```bash
+git clone https://github.com/Ranjitpatra26/DevCore-AI-.git
+pip install -r requirements.txt
+streamlit run app.py
+```
+"""
+    elif cat_key == "architecture":
+        bp_code = get_run_text("architect")
+        if bp_code:
+            return bp_code
+        return f"""# System Architecture for '{proj_name}'
+
+```text
++-------------------------------------------------------------+
+|                     PRESENTATION LAYER                      |
+|                  (Streamlit UI / Web SPA)                   |
++-------------------------------------------------------------+
+                               |
+                               v
++-------------------------------------------------------------+
+|                     BUSINESS LOGIC LAYER                    |
+|                (FastAPI REST / Python Services)             |
++-------------------------------------------------------------+
+                               |
+                               v
++-------------------------------------------------------------+
+|                   DATA PERSISTENCE LAYER                    |
+|             (SQLite Database / Vector Embedding Store)      |
++-------------------------------------------------------------+
+```
+"""
+    elif cat_key == "project_structure":
+        return f"""# File Tree Structure for '{proj_name}'
+
+```text
+{proj_name.lower().replace(' ', '_')}/
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── config.py
+│   ├── routers/
+│   └── models/
+├── database/
+│   ├── schema.sql
+│   └── connection.py
+├── tests/
+│   └── test_main.py
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+```
+"""
+    else:
+        return f"""# Source Code Module for '{proj_name}'
+
+```python
+# File: app/service.py
+def execute_service():
+    return {{"status": "success", "project": "{proj_name}"}}
+```
+"""
+
 def parse_multi_files(response_text: str, default_lang: str = "python") -> List[Dict[str, str]]:
     """Parse generated LLM response into virtual independent source files for the VS Code Explorer."""
     parsed_files: List[Dict[str, str]] = []
@@ -822,6 +1084,13 @@ def render_implementation_studio(
         saved_times = st.session_state.get(f"impl_studio_time_{active_id}", {})
         output_key = f"{current_cat_key}_{selected_mode_key}"
         
+        if output_key not in saved_outputs:
+            initial_code = get_initial_category_code(current_cat_key, proj_details, runs_map)
+            if out_state_key not in st.session_state:
+                st.session_state[out_state_key] = {}
+            st.session_state[out_state_key][output_key] = initial_code
+            saved_outputs = st.session_state[out_state_key]
+
         if output_key in saved_outputs:
             guidance_text = saved_outputs[output_key]
             exec_time = saved_times.get(output_key, 2.0)
