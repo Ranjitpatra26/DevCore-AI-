@@ -113,7 +113,7 @@ def query_groq_api_fallback(
                 is_chatbot=False
             ))
             res = "".join(chunks).strip()
-            if res and ("rate limit" in res.lower() or "token limit" in res.lower() or "maximum token" in res.lower() or "429" in res):
+            if res and res.startswith("⚠️") and ("rate limit" in res.lower() or "token limit" in res.lower() or "maximum token" in res.lower() or "429" in res):
                 try:
                     import streamlit as st
                     st.session_state["show_groq_quota_modal"] = True

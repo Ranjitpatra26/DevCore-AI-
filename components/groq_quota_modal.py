@@ -239,6 +239,7 @@ else:
         render_groq_quota_modal_content()
 
 def check_and_render_groq_quota_modal():
-    """Trigger popup if rate limit state is flagged in session state."""
+    """Trigger popup if rate limit state is flagged in session state, and auto-consume trigger so it opens once."""
     if st.session_state.get("show_groq_quota_modal"):
+        st.session_state["show_groq_quota_modal"] = False
         show_groq_quota_dialog()
