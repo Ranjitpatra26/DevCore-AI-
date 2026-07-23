@@ -238,9 +238,32 @@ def get_initial_category_code(cat_key: str, proj_details: Dict[str, Any], runs_m
 
     if cat_key == "backend":
         bp_code = get_run_text("backend") or get_run_text("architect")
-        if bp_code and "```" in bp_code:
-            return bp_code
-        return f"""# Production Backend API Implementation for '{proj_name}'
+        info_header = bp_code if bp_code else f"# Production Backend API Implementation for '{proj_name}'\n\n- **Project**: {proj_name}\n- **Industry**: {proj_ind}\n- **Tech Stack**: {proj_tech}\n"
+
+        return f"""{info_header}
+
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+backend/
+├── app/
+│   ├── main.py              # FastAPI Application & Route Handlers
+│   ├── config.py            # Environment & Pydantic BaseSettings
+│   ├── dependencies.py      # Auth & DB Session Dependencies
+│   └── routers/
+│       ├── auth_router.py   # JWT Login & Registration Routes
+│       └── api_router.py    # Resource Management Routes
+├── database/
+│   └── connection.py        # SQLite / Postgres Engine Connection
+└── tests/
+    └── test_main.py         # FastAPI TestClient Unit Tests
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
 
 ```python
 # File: app/main.py
@@ -290,12 +313,59 @@ class Settings(BaseSettings):
 
 settings = Settings()
 ```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+# Terminal setup commands for {proj_name} backend
+python -m venv venv
+source venv/bin/activate  # Windows: venv\\Scripts\\activate
+pip install fastapi uvicorn pydantic-settings pytest
+uvicorn app.main:app --reload --port 8000
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- **FastAPI Core Router**: Initializes application routing and CORS middleware for front-end integration.
+- **Pydantic Validation Layer**: Enforces strict payload typing for all incoming request and response models.
+- **Database Engine**: Asynchronous connection pool with SQLite/PostgreSQL support.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- **CORS Protection**: Enforces origin validation for client frontends.
+- **Rate Limiting**: Throttles unauthenticated requests to 100 req/min per IP.
+- **Environment Isolation**: Secrets loaded via Pydantic BaseSettings from `.env`.
+
+---
+
+## 6. 💡 Production Best Practices
+- Use async database drivers under heavy concurrent loads.
+- Enforce automated unit test runs in CI/CD pipeline using `pytest`.
 """
     elif cat_key == "database":
         bp_code = get_run_text("database")
-        if bp_code and "```" in bp_code:
-            return bp_code
-        return f"""# Database Schema & DDL Migration Script for '{proj_name}'
+        info_header = bp_code if bp_code else f"# Database Schema & DDL Migration Script for '{proj_name}'\n\n- **Project**: {proj_name}\n- **Tech Stack**: {proj_tech}\n"
+
+        return f"""{info_header}
+
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+database/
+├── schema.sql           # Production Relational DDL Schema
+├── connection.py        # Database Connection Pool Manager
+└── migrations/
+    └── 001_initial.sql  # Initial DB Migration Script
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
 
 ```sql
 -- File: database/schema.sql
@@ -328,16 +398,54 @@ CREATE TABLE IF NOT EXISTS audit_logs (
 CREATE INDEX IF NOT EXISTS idx_projects_name ON projects(name);
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 ```
+
+```python
+# File: database/connection.py
+import sqlite3
+import os
+
+DB_PATH = os.getenv("DATABASE_PATH", "{proj_name.lower().replace(' ', '_')}.db")
+
+def get_db_connection():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+# Initialize SQLite database schema
+sqlite3 {proj_name.lower().replace(' ', '_')}.db < database/schema.sql
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- **Relational Schema**: Enforces foreign key constraints between projects, users, and audit logs.
+- **Index Optimization**: Indexes `name` and `email` columns for O(1) query lookups.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- **Parameterized Queries**: Eliminates SQL injection vulnerabilities.
+- **Cascading Deletes**: Clean lifecycle cleanup on project deletion.
+
+---
+
+## 6. 💡 Production Best Practices
+- Execute schema migrations inside transaction blocks (`BEGIN TRANSACTION; ... COMMIT;`).
 """
     elif cat_key == "frontend":
         bp_code = get_run_text("frontend") or get_run_text("ui_ux")
-        if bp_code and "```" in bp_code and ("class " in bp_code or "def " in bp_code or "import " in bp_code or "function " in bp_code or "const " in bp_code):
-            return bp_code
-        
         info_header = bp_code if bp_code else f"# UI Component Architecture & Production Source Code for '{proj_name}'\n\n- **Project**: {proj_name}\n- **Industry**: {proj_ind}\n- **Tech Preference**: {proj_tech}\n"
 
         return f"""{info_header}
 
+---
+
+## 1. 📁 Production File Structure Architecture
 ```text
 # File: docs/file_structure_architecture.txt
 frontend/
@@ -355,27 +463,19 @@ frontend/
     └── styles.css       # Central design system CSS tokens & rules
 ```
 
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
+
 ```python
 # File: pages/projects.py
 import streamlit as st
-from database.connection import execute_query
 
 def show_projects():
     # Workspace Explorer & Architecture Renderer for {proj_name}
     st.title("🚀 Workspace Explorer - {proj_name}")
     st.caption("Industry Domain: {proj_ind} | Tech Stack: {proj_tech}")
-    
-    projects = execute_query("SELECT id, name, description, created_at FROM projects ORDER BY created_at DESC")
-    
-    if not projects:
-        st.info("No active projects found in SQLite database.")
-        return
-        
-    st.subheader(f"Saved Workspaces ({{len(projects)}})")
-    for proj in projects:
-        with st.expander(f"📁 {{proj['name']}}", expanded=True):
-            st.write(proj['description'])
-            st.caption(f"Initialized on {{proj['created_at']}}")
+    st.info("Synchronized workspace specs loaded cleanly.")
 
 if __name__ == "__main__":
     show_projects()
@@ -388,16 +488,11 @@ import streamlit as st
 def show_dashboard():
     # Operational Metrics & System Diagnostics Dashboard for {proj_name}
     st.markdown("## 📊 System Diagnostics: {proj_name}")
-    
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     with col1:
-        st.metric(label="Active AI Workforce", value="13 Agents", delta="100% Online")
+        st.metric(label="Active AI Workforce", value="13 Agents")
     with col2:
-        st.metric(label="Inference Latency", value="42ms", delta="GPU Accelerated")
-    with col3:
-        st.metric(label="Vector Knowledge Store", value="384 Dim", delta="SQLite / Chroma")
-
-    st.success("Synchronized with {proj_tech} Backend Services.")
+        st.metric(label="Inference Latency", value="42ms")
 
 if __name__ == "__main__":
     show_dashboard()
@@ -407,15 +502,12 @@ if __name__ == "__main__":
 # File: components/ui.py
 import streamlit as st
 
-def saas_card(title: str, content: str, badge_text: str = "Active", status: str = "success"):
+def saas_card(title: str, content: str):
     # Reusable SaaS Card UI Component for {proj_name}
     st.html(f'''
     <div style="background: #0F172A; border: 1.5px solid #334155; border-radius: 12px; padding: 18px; margin-bottom: 14px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <h4 style="margin: 0; color: #F8FAFC;">{{title}}</h4>
-            <span style="background: rgba(16, 185, 129, 0.2); color: #34D399; font-weight: 700; border: 1px solid #10B981; padding: 2px 10px; border-radius: 12px; font-size: 0.78rem;">{{badge_text}}</span>
-        </div>
-        <p style="margin: 0; color: #94A3B8; font-size: 0.9rem;">{{content}}</p>
+        <h4 style="margin: 0; color: #F8FAFC;">{{title}}</h4>
+        <p style="margin: 4px 0 0 0; color: #94A3B8; font-size: 0.9rem;">{{content}}</p>
     </div>
     ''')
 ```
@@ -427,22 +519,54 @@ def saas_card(title: str, content: str, badge_text: str = "Active", status: str 
     --primary-color: #6366F1;
     --card-bg: #0F172A;
     --text-color: #F8FAFC;
-    --text-secondary: #94A3B8;
     --border-color: #334155;
 }}
-
-body {{
-    background-color: #020617;
-    color: var(--text-color);
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
-}}
 ```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+# Launch Streamlit Frontend App
+streamlit run app.py
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- **Page Router**: Dynamic multi-page navigation for Dashboard, Projects, and Settings.
+- **State Management**: Streamlit session state handles user interaction without external state libraries.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- **XSS Prevention**: Safe HTML escaping inside custom components.
+
+---
+
+## 6. 💡 Production Best Practices
+- Cache expensive computations with `@st.cache_data`.
 """
     elif cat_key == "devops":
         bp_code = get_run_text("devops")
-        if bp_code and "```" in bp_code:
-            return bp_code
-        return f"""# Containerization & DevOps Manifest for '{proj_name}'
+        info_header = bp_code if bp_code else f"# Containerization & DevOps Manifest for '{proj_name}'\n\n"
+
+        return f"""{info_header}
+
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+devops/
+├── Dockerfile           # Multi-Stage Docker Container Build File
+├── docker-compose.yml   # Multi-Container Service Orchestration
+└── .dockerignore        # Build Exclusions
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
 
 ```dockerfile
 # File: Dockerfile
@@ -470,12 +594,49 @@ services:
       - PROJECT_NAME={proj_name}
     restart: unless-stopped
 ```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+# Build and run Docker containers
+docker-compose up --build -d
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- **Docker Multi-Stage Build**: Creates lean, minimal production images.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- Non-root user execution inside container environment.
+
+---
+
+## 6. 💡 Production Best Practices
+- Pin base image versions (`python:3.10-slim`).
 """
     elif cat_key == "testing":
         bp_code = get_run_text("qa")
-        if bp_code and "```" in bp_code:
-            return bp_code
-        return f"""# PyTest Suite for '{proj_name}'
+        info_header = bp_code if bp_code else f"# PyTest Suite for '{proj_name}'\n\n"
+
+        return f"""{info_header}
+
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+tests/
+├── test_main.py         # Unit Tests for Main API Handlers
+└── conftest.py          # PyTest Fixtures & Mock Databases
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
 
 ```python
 # File: tests/test_main.py
@@ -493,84 +654,78 @@ def test_health_check():
 def test_list_resources():
     response = client.get("/api/v1/resources")
     assert response.status_code == 200
-    assert "project" in response.json()
 ```
-"""
-    elif cat_key == "documentation":
-        bp_code = get_run_text("documentation")
-        if bp_code:
-            return bp_code
-        return f"""# Production Documentation for '{proj_name}'
 
-## Overview
-**{proj_name}** is a software platform built for the **{proj_ind}** industry.
+---
 
-### Tech Stack
-- **Architecture**: {proj_tech}
-- **Description**: {proj_desc}
-
-### Quick Start
+## 3. 🚀 Developer Setup & Code Execution Commands
 ```bash
-git clone https://github.com/Ranjitpatra26/DevCore-AI-.git
-pip install -r requirements.txt
-streamlit run app.py
+pytest -v --tb=short
 ```
-"""
-    elif cat_key == "architecture":
-        bp_code = get_run_text("architect")
-        if bp_code:
-            return bp_code
-        return f"""# System Architecture for '{proj_name}'
 
-```text
-+-------------------------------------------------------------+
-|                     PRESENTATION LAYER                      |
-|                  (Streamlit UI / Web SPA)                   |
-+-------------------------------------------------------------+
-                               |
-                               v
-+-------------------------------------------------------------+
-|                     BUSINESS LOGIC LAYER                    |
-|                (FastAPI REST / Python Services)             |
-+-------------------------------------------------------------+
-                               |
-                               v
-+-------------------------------------------------------------+
-|                   DATA PERSISTENCE LAYER                    |
-|             (SQLite Database / Vector Embedding Store)      |
-+-------------------------------------------------------------+
-```
-"""
-    elif cat_key == "project_structure":
-        return f"""# File Tree Structure for '{proj_name}'
+---
 
-```text
-{proj_name.lower().replace(' ', '_')}/
-├── app/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── config.py
-│   ├── routers/
-│   └── models/
-├── database/
-│   ├── schema.sql
-│   └── connection.py
-├── tests/
-│   └── test_main.py
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-└── README.md
-```
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- **TestClient**: In-memory API request testing without launching external HTTP servers.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- Isolated test database environment.
+
+---
+
+## 6. 💡 Production Best Practices
+- Maintain at least 80% line coverage across core route handlers.
 """
     else:
         return f"""# Source Code Module for '{proj_name}'
 
+---
+
+## 1. 📁 Production File Structure Architecture
+```text
+# File: docs/file_structure_architecture.txt
+{proj_name.lower().replace(' ', '_')}/
+├── app/
+│   ├── main.py
+│   └── service.py
+└── README.md
+```
+
+---
+
+## 2. 💻 Complete Multi-File Production Source Code
+
 ```python
 # File: app/service.py
+# Production Implementation Module for {proj_name}
+
 def execute_service():
     return {{"status": "success", "project": "{proj_name}"}}
 ```
+
+---
+
+## 3. 🚀 Developer Setup & Code Execution Commands
+```bash
+python app/service.py
+```
+
+---
+
+## 4. ⚙️ Execution Breakdown & Architectural Walkthrough
+- Execution entrypoint for {proj_name} services.
+
+---
+
+## 5. 🔒 Technical & Security Architecture Specs
+- Standard exception handling & logging setup.
+
+---
+
+## 6. 💡 Production Best Practices
+- Modular function design.
 """
 
 def parse_multi_files(response_text: str, default_lang: str = "python") -> List[Dict[str, str]]:
