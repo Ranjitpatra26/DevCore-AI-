@@ -81,65 +81,22 @@ p, span, li, label, div {
 
 /* Neo-Brutalist Overrides for Streamlit Elements */
 
-/* Unified Neobrutalism Text Input Container (Password Eye Included) */
-div[data-testid="stTextInput"] > div,
-div[data-testid="stTextArea"] > div,
-div[data-testid="stSelectbox"] > div,
-div[data-baseweb="input"],
-div[data-baseweb="select"] {
+/* Inputs & Textareas */
+div[data-testid="stTextInput"] input, div[data-testid="stTextArea"] textarea {
     background-color: var(--card-bg) !important;
-    background: var(--card-bg) !important;
     border: 3px solid var(--border-color) !important;
     border-radius: 8px !important;
-    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
-    transition: all 0.15s ease-in-out !important;
-    color: var(--text-color) !important;
-}
-
-div[data-testid="stTextInput"] input,
-div[data-testid="stTextArea"] textarea {
-    background-color: transparent !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
     color: var(--text-color) !important;
     font-weight: 600 !important;
     padding: 12px !important;
+    box-shadow: 4px 4px 0px 0px var(--border-color) !important;
+    transition: all 0.15s ease-in-out !important;
 }
 
 div[data-testid="stTextInput"] input:focus, div[data-testid="stTextArea"] textarea:focus {
+    transform: translate(-1px, -1px) !important;
+    box-shadow: 4px 4px 0px 0px var(--accent-color) !important;
     outline: none !important;
-}
-
-/* Eye button & dropdown arrow inside unified container */
-div[data-testid="stTextInput"] button,
-div[data-testid="stTextInput"] [data-baseweb="button"],
-div[data-testid="stTextInput"] [data-baseweb="input"] > div,
-div[data-testid="stTextInput"] [data-baseweb="input"] > div:last-child,
-div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
-div[data-testid="stSelectbox"] [data-baseweb="select"] [data-baseweb="icon"],
-button[aria-label*="password" i],
-button[aria-label*="visibility" i] {
-    background: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    outline: none !important;
-}
-
-div[data-testid="stTextInput"] svg,
-div[data-testid="stTextInput"] svg path,
-div[data-testid="stTextInput"] svg *,
-div[data-testid="stSelectbox"] svg,
-div[data-testid="stSelectbox"] svg path,
-button[aria-label*="password" i] svg,
-button[aria-label*="visibility" i] svg {
-    background-color: transparent !important;
-    fill: var(--text-color, #1E293B) !important;
-    color: var(--text-color, #1E293B) !important;
-    stroke: var(--text-color, #1E293B) !important;
-    opacity: 1 !important;
-    visibility: visible !important;
 }
 
 /* Select Box & Dropdowns - Enforced Theme Styling for Light & Dark */

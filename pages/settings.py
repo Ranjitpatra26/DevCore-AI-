@@ -220,46 +220,6 @@ curl http://localhost:11434/api/tags
     tab_config, tab_guide = st.tabs(["⚙️ Execution Engine & Key Configuration", "🚀 Max Power Local Installation Guide"])
 
     with tab_config:
-        st.html("""
-        <style>
-        /* Password Eye Visibility Button & Dropdown Arrow Inherit Background & High Contrast Fix */
-        div[data-baseweb="input"],
-        div[data-baseweb="input"] > div,
-        div[data-baseweb="input"] > div:last-child,
-        div[data-baseweb="input"] button,
-        div[data-baseweb="input"] [data-baseweb="button"],
-        button[aria-label*="password" i],
-        button[aria-label*="visibility" i],
-        button[title*="password" i],
-        button[title*="visibility" i],
-        div[data-baseweb="select"],
-        div[data-baseweb="select"] > div,
-        div[data-baseweb="select"] > div:last-child,
-        div[data-baseweb="select"] [data-baseweb="icon"] {
-            background: inherit !important;
-            background-color: inherit !important;
-            border: none !important;
-            box-shadow: none !important;
-            outline: none !important;
-        }
-
-        div[data-baseweb="input"] svg,
-        div[data-baseweb="input"] svg *,
-        div[data-baseweb="input"] path,
-        div[data-baseweb="input"] button svg,
-        div[data-baseweb="input"] button svg *,
-        button[aria-label*="password" i] svg,
-        button[aria-label*="visibility" i] svg,
-        div[data-baseweb="select"] svg,
-        div[data-baseweb="select"] path {
-            fill: var(--text-color, #1E293B) !important;
-            color: var(--text-color, #1E293B) !important;
-            stroke: var(--text-color, #1E293B) !important;
-            opacity: 1 !important;
-            background-color: transparent !important;
-        }
-        </style>
-        """)
         col_left, col_right = st.columns([1.2, 1])
         
         with col_left:

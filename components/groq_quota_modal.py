@@ -57,41 +57,25 @@ def render_groq_quota_modal_content():
         font-family: 'Space Grotesk', 'Inter', sans-serif !important;
     }
 
-    /* Password Eye Visibility Button & Dropdown Arrow Inherit Background & High Contrast Fix */
-    div[data-baseweb="input"],
-    div[data-baseweb="input"] > div,
+    /* Password Eye Visibility Button & Dropdown Arrow Transparent Fix */
     div[data-baseweb="input"] > div:last-child,
     div[data-baseweb="input"] button,
-    div[data-baseweb="input"] [data-baseweb="button"],
-    button[aria-label*="password" i],
     button[aria-label*="visibility" i],
-    button[title*="password" i],
     button[title*="visibility" i],
-    div[data-baseweb="select"],
-    div[data-baseweb="select"] > div,
     div[data-baseweb="select"] > div:last-child,
     div[data-baseweb="select"] [data-baseweb="icon"] {
-        background: inherit !important;
-        background-color: inherit !important;
+        background: transparent !important;
+        background-color: transparent !important;
         border: none !important;
         box-shadow: none !important;
-        outline: none !important;
     }
 
-    div[data-baseweb="input"] svg,
-    div[data-baseweb="input"] svg *,
-    div[data-baseweb="input"] path,
     div[data-baseweb="input"] button svg,
-    div[data-baseweb="input"] button svg *,
-    button[aria-label*="password" i] svg,
+    div[data-baseweb="input"] button *,
     button[aria-label*="visibility" i] svg,
-    div[data-baseweb="select"] svg,
-    div[data-baseweb="select"] path {
-        fill: var(--text-color, #1E293B) !important;
-        color: var(--text-color, #1E293B) !important;
-        stroke: var(--text-color, #1E293B) !important;
-        opacity: 1 !important;
-        background-color: transparent !important;
+    div[data-baseweb="select"] svg {
+        fill: var(--text-color) !important;
+        color: var(--text-color) !important;
     }
 
     /* Modal Callout Header */
