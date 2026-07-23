@@ -304,6 +304,14 @@ def show_specialist_modal(member: dict):
     step = member["step"]
     
     st.html(f"""
+    <style>
+    /* Widen AI Specialist Operational Dossier Modal popup toward left & right on AI Team page */
+    div[data-testid="stDialog"] > div:first-child,
+    div[role="dialog"] {
+        max-width: 840px !important;
+        width: 88vw !important;
+    }
+    </style>
     <div style="background-color: var(--hover-bg); border: 3.5px solid var(--border-color); border-radius: 14px; padding: 18px 22px; margin-bottom: 24px;">
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 16px;">
