@@ -1,27 +1,43 @@
 /* DevCore AI Floating Assistant - Isolated Dedicated Stylesheet */
 
-/* Precise Streamlit popover button fixed at bottom: 150px, right: 24px */
+/* Container zeroing in document flow so it never creates horizontal bars or layout blocks */
+div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover),
+div[data-testid="stElementContainer"]:has(#devcore_chatbot_popover),
+div.stPopover:has(.st-key-devcore_chatbot_popover) {
+    position: fixed !important;
+    bottom: 145px !important;
+    right: 20px !important;
+    left: auto !important;
+    top: auto !important;
+    width: 0px !important;
+    height: 0px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    z-index: 999999 !important;
+    overflow: visible !important;
+}
+
+/* Precise Streamlit popover button fixed at bottom: 145px, right: 20px */
 .st-key-devcore_chatbot_popover,
 .st-key-devcore_chatbot_popover > button,
-div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover),
-div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover) > button,
-div.stPopover:has(.st-key-devcore_chatbot_popover),
 div.stPopover:has(.st-key-devcore_chatbot_popover) > button,
-div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover),
 div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover) > button {
     position: fixed !important;
-    bottom: 150px !important;
-    right: 24px !important;
+    bottom: 145px !important;
+    right: 20px !important;
     left: auto !important;
     top: auto !important;
     margin: 0 !important;
     z-index: 999999 !important;
-    width: 60px !important;
-    min-width: 60px !important;
-    max-width: 60px !important;
-    height: 60px !important;
-    min-height: 60px !important;
-    max-height: 60px !important;
+    width: 58px !important;
+    min-width: 58px !important;
+    max-width: 58px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    max-height: 58px !important;
     aspect-ratio: 1 / 1 !important;
     border-radius: 50% !important;
     -webkit-border-radius: 50% !important;
@@ -66,7 +82,7 @@ div.stPopover:has(.st-key-devcore_chatbot_popover) > button [data-testid="stIcon
     visibility: hidden !important;
 }
 
-/* Force the icon/emoji inside popover button to be crisp, large (~40px), visible, and centered */
+/* Force the icon/emoji inside popover button to be crisp, large (~32px), visible, and centered */
 .st-key-devcore_chatbot_popover button p,
 .st-key-devcore_chatbot_popover button span,
 .st-key-devcore_chatbot_popover button div,
@@ -75,7 +91,7 @@ div.stPopover:has(.st-key-devcore_chatbot_popover) > button [data-testid="stIcon
 div.stPopover:has(.st-key-devcore_chatbot_popover) button p,
 div.stPopover:has(.st-key-devcore_chatbot_popover) button span,
 div.stPopover:has(.st-key-devcore_chatbot_popover) button [data-testid="stMarkdownContainer"] p {
-    font-size: 3.0rem !important;
+    font-size: 2.5rem !important;
     line-height: 1 !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -117,8 +133,6 @@ div[data-testid="stPopoverBody"] {
     z-index: 999998 !important;
     overflow-y: auto !important;
 }
-
-
 
 /* Complete High-Contrast Text Overrides inside Popover for Markdown, Lists, Code & Text */
 div[data-testid="stPopoverBody"] p,
@@ -213,18 +227,27 @@ div[data-testid="stPopoverBody"] input::placeholder {
         left: 10px !important;
         padding: 12px !important;
         position: fixed !important;
-        bottom: 140px !important;
+        bottom: 130px !important;
     }
     
     .st-key-devcore_chatbot_popover,
     .st-key-devcore_chatbot_popover > button,
     div.stPopover:has(.st-key-devcore_chatbot_popover) > button {
-        bottom: 140px !important;
+        bottom: 135px !important;
         right: 16px !important;
-        width: 52px !important;
-        min-width: 52px !important;
-        height: 52px !important;
-        min-height: 52px !important;
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+        height: 50px !important;
+        min-height: 50px !important;
+        max-height: 50px !important;
+        box-shadow: 3px 3px 0px 0px var(--border-color, #1A2238) !important;
+    }
+
+    .st-key-devcore_chatbot_popover button p,
+    .st-key-devcore_chatbot_popover button span,
+    div.stPopover:has(.st-key-devcore_chatbot_popover) button p {
+        font-size: 2.1rem !important;
     }
 
     div[data-testid="stPopoverBody"] div[data-testid="column"] {
