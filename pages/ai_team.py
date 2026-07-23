@@ -372,13 +372,13 @@ def show_specialist_modal(member: dict):
     # Action Buttons
     col_act1, col_act2 = st.columns(2)
     with col_act1:
-        if st.button(f"💬 Consult & Chat with {name}", key=f"dlg_chat_{role_key}", use_container_width=True, type="primary"):
+        if st.button(f"💬 Consult & Chat", key=f"dlg_chat_{role_key}", use_container_width=True, type="primary"):
             st.session_state.chat_agent = role_key
             st.session_state.current_page = "Chat"
             st.rerun()
             
     with col_act2:
-        with st.expander(f"📜 Inspect Raw System Prompt ({name})"):
+        with st.expander(f"📜 Inspect System Prompt"):
             raw_prompt = SYSTEM_PROMPTS.get(role_key, "No prompt found.")
             safe_prompt = raw_prompt.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
             
