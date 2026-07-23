@@ -312,18 +312,22 @@ def show_specialist_modal(member: dict):
         width: 94vw !important;
     }
 
-    /* Completely eliminate arrow_right / arrow_down text in stExpander summary */
-    div[data-testid="stExpander"] details summary [data-testid="stExpanderToggleIcon"],
-    div[data-testid="stExpander"] details summary [data-baseweb="icon"],
-    div[data-testid="stExpander"] details summary svg + span,
-    div[data-testid="stExpander"] details summary > span:nth-child(n+2),
-    div[data-testid="stExpander"] details summary > div:nth-child(n+2) {
-        font-size: 0 !important;
-        color: transparent !important;
-        display: none !important;
-        visibility: hidden !important;
-        width: 0 !important;
-        height: 0 !important;
+    /* Ensure stExpander inside stDialog renders clean native > / v chevron arrow toggle on the left */
+    div[data-testid="stDialog"] div[data-testid="stExpander"] summary {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        cursor: pointer !important;
+    }
+
+    div[data-testid="stDialog"] div[data-testid="stExpander"] summary [data-testid="stExpanderToggleIcon"] {
+        display: inline-flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 1rem !important;
+        width: auto !important;
+        height: auto !important;
+        color: var(--text-color, #1E293B) !important;
     }
     </style>
     """)
@@ -394,21 +398,6 @@ def show_specialist_modal(member: dict):
     """)
     
     # Action Buttons
-    st.html("""
-    <style>
-    /* Remove arrow_right / arrow_down text strictly from AI Specialist Inspect popup on AI Team page */
-    div[data-testid="stDialog"] div[data-testid="stExpander"] summary [data-testid="stExpanderToggleIcon"],
-    div[data-testid="stDialog"] div[data-testid="stExpander"] summary [data-testid="stExpanderToggleIcon"] *,
-    div[data-testid="stDialog"] div[data-testid="stExpander"] summary svg + span {
-        font-size: 0 !important;
-        color: transparent !important;
-        display: none !important;
-        visibility: hidden !important;
-        width: 0 !important;
-        height: 0 !important;
-    }
-    </style>
-    """)
     col_act1, col_act2 = st.columns(2)
     with col_act1:
         if st.button(f"💬 Consult & Chat with {name}", key=f"dlg_chat_{role_key}", use_container_width=True, type="primary"):
