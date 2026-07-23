@@ -1272,18 +1272,12 @@ div[data-testid="stDialog"] input::placeholder {
     div[data-testid="stElementContainer"]:has(.st-key-floating_theme_toggle_btn),
     div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover),
     div[data-testid="stElementContainer"]:has(#devcore_chatbot_popover),
-    div.stPopover:has(.st-key-devcore_chatbot_popover),
-    div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover) {
+    div.stPopover:has(.st-key-devcore_chatbot_popover) {
         position: fixed !important;
         bottom: 75px !important;
         right: 16px !important;
-        left: auto !important;
-        top: auto !important;
         width: 0px !important;
         height: 0px !important;
-        max-width: 0px !important;
-        min-width: 0px !important;
-        transform: none !important;
         margin: 0 !important;
         padding: 0 !important;
         border: none !important;
@@ -1315,7 +1309,6 @@ div[data-testid="stDialog"] input::placeholder {
         -webkit-border-radius: 50% !important;
         border: 3px solid var(--border-color) !important;
         box-shadow: 3px 3px 0px 0px var(--border-color) !important;
-        transform: none !important;
         margin: 0 !important;
         padding: 0 !important;
         z-index: 999999 !important;
@@ -1326,7 +1319,34 @@ div[data-testid="stDialog"] input::placeholder {
     }
 
     /* 4. Floating Chatbot Trigger Circular FAB (Bottom Right Above Theme Switcher) */
-    .st-key-devcore_chatbot_popover,
+    div[data-testid="stElementContainer"]:has(.st-key-devcore_chatbot_popover),
+    div[data-testid="stElementContainer"]:has(#devcore_chatbot_popover),
+    div.stPopover:has(.st-key-devcore_chatbot_popover),
+    div[data-testid="stPopover"]:has(.st-key-devcore_chatbot_popover),
+    .st-key-devcore_chatbot_popover {
+        position: fixed !important;
+        bottom: 135px !important;
+        right: 16px !important;
+        left: auto !important;
+        top: auto !important;
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+        height: 50px !important;
+        min-height: 50px !important;
+        max-height: 50px !important;
+        transform: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        z-index: 999999 !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+        border: none !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+
     .st-key-devcore_chatbot_popover button,
     .st-key-devcore_chatbot_popover > button,
     div.stPopover:has(.st-key-devcore_chatbot_popover) > button,
@@ -1353,6 +1373,11 @@ div[data-testid="stDialog"] input::placeholder {
         margin: 0 !important;
         padding: 0 !important;
         z-index: 999999 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
     }
 
     /* 5. Mobile Typography & Header Scaling */
