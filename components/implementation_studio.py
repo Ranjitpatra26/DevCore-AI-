@@ -751,8 +751,12 @@ def parse_multi_files(response_text: str, default_lang: str = "python") -> List[
     for idx, (lang_tag, code_body) in enumerate(raw_blocks):
         lang = lang_tag.strip().lower() if lang_tag else "text"
         code_str = code_body.strip() if code_body else ""
-        lines = code_str.splitlines()
         
+        # Skip empty or near-empty code blocks (prevents 0-byte empty file boxes)
+        if not code_str or len(code_str.strip()) < 10:
+            continue
+
+        lines = code_str.splitlines()
         file_path = ""
         
         # Check first 3 lines for explicit filename header (# File: path/to/file.ext)
@@ -790,41 +794,38 @@ def parse_multi_files(response_text: str, default_lang: str = "python") -> List[
             
             if ext in ["python", "py"]:
                 default_names = [
+                    "pages/projects.py",
+                    "pages/dashboard.py",
+                    "pages/new_project.py",
+                    "components/ui.py",
+                    "components/navigation.py",
                     "app/main.py",
-                    "routers/auth_router.py",
-                    "services/app_service.py",
-                    "repository/db_repository.py",
-                    "schemas/domain_schemas.py",
-                    "models/domain_models.py",
-                    "tests/test_module.py"
+                    "services/app_service.py"
                 ]
                 file_path = default_names[code_idx] if code_idx < len(default_names) else f"modules/service_{code_idx+1}.py"
             elif ext in ["javascript", "js", "typescript", "ts"]:
                 default_names = [
                     "src/index.ts",
-                    "src/components/ModuleComponent.tsx",
+                    "src/components/Dashboard.tsx",
                     "src/services/apiService.ts",
-                    "src/hooks/useAuth.ts",
-                    "tests/module.test.ts"
+                    "src/hooks/useAuth.ts"
                 ]
                 file_path = default_names[code_idx] if code_idx < len(default_names) else f"src/services/service_{code_idx+1}.ts"
             elif ext == "sql":
                 default_names = [
                     "database/schema.sql",
-                    "database/migrations/001_init.sql",
-                    "database/seeds/001_demo.sql"
+                    "database/migrations/001_init.sql"
                 ]
                 file_path = default_names[code_idx] if code_idx < len(default_names) else f"database/migration_{code_idx+1}.sql"
             elif ext in ["yaml", "yml", "dockerfile"]:
-                default_names = ["docker-compose.yml", "Dockerfile", "k8s/deployment.yaml"]
+                default_names = ["docker-compose.yml", "Dockerfile"]
                 file_path = default_names[code_idx] if code_idx < len(default_names) else f"config/deploy_{code_idx+1}.yaml"
+            elif ext == "css":
+                file_path = "styles.css"
             elif ext == "json":
-                default_names = ["package.json", "config/settings.json"]
-                file_path = default_names[code_idx] if code_idx < len(default_names) else f"config/data_{code_idx+1}.json"
+                file_path = "package.json" if code_idx == 0 else f"config/data_{code_idx+1}.json"
             elif ext in ["markdown", "md"]:
                 file_path = "README.md" if code_idx == 0 else f"docs/guide_{code_idx+1}.md"
-            elif ext in ["mermaid", "mmd"]:
-                file_path = "diagrams/architecture.mmd" if code_idx == 0 else f"diagrams/data_flow_{code_idx+1}.mmd"
             else:
                 file_path = f"docs/notes_{code_idx+1}.txt"
 
