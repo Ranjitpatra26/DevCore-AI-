@@ -308,8 +308,20 @@ def show_specialist_modal(member: dict):
     /* Widen AI Specialist Operational Dossier Modal popup toward left & right on AI Team page */
     div[data-testid="stDialog"] > div:first-child,
     div[role="dialog"] {
-        max-width: 980px !important;
-        width: 92vw !important;
+        max-width: 1150px !important;
+        width: 94vw !important;
+    }
+
+    /* Completely eliminate arrow_right / arrow_down text in stExpander summary */
+    div[data-testid="stExpander"] details summary [data-testid="stExpanderToggleIcon"],
+    div[data-testid="stExpander"] details summary [data-baseweb="icon"],
+    div[data-testid="stExpander"] details summary svg + span {
+        font-size: 0 !important;
+        color: transparent !important;
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
     }
     </style>
     """)

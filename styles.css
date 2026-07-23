@@ -1241,13 +1241,16 @@ div[data-testid="stDialog"] label {
 
 /* Hide fallback text string arrow_right / arrow_down in stExpander toggle icons */
 div[data-testid="stDialog"] [data-testid="stExpanderToggleIcon"],
-div[data-testid="stExpander"] [data-testid="stExpanderToggleIcon"] {
+div[data-testid="stExpander"] [data-testid="stExpanderToggleIcon"],
+div[data-testid="stExpander"] summary [data-baseweb="icon"],
+div[data-testid="stExpander"] summary svg + span {
     display: none !important;
     visibility: hidden !important;
     font-size: 0 !important;
     color: transparent !important;
     width: 0 !important;
     height: 0 !important;
+    opacity: 0 !important;
 }
 
 div[data-testid="stDialog"] input {
