@@ -208,8 +208,32 @@ def render_chat_window_content():
 
         with msg_container:
             with st.chat_message("assistant", avatar="⚡"):
-                if not is_online:
-                    err_msg = f"⚠️ **Ollama Not Connected**: Could not reach `{target_url}`. Run `ollama serve` locally or update the connection URL in Settings."
+                # Fetch active Groq API key & provider
+                groq_key = ""
+                groq_model = "llama-3.3-70b-versatile"
+                provider = "groq"
+                try:
+                    from database.connection import execute_query
+                    p_row = execute_query("SELECT value FROM settings WHERE key = 'chatbot_provider'")
+                    k_row = execute_query("SELECT value FROM settings WHERE key = 'groq_api_key_chatbot'")
+                    if not k_row or not k_row[0].get('value'):
+                        k_row = execute_query("SELECT value FROM settings WHERE key = 'groq_api_key'")
+                    m_row = execute_query("SELECT value FROM settings WHERE key = 'groq_model'")
+                    if p_row and p_row[0].get('value'):
+                        provider = p_row[0]['value']
+                    if k_row and k_row[0].get('value'):
+                        groq_key = k_row[0]['value']
+                    if not groq_key:
+                        groq_key = os.getenv("GROQ_API_KEY_CHATBOT") or os.getenv("GROQ_API_KEY") or ""
+                    if m_row and m_row[0].get('value'):
+                        groq_model = m_row[0]['value']
+                except Exception:
+                    groq_key = os.getenv("GROQ_API_KEY_CHATBOT") or os.getenv("GROQ_API_KEY") or ""
+
+                use_groq = (provider == "groq" or not is_online or os.getenv("EXECUTION_PROVIDER") == "groq") and bool(groq_key)
+
+                if not is_online and not use_groq:
+                    err_msg = f"⚠️ **Groq API Key Required**: Please enter your Groq API key in **Settings** or your `.env` file to enable cloud responses."
                     st.markdown(err_msg)
                     st.session_state.devcore_chat_messages.append({"role": "assistant", "content": err_msg})
                 else:
@@ -217,35 +241,6 @@ def render_chat_window_content():
                     thinking_ph.html(get_role_thinking_html("assistant"))
 
                     system_prompt = build_system_context(user_prompt=prompt, active_project_id=st.session_state.get("active_project_id"))
-                    
-                    # Fetch active provider from SQLite settings
-                    provider = "ollama"
-                    groq_key = ""
-                    groq_model = "llama-3.3-70b-versatile"
-                    try:
-                        from database.connection import execute_query
-                        p_row = execute_query("SELECT value FROM settings WHERE key = 'chatbot_provider'")
-                        k_row = execute_query("SELECT value FROM settings WHERE key = 'groq_api_key_chatbot'")
-                        if not k_row:
-                            k_row = execute_query("SELECT value FROM settings WHERE key = 'groq_api_key'")
-                        m_row = execute_query("SELECT value FROM settings WHERE key = 'groq_model'")
-                        if p_row and p_row[0].get('value'):
-                            provider = p_row[0]['value']
-                        if k_row and k_row[0].get('value'):
-                            groq_key = k_row[0]['value']
-                        if not groq_key:
-                            import os
-                            groq_key = os.getenv("GROQ_API_KEY_CHATBOT") or os.getenv("GROQ_API_KEY") or ""
-                        if m_row and m_row[0].get('value'):
-                            groq_model = m_row[0]['value']
-                    except Exception:
-                        import os
-                        groq_key = os.getenv("GROQ_API_KEY_CHATBOT") or os.getenv("GROQ_API_KEY") or ""
-
-
-                    from utils.config import ensure_ollama_server_online
-                    is_ollama_up = ensure_ollama_server_online()
-                    use_groq = (provider == "groq" or not is_ollama_up or os.getenv("EXECUTION_PROVIDER") == "groq") and bool(groq_key)
 
                     if use_groq:
                         from components.chatbot.groq_client import stream_groq_response
