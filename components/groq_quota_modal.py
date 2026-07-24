@@ -224,6 +224,13 @@ def render_groq_quota_modal_content():
         execute_update("UPDATE settings SET value = ? WHERE key = 'groq_api_key'", (primary_new,))
         execute_update("UPDATE settings SET value = ? WHERE key = 'groq_model'", (selected_model,))
 
+        st.session_state["groq_api_key_blueprint"] = bp_new
+        st.session_state["groq_api_key_studio"] = studio_new
+        st.session_state["groq_api_key_chatbot"] = chatbot_new
+        st.session_state["groq_api_key_consultation"] = consult_new
+        st.session_state["groq_api_key"] = primary_new
+        st.session_state["groq_model"] = selected_model
+
         st.session_state["show_groq_quota_modal"] = False
         st.success("🎉 All Groq API keys updated successfully!")
         st.toast("New API keys saved to settings!")
