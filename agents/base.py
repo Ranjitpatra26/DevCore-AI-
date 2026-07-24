@@ -148,8 +148,11 @@ Do NOT use placeholders, ellipsis ("..."), or abbreviated summaries. Utilize you
         agent_role=agent_role,
         override_max_tokens=AGENT_BLUEPRINT_MAX_TOKENS
     )
-    if not output_markdown or not output_markdown.strip():
-        output_markdown = f"⚠️ **Blueprint Synthesis Notice**: The AI engine returned no content for {get_role_display_name(agent_role)}. Please verify your Groq API Key or local Ollama connection and click 'Regenerate'."
+    if not output_markdown or not output_markdown.strip() or (output_markdown.startswith("⚠️") and "Connection Error" in output_markdown):
+        from utils.ollama_client import generate_simulated_response
+        simulated = generate_simulated_response(system_prompt, user_prompt, agent_role=agent_role)
+        notice = "> [!NOTE]\n> ℹ️ *Offline Emergency Engine Active: Live API was unavailable. To switch to live cloud inference, enter your Groq API Key in Settings.*\n\n"
+        output_markdown = notice + simulated
         
     # 6. Calculate execution time
     elapsed_time = round(time.time() - start_time, 2)
