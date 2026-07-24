@@ -8,9 +8,28 @@ from exports.markdown import package_project_blueprint_zip
 from exports.pdf_generator import build_pdf_blueprint
 from agents.base import get_role_display_name
 
+def strip_emojis(text: str) -> str:
+    """Strip all emojis from text to guarantee clean Mermaid syntax parsing and professional diagram rendering."""
+    if not text:
+        return ""
+    emoji_pattern = re.compile(
+        "["
+        "\U0001F600-\U0001F64F"  # emoticons
+        "\U0001F300-\U0001F5FF"  # symbols & pictographs
+        "\U0001F680-\U0001F6FF"  # transport & map symbols
+        "\U0001F1E0-\U0001F1FF"  # flags (iOS)
+        "\U00002702-\U000027B0"  # dingbats
+        "\U000024C2-\U0001F251"
+        "\U00002600-\U000026FF"  # misc symbols
+        "\U0001F900-\U0001F9FF"
+        "\U0001FA70-\U0001FAFF"
+        "]+", flags=re.UNICODE
+    )
+    return emoji_pattern.sub('', text)
+
 def get_project_specific_diagram(project_details: dict, runs_map: dict, diag_choice: str) -> str:
     """
-    Dynamically extract or generate a project-customized Mermaid diagram.
+    Dynamically extract or generate a project-customized Mermaid diagram (strictly emoji-free).
     1. First checks if any completed agent run contains a valid Mermaid code block matching the diagram choice.
     2. If not found, dynamically synthesizes a project-tailored Mermaid diagram using project metadata.
     """
@@ -34,7 +53,7 @@ def get_project_specific_diagram(project_details: dict, runs_map: dict, diag_cho
             content = runs_map[role]['output_markdown']
             mermaid_blocks = re.findall(r'```mermaid\s*(.*?)```', content, re.DOTALL)
             for block in mermaid_blocks:
-                block_clean = block.strip()
+                block_clean = strip_emojis(block.strip())
                 if "ERD" in diag_choice or "Database" in diag_choice:
                     if "erDiagram" in block_clean:
                         return block_clean
@@ -45,15 +64,15 @@ def get_project_specific_diagram(project_details: dict, runs_map: dict, diag_cho
                     if "graph" in block_clean or "flowchart" in block_clean:
                         return block_clean
 
-    # 2. Fallback: Dynamically synthesize custom Mermaid diagram using project metadata
+    # 2. Fallback: Dynamically synthesize custom Mermaid diagram using project metadata (Emoji-Free)
     if diag_choice == "High-Level System Topology":
         return f"""graph TD
-    Client["📱 Client Interface ({proj_name})"] --> Gateway["⚡ API Gateway / Router"]
-    Gateway --> Auth["🔑 Authentication & RBAC Service"]
-    Gateway --> CoreService["⚙️ Core {industry} Service ({tech})"]
-    CoreService --> Cache[("⚡ Redis In-Memory Cache")]
-    CoreService --> PrimaryDB[("🗄️ {proj_name} Primary DB")]
-    CoreService --> AIModule[("🧠 AI & RAG Engine")]"""
+    Client["Client Interface ({proj_name})"] --> Gateway["API Gateway / Router"]
+    Gateway --> Auth["Authentication & RBAC Service"]
+    Gateway --> CoreService["Core {industry} Service ({tech})"]
+    CoreService --> Cache[("Redis In-Memory Cache")]
+    CoreService --> PrimaryDB[("{proj_name} Primary DB")]
+    CoreService --> AIModule[("AI & RAG Engine")]"""
 
     elif diag_choice == "User Authentication Flow":
         return f"""sequenceDiagram
@@ -69,11 +88,11 @@ def get_project_specific_diagram(project_details: dict, runs_map: dict, diag_cho
 
     elif diag_choice == "Vector RAG Ingestion Pipeline":
         return f"""graph LR
-    Input["📄 Ingest Docs for {proj_name}"] --> Chunk["✂️ Recursive Text Chunker"]
-    Chunk --> Embed["🧠 Embeddings API ({tech})"]
-    Embed --> VectorDB[("📦 Vector Store ({proj_name})")]
-    VectorDB --> Retrieve["🔍 Similarity Match Search"]
-    Retrieve --> AgentContext["🤖 Context-Aware AI Agent Prompt"]"""
+    Input["Ingest Docs for {proj_name}"] --> Chunk["Recursive Text Chunker"]
+    Chunk --> Embed["Embeddings API ({tech})"]
+    Embed --> VectorDB[("Vector Store ({proj_name})")]
+    VectorDB --> Retrieve["Similarity Match Search"]
+    Retrieve --> AgentContext["Context-Aware AI Agent Prompt"]"""
 
     elif diag_choice == "Database Entity Relationship Diagram (ERD)":
         cid = clean_id.upper()
@@ -111,35 +130,35 @@ def get_project_specific_diagram(project_details: dict, runs_map: dict, diag_cho
 
     elif diag_choice == "Component Architecture & Microservices":
         return f"""graph TD
-    UI["🖥️ Streamlit UI ({proj_name})"] --> Router["🔀 SPA Router & State Manager"]
-    Router --> Orchestrator["⚙️ LangGraph Multi-Agent Orchestrator"]
-    Orchestrator --> BusinessLayer["📊 Business & Requirements Layer ({industry})"]
-    Orchestrator --> TechLayer["🛠️ Architecture Layer ({tech})"]
-    Orchestrator --> SecurityLayer["🛡️ CSO & QA Audit Layer"]
+    UI["Streamlit UI ({proj_name})"] --> Router["SPA Router & State Manager"]
+    Router --> Orchestrator["LangGraph Multi-Agent Orchestrator"]
+    Orchestrator --> BusinessLayer["Business & Requirements Layer ({industry})"]
+    Orchestrator --> TechLayer["Architecture Layer ({tech})"]
+    Orchestrator --> SecurityLayer["CSO & QA Audit Layer"]
     Orchestrator --> DB[(SQLite & Vector DB)]"""
 
     elif diag_choice == "Agent Workforce State Graph Workflow":
         return f"""graph LR
-    CEO["🏢 CEO Agent"] --> BA["📋 Business Analyst"]
-    BA --> PM["📅 Project Manager"]
-    PM --> Arch["📐 Lead Architect ({tech})"]
-    Arch --> UIUX["🎨 UI/UX Designer"]
-    UIUX --> FE["💻 Frontend Eng"]
-    FE --> BE["⚙️ Backend Eng"]
-    BE --> DB["🗄️ Database Lead"]
-    DB --> Sec["🛡️ CSO Security"]
-    Sec --> DevOps["🚀 DevOps Eng"]
-    DevOps --> QA["🧪 QA Lead"]
-    QA --> Doc["📝 Tech Writer"]
-    Doc --> Rev["🔍 Systems Reviewer ({proj_name})"]"""
+    CEO["CEO Agent"] --> BA["Business Analyst"]
+    BA --> PM["Project Manager"]
+    PM --> Arch["Lead Architect ({tech})"]
+    Arch --> UIUX["UI/UX Designer"]
+    UIUX --> FE["Frontend Engineer"]
+    FE --> BE["Backend Engineer"]
+    BE --> DB["Database Lead"]
+    DB --> Sec["CSO Security"]
+    Sec --> DevOps["DevOps Engineer"]
+    DevOps --> QA["QA Lead"]
+    QA --> Doc["Tech Writer"]
+    Doc --> Rev["Systems Reviewer ({proj_name})"]"""
 
     elif diag_choice == "End-to-End Data Flow Diagram":
         return f"""graph TD
-    UserSpec["💡 User Prompt: {proj_name}"] --> DBInit["💾 Create SQLite Record ({industry})"]
-    DBInit --> VectorIndex["🔍 RAG Document Indexing"]
-    VectorIndex --> ExecutionGraph["⚡ 13-Agent State Graph Execution"]
-    ExecutionGraph --> Persistence["🗄️ Save Specs & Code Blueprints"]
-    Persistence --> Studio["💻 Live Implementation Studio & PDF Export"]"""
+    UserSpec["User Prompt: {proj_name}"] --> DBInit["Create SQLite Record ({industry})"]
+    DBInit --> VectorIndex["RAG Document Indexing"]
+    VectorIndex --> ExecutionGraph["13-Agent State Graph Execution"]
+    ExecutionGraph --> Persistence["Save Specs & Code Blueprints"]
+    Persistence --> Studio["Live Implementation Studio & PDF Export"]"""
 
     elif diag_choice == "Security & Access Control Sequence Diagram":
         return f"""sequenceDiagram
