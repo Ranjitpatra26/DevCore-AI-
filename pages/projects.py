@@ -8,6 +8,150 @@ from exports.markdown import package_project_blueprint_zip
 from exports.pdf_generator import build_pdf_blueprint
 from agents.base import get_role_display_name
 
+def get_project_specific_diagram(project_details: dict, runs_map: dict, diag_choice: str) -> str:
+    """
+    Dynamically extract or generate a project-customized Mermaid diagram.
+    1. First checks if any completed agent run contains a valid Mermaid code block matching the diagram choice.
+    2. If not found, dynamically synthesizes a project-tailored Mermaid diagram using project metadata.
+    """
+    proj_name = project_details.get('name', 'Project').strip()
+    tech = project_details.get('tech_preference', 'Modern Tech Stack').strip()
+    industry = project_details.get('industry', 'General').strip()
+
+    clean_id = re.sub(r'[^a-zA-Z0-9]', '', proj_name) or "App"
+    
+    # 1. Search in agent runs markdown for dynamic Mermaid code blocks
+    search_roles = []
+    if "Database" in diag_choice or "ERD" in diag_choice:
+        search_roles = ['database', 'architect', 'reviewer']
+    elif "Authentication" in diag_choice or "Security" in diag_choice:
+        search_roles = ['security', 'backend', 'architect', 'reviewer']
+    else:
+        search_roles = ['architect', 'reviewer', 'tech_lead', 'backend', 'database', 'frontend']
+
+    for role in search_roles:
+        if role in runs_map and runs_map[role].get('output_markdown'):
+            content = runs_map[role]['output_markdown']
+            mermaid_blocks = re.findall(r'```mermaid\s*(.*?)```', content, re.DOTALL)
+            for block in mermaid_blocks:
+                block_clean = block.strip()
+                if "ERD" in diag_choice or "Database" in diag_choice:
+                    if "erDiagram" in block_clean:
+                        return block_clean
+                elif "Sequence" in diag_choice or "Authentication" in diag_choice:
+                    if "sequenceDiagram" in block_clean:
+                        return block_clean
+                elif "Topology" in diag_choice or "Component" in diag_choice or "Flow" in diag_choice:
+                    if "graph" in block_clean or "flowchart" in block_clean:
+                        return block_clean
+
+    # 2. Fallback: Dynamically synthesize custom Mermaid diagram using project metadata
+    if diag_choice == "High-Level System Topology":
+        return f"""graph TD
+    Client["📱 Client Interface ({proj_name})"] --> Gateway["⚡ API Gateway / Router"]
+    Gateway --> Auth["🔑 Authentication & RBAC Service"]
+    Gateway --> CoreService["⚙️ Core {industry} Service ({tech})"]
+    CoreService --> Cache[("⚡ Redis In-Memory Cache")]
+    CoreService --> PrimaryDB[("🗄️ {proj_name} Primary DB")]
+    CoreService --> AIModule[("🧠 AI & RAG Engine")]"""
+
+    elif diag_choice == "User Authentication Flow":
+        return f"""sequenceDiagram
+    actor User as {proj_name} User
+    User->>Client: Input Credentials ({proj_name})
+    Client->>Gateway: POST /api/v1/auth/login
+    Gateway->>Auth: Validate Credentials
+    Auth->>DB: Query User Record ({industry})
+    DB-->>Auth: Return Password Hash & User Roles
+    Auth-->>Gateway: Generate JWT Token (Bearer)
+    Gateway-->>Client: 200 OK + JWT Access Token
+    Client-->>User: Load Customized {proj_name} Dashboard"""
+
+    elif diag_choice == "Vector RAG Ingestion Pipeline":
+        return f"""graph LR
+    Input["📄 Ingest Docs for {proj_name}"] --> Chunk["✂️ Recursive Text Chunker"]
+    Chunk --> Embed["🧠 Embeddings API ({tech})"]
+    Embed --> VectorDB[("📦 Vector Store ({proj_name})")]
+    VectorDB --> Retrieve["🔍 Similarity Match Search"]
+    Retrieve --> AgentContext["🤖 Context-Aware AI Agent Prompt"]"""
+
+    elif diag_choice == "Database Entity Relationship Diagram (ERD)":
+        cid = clean_id.upper()
+        return f"""erDiagram
+    {cid}_USERS ||--o{{ {cid}_PROJECTS : "owns"
+    {cid}_PROJECTS ||--o{{ {cid}_DATA : "contains"
+    {cid}_PROJECTS ||--o{{ {cid}_LOGS : "records"
+
+    {cid}_USERS {{
+        string user_id PK
+        string email
+        string hashed_password
+        string role
+        timestamp created_at
+    }}
+    {cid}_PROJECTS {{
+        string project_id PK
+        string user_id FK
+        string title
+        string industry
+        string tech_stack
+    }}
+    {cid}_DATA {{
+        string record_id PK
+        string project_id FK
+        string payload_json
+        string status
+    }}
+    {cid}_LOGS {{
+        string log_id PK
+        string project_id FK
+        string agent_role
+        string log_message
+    }}"""
+
+    elif diag_choice == "Component Architecture & Microservices":
+        return f"""graph TD
+    UI["🖥️ Streamlit UI ({proj_name})"] --> Router["🔀 SPA Router & State Manager"]
+    Router --> Orchestrator["⚙️ LangGraph Multi-Agent Orchestrator"]
+    Orchestrator --> BusinessLayer["📊 Business & Requirements Layer ({industry})"]
+    Orchestrator --> TechLayer["🛠️ Architecture Layer ({tech})"]
+    Orchestrator --> SecurityLayer["🛡️ CSO & QA Audit Layer"]
+    Orchestrator --> DB[(SQLite & Vector DB)]"""
+
+    elif diag_choice == "Agent Workforce State Graph Workflow":
+        return f"""graph LR
+    CEO["🏢 CEO Agent"] --> BA["📋 Business Analyst"]
+    BA --> PM["📅 Project Manager"]
+    PM --> Arch["📐 Lead Architect ({tech})"]
+    Arch --> UIUX["🎨 UI/UX Designer"]
+    UIUX --> FE["💻 Frontend Eng"]
+    FE --> BE["⚙️ Backend Eng"]
+    BE --> DB["🗄️ Database Lead"]
+    DB --> Sec["🛡️ CSO Security"]
+    Sec --> DevOps["🚀 DevOps Eng"]
+    DevOps --> QA["🧪 QA Lead"]
+    QA --> Doc["📝 Tech Writer"]
+    Doc --> Rev["🔍 Systems Reviewer ({proj_name})"]"""
+
+    elif diag_choice == "End-to-End Data Flow Diagram":
+        return f"""graph TD
+    UserSpec["💡 User Prompt: {proj_name}"] --> DBInit["💾 Create SQLite Record ({industry})"]
+    DBInit --> VectorIndex["🔍 RAG Document Indexing"]
+    VectorIndex --> ExecutionGraph["⚡ 13-Agent State Graph Execution"]
+    ExecutionGraph --> Persistence["🗄️ Save Specs & Code Blueprints"]
+    Persistence --> Studio["💻 Live Implementation Studio & PDF Export"]"""
+
+    elif diag_choice == "Security & Access Control Sequence Diagram":
+        return f"""sequenceDiagram
+    actor Admin as {proj_name} Admin
+    Admin->>App: Update Security Policy ({industry})
+    App->>DB: UPDATE app_settings table
+    App->>Ollama: Check Local Server Health
+    Ollama-->>App: 200 OK Response
+    App-->>Admin: Display Security Audit Status"""
+
+    return ""
+
 def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int = 450):
     """Inject a container script with Mermaid CDN to render diagram blocks dynamically, matching active themes."""
     theme = st.session_state.get("theme", "light")
