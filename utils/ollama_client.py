@@ -191,8 +191,7 @@ def query_ollama(
         groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name)
         if groq_res:
             return groq_res
-        simulated = generate_simulated_response(system_prompt, user_prompt, agent_role, is_consultation)
-        return sanitize_and_eliminate_placeholders(simulated, project_name)
+        return "⚠️ **AI Engine Timeout**: Local Ollama server timed out and no active Groq API Key was found. Please check your Groq API Key in Settings."
 
     config = get_generation_config()
     is_online = ensure_ollama_server_online(config['url'])
@@ -201,10 +200,7 @@ def query_ollama(
         groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name)
         if groq_res:
             return groq_res
-
-        logger.info("Ollama server offline. Instantly using simulated blueprint synthesis.")
-        simulated = generate_simulated_response(system_prompt, user_prompt, agent_role, is_consultation)
-        return sanitize_and_eliminate_placeholders(simulated, project_name)
+        return "⚠️ **AI Connection Required**: Local Ollama server is offline and no active Groq API Key was found. Please enter your Groq API key in Settings or the top pop-up modal."
 
     target_url = f"{config['url'].rstrip('/')}/api/chat"
 

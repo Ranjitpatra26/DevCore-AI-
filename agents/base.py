@@ -149,8 +149,7 @@ Do NOT use placeholders, ellipsis ("..."), or abbreviated summaries. Utilize you
         override_max_tokens=AGENT_BLUEPRINT_MAX_TOKENS
     )
     if not output_markdown or not output_markdown.strip():
-        from utils.ollama_client import generate_simulated_response
-        output_markdown = generate_simulated_response(system_prompt, user_prompt, agent_role=agent_role)
+        output_markdown = f"⚠️ **Blueprint Synthesis Notice**: The AI engine returned no content for {get_role_display_name(agent_role)}. Please verify your Groq API Key or local Ollama connection and click 'Regenerate'."
         
     # 6. Calculate execution time
     elapsed_time = round(time.time() - start_time, 2)
