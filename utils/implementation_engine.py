@@ -44,21 +44,8 @@ def validate_generation_request(
     return True, None
 
 def calculate_smart_token_budget(cat_key: str = "", user_input: str = "", difficulty: str = "") -> int:
-    """Smartly calculate token budget based on category complexity, project difficulty, and custom instruction scope."""
-    cat_lower = str(cat_key).lower()
-    input_lower = str(user_input).lower()
-    diff_lower = str(difficulty).lower()
-
-    if "beginner" in diff_lower:
-        return 4096  # Lean, educational, easy-to-read code snippets for beginners
-
-    # Heavy multi-file & architectural categories get 8192 tokens for deep, complete code generation
-    heavy_categories = {"backend", "frontend", "database", "ai_rag", "devops", "architecture", "project_structure", "ui_components", "sql_schema", "pytest_suite"}
-    heavy_keywords = {"full", "complete", "exhaustive", "all", "enterprise", "multi", "entire", "production", "system", "code", "file"}
-
-    if cat_lower in heavy_categories or any(kw in input_lower for kw in heavy_keywords) or "enterprise" in diff_lower or "advanced" in diff_lower:
-        return 8192
-    return 6144
+    """Calculate maximum token budget (8192 tokens) for deep, complete, multi-file code generation without truncation."""
+    return 8192
 
 def execute_implementation_module(*args, **kwargs) -> Dict[str, Any]:
     """
