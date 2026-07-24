@@ -1,3 +1,4 @@
+import re
 import base64
 import streamlit as st
 import streamlit.components.v1 as components
@@ -491,111 +492,9 @@ def show_projects():
             ]
         )
         
-        if diag_choice == "High-Level System Topology":
-            code = """graph TD
-    Client[Browser/Client App] --> Gateway[API Gateway / Load Balancer]
-    Gateway --> Auth[Auth Service]
-    Gateway --> WebApp[Core Web Service]
-    WebApp --> Cache[(Redis Cache)]
-    WebApp --> DB[(SQLite Database)]
-    WebApp --> RAG[(Vector DB / Chroma)]"""
-            render_mermaid_in_streamlit(code, "topology", height=440)
-            
-        elif diag_choice == "User Authentication Flow":
-            code = """sequenceDiagram
-    actor User
-    User->>Client: Input credentials
-    Client->>Gateway: POST /api/auth/login
-    Gateway->>Auth: Validate user hash
-    Auth->>DB: Query user record
-    DB-->>Auth: Record found
-    Auth-->>Gateway: Generate JWT Token
-    Gateway-->>Client: 200 OK + JWT
-    Client-->>User: Load dashboard"""
-            render_mermaid_in_streamlit(code, "auth_seq", height=480)
-            
-        elif diag_choice == "Vector RAG Ingestion Pipeline":
-            code = """graph LR
-    Input[Upload Docs] --> Chunk[Recursive Text Splitter]
-    Chunk --> Embed[Ollama Embeddings API]
-    Embed --> DB[(SQLite Store)]
-    DB --> Retrieve[Similarity Matching]
-    Retrieve --> AgentPrompt[Collaborative LLM Prompt]"""
-            render_mermaid_in_streamlit(code, "rag_flow", height=420)
-            
-        elif diag_choice == "Database Entity Relationship Diagram (ERD)":
-            code = """erDiagram
-    PROJECTS ||--o{ PROJECT_FILES : "contains"
-    PROJECTS ||--o{ AGENT_RUNS : "executes"
-    PROJECT_FILES ||--o{ EMBEDDINGS : "splits"
-    PROJECTS ||--o{ CHATS : "logs"
-
-    PROJECTS {
-        text id PK
-        text name
-        text description
-        text created_at
-    }
-    PROJECT_FILES {
-        text id PK
-        text project_id FK
-        text filename
-        text file_type
-        text content
-    }
-    AGENT_RUNS {
-        text project_id PK,FK
-        text agent_role PK
-        text output_markdown
-        real execution_time_s
-    }"""
-            render_mermaid_in_streamlit(code, "erd", height=450)
-
-        elif diag_choice == "Component Architecture & Microservices":
-            code = """graph TD
-    UI[Streamlit Frontend UI] --> State[Session State Manager]
-    State --> Workflow[LangGraph Orchestrator]
-    Workflow --> AgentNode1[CEO & Analyst Agents]
-    Workflow --> AgentNode2[Architect & DB Agents]
-    Workflow --> AgentNode3[QA & Security Agents]
-    Workflow --> Ollama[Local Ollama Inference API]
-    Workflow --> SQLite[(SQLite Local DB)]"""
-            render_mermaid_in_streamlit(code, "comp_arch", height=440)
-
-        elif diag_choice == "Agent Workforce State Graph Workflow":
-            code = """graph LR
-    CEO[CEO Agent] --> BA[Business Analyst]
-    BA --> PM[Project Manager]
-    PM --> Arch[Architect]
-    Arch --> UIUX[UI/UX Designer]
-    UIUX --> FE[Frontend Eng]
-    FE --> BE[Backend Eng]
-    BE --> DB[DB Admin]
-    DB --> Sec[Security Analyst]
-    Sec --> DevOps[DevOps Eng]
-    DevOps --> QA[QA Specialist]
-    QA --> Doc[Tech Writer]
-    Doc --> Rev[Reviewer Agent]"""
-            render_mermaid_in_streamlit(code, "agent_graph", height=420)
-
-        elif diag_choice == "End-to-End Data Flow Diagram":
-            code = """graph TD
-    UserData[User Prompt / Spec Upload] --> DBInsert[Save SQLite Project Record]
-    DBInsert --> VectorEmbed[Index Files via Ollama Embeddings]
-    VectorEmbed --> StateGraph[Execute 13-Agent State Graph]
-    StateGraph --> PersistRuns[Persist Agent Runs in SQLite]
-    PersistRuns --> PDFExport[Generate PDF / ZIP Package]"""
-            render_mermaid_in_streamlit(code, "data_flow", height=460)
-
-        elif diag_choice == "Security & Access Control Sequence Diagram":
-            code = """sequenceDiagram
-    actor Admin
-    Admin->>App: Update Ollama Settings
-    App->>DB: UPDATE settings table
-    App->>Ollama: Ping http://localhost:11434/api/tags
-    Ollama-->>App: 200 OK Response
-    App-->>Admin: Display Online Status & Model Config"""
-            render_mermaid_in_streamlit(code, "sec_seq", height=380)
+        code = get_project_specific_diagram(project_details, runs_map, diag_choice)
+        element_id = f"diag_{active_id[:8]}_{diag_choice.lower().replace(' ', '_').replace('&', 'and')}"
+        render_mermaid_in_streamlit(code, element_id, height=460)
             
         d_cols = st.columns([2.5, 1])
         with d_cols[0]:
