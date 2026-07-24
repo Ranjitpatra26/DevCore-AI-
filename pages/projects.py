@@ -171,11 +171,10 @@ def get_project_specific_diagram(project_details: dict, runs_map: dict, diag_cho
 
     return ""
 
-def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int = 450):
-    """Inject a container script with Mermaid CDN to render diagram blocks dynamically, matching active themes."""
+def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int = 480):
+    """Inject a container script with Mermaid CDN to render diagram blocks dynamically with interactive Pan & Zoom controls."""
     theme = st.session_state.get("theme", "light")
     
-    # Configure colors matching theme variables for accurate contrast & readability
     if theme == "dark":
         background_color = "#0F172A"
         border_color = "#334155"
@@ -186,6 +185,8 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
         line_color = "#38BDF8"
         node_border = "#6366F1"
         cluster_bkg = "#1E293B"
+        entity_bkg = "#1E293B"
+        entity_stroke = "#6366F1"
     else:
         background_color = "#FFFFFF"
         border_color = "#CBD5E1"
@@ -196,6 +197,8 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
         line_color = "#2563EB"
         node_border = "#3B82F6"
         cluster_bkg = "#F8FAFC"
+        entity_bkg = "#EFF6FF"
+        entity_stroke = "#2563EB"
 
     html_code = f"""
     <!DOCTYPE html>
@@ -207,107 +210,250 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
         html, body {{
             background-color: {background_color};
             margin: 0;
-            padding: 8px;
-            overflow: auto;
+            padding: 0;
+            overflow: hidden;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             color: {text_color};
             box-sizing: border-box;
             width: 100%;
             height: 100%;
         }}
-        body {{
+
+        /* Dedicated Control Toolbar (Placed strictly above the diagram) */
+        .diagram-toolbar {{
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }}
-        #holder-{element_id} {{
-            background-color: {background_color};
-            border: 1.5px solid {border_color};
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 4px 16px {shadow_color};
-            width: 100%;
-            max-width: 960px;
-            margin: 0 auto;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            background: {primary_color};
+            border-bottom: 1.5px solid {border_color};
             box-sizing: border-box;
+            gap: 12px;
+            flex-wrap: wrap;
+        }}
+
+        .toolbar-group {{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }}
+
+        .tool-btn {{
+            background: {background_color};
+            color: {text_color};
+            border: 1px solid {border_color};
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            font-family: 'Inter', system-ui, sans-serif;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px {shadow_color};
+        }}
+
+        .tool-btn:hover {{
+            border-color: {line_color};
+            color: {line_color};
+            transform: translateY(-1px);
+        }}
+
+        .tool-btn-primary {{
+            background: {line_color};
+            color: #FFFFFF !important;
+            border: none;
+        }}
+
+        .tool-btn-primary:hover {{
+            opacity: 0.9;
+            color: #FFFFFF !important;
+        }}
+
+        .zoom-badge {{
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: {text_color};
+            padding: 4px 10px;
+            background: {background_color};
+            border: 1px solid {border_color};
+            border-radius: 12px;
+            min-width: 48px;
+            text-align: center;
+        }}
+
+        /* Diagram Viewport & Interactive Canvas */
+        .diagram-viewport {{
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 54px);
+            overflow: hidden;
+            cursor: grab;
+            background-color: {background_color};
+            user-select: none;
+        }}
+
+        .diagram-viewport:active {{
+            cursor: grabbing;
+        }}
+
+        .diagram-canvas {{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: calc(100% - 16px);
+            transform-origin: 0 0;
+            transition: transform 0.05s ease-out;
         }}
+
         .mermaid {{
             width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             background: transparent !important;
         }}
+
         .mermaid svg {{
-            max-width: 100% !important;
-            max-height: calc({height}px - 50px) !important;
-            width: auto !important;
-            height: auto !important;
-            margin: 0 auto !important;
+            max-width: none !important;
+            max-height: none !important;
             display: block !important;
+            margin: auto !important;
+        }}
+
+        /* High-Contrast Explicit ERD & Class Diagram Overrides */
+        .er.entityBox, rect.entityBox, g.entityBox rect {{
+            fill: {entity_bkg} !important;
+            stroke: {entity_stroke} !important;
+            stroke-width: 2px !important;
+        }}
+        .er.entityLabel, text.entityName, text.attributeName, text.er, g.entityBox text {{
+            fill: {text_color} !important;
+            color: {text_color} !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+        }}
+        .er.relationshipLine, path.relationshipLine, path.er {{
+            stroke: {line_color} !important;
+            stroke-width: 2px !important;
+        }}
+        .er.relationshipLabel, text.relationshipLabel {{
+            fill: {text_color} !important;
+            font-size: 12px !important;
         }}
         </style>
     </head>
-        <div id="holder-{element_id}" style="position: relative;">
-            <div style="position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; z-index: 999;">
-                <button onclick="downloadPNG('{element_id}')" style="
-                    background: {line_color};
-                    color: #FFFFFF;
-                    border: none;
-                    border-radius: 8px;
-                    padding: 6px 12px;
-                    font-size: 0.78rem;
-                    font-weight: 600;
-                    font-family: 'Inter', system-ui, sans-serif;
-                    cursor: pointer;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                    transition: opacity 0.2s;
-                " onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1.0'">
-                    📷 Download PNG
-                </button>
-                <button onclick="downloadSVG('{element_id}')" style="
-                    background: {node_border};
-                    color: #FFFFFF;
-                    border: none;
-                    border-radius: 8px;
-                    padding: 6px 12px;
-                    font-size: 0.78rem;
-                    font-weight: 600;
-                    font-family: 'Inter', system-ui, sans-serif;
-                    cursor: pointer;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                    transition: opacity 0.2s;
-                " onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1.0'">
-                    📥 Download SVG
-                </button>
+    <body>
+        <div class="diagram-toolbar">
+            <div class="toolbar-group">
+                <button class="tool-btn" onclick="zoomIn()" title="Zoom In (or use mouse scroll wheel)">🔍 Zoom In</button>
+                <button class="tool-btn" onclick="zoomOut()" title="Zoom Out (or use mouse scroll wheel)">🔍 Zoom Out</button>
+                <button class="tool-btn" onclick="resetZoom()" title="Reset Zoom & Pan">🔄 Reset View</button>
+                <span class="zoom-badge" id="zoom-text">100%</span>
             </div>
-            <div class="mermaid">
-{mermaid_code}
+            <div class="toolbar-group">
+                <button class="tool-btn tool-btn-primary" onclick="downloadPNG('{element_id}')">📷 Download PNG</button>
+                <button class="tool-btn tool-btn-primary" onclick="downloadSVG('{element_id}')">📥 Download SVG</button>
             </div>
         </div>
+
+        <div class="diagram-viewport" id="viewport-{element_id}">
+            <div class="diagram-canvas" id="canvas-{element_id}">
+                <div class="mermaid" id="mermaid-{element_id}">
+{mermaid_code}
+                </div>
+            </div>
+        </div>
+
         <script>
+            var zoomScale = 1.0;
+            var panX = 0;
+            var panY = 0;
+            var isDragging = false;
+            var startX = 0;
+            var startY = 0;
+
+            var viewport = document.getElementById('viewport-{element_id}');
+            var canvas = document.getElementById('canvas-{element_id}');
+            var zoomBadge = document.getElementById('zoom-text');
+
+            function updateTransform() {{
+                canvas.style.transform = "translate(" + panX + "px, " + panY + "px) scale(" + zoomScale + ")";
+                zoomBadge.innerText = Math.round(zoomScale * 100) + "%";
+            }}
+
+            function zoomIn() {{
+                zoomScale = Math.min(zoomScale * 1.2, 5.0);
+                updateTransform();
+            }}
+
+            function zoomOut() {{
+                zoomScale = Math.max(zoomScale / 1.2, 0.2);
+                updateTransform();
+            }}
+
+            function resetZoom() {{
+                zoomScale = 1.0;
+                panX = 0;
+                panY = 0;
+                updateTransform();
+            }}
+
+            // Mouse Scroll Wheel Zoom Listener
+            viewport.addEventListener('wheel', function(e) {{
+                e.preventDefault();
+                var delta = e.deltaY < 0 ? 1.15 : 0.85;
+                var newScale = Math.min(Math.max(zoomScale * delta, 0.2), 5.0);
+                
+                var rect = viewport.getBoundingClientRect();
+                var mouseX = e.clientX - rect.left;
+                var mouseY = e.clientY - rect.top;
+
+                panX = mouseX - (mouseX - panX) * (newScale / zoomScale);
+                panY = mouseY - (mouseY - panY) * (newScale / zoomScale);
+                zoomScale = newScale;
+                updateTransform();
+            }}, {{ passive: false }});
+
+            // Click & Drag Pan Listeners
+            viewport.addEventListener('mousedown', function(e) {{
+                if (e.button !== 0) return; // Left click only
+                isDragging = true;
+                startX = e.clientX - panX;
+                startY = e.clientY - panY;
+            }});
+
+            window.addEventListener('mousemove', function(e) {{
+                if (!isDragging) return;
+                panX = e.clientX - startX;
+                panY = e.clientY - startY;
+                updateTransform();
+            }});
+
+            window.addEventListener('mouseup', function() {{
+                isDragging = false;
+            }});
+
+            // SVG & PNG Export Functions
             function downloadSVG(filename) {{
                 try {{
                     var svg = document.querySelector('.mermaid svg');
                     if (!svg) {{
-                        alert("Diagram is still rendering... Please wait a moment.");
+                        alert("Diagram is rendering... Please wait a moment.");
                         return;
                     }}
                     var clone = svg.cloneNode(true);
+                    var bbox = svg.getBBox ? svg.getBBox() : {{ width: 1000, height: 700 }};
                     var rect = svg.getBoundingClientRect();
-                    var bbox = svg.getBBox ? svg.getBBox() : {{ width: 900, height: 600 }};
-                    var w = Math.ceil(rect.width || bbox.width || 900) + 40;
-                    var h = Math.ceil(rect.height || bbox.height || 600) + 40;
+                    var w = Math.ceil(rect.width || bbox.width || 1000) + 40;
+                    var h = Math.ceil(rect.height || bbox.height || 700) + 40;
 
                     clone.setAttribute("width", w);
                     clone.setAttribute("height", h);
@@ -315,7 +461,6 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
                         clone.setAttribute("viewBox", "0 0 " + w + " " + h);
                     }}
                     clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-                    clone.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
                     var bg = '{background_color}';
                     var styleEl = document.createElementNS("http://www.w3.org/2000/svg", "style");
@@ -342,27 +487,15 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
                 try {{
                     var svg = document.querySelector('.mermaid svg');
                     if (!svg) {{
-                        alert("Diagram is still rendering... Please wait a moment.");
+                        alert("Diagram is rendering... Please wait a moment.");
                         return;
                     }}
 
-                    // Extract actual dimensions of rendered SVG
+                    var bbox = svg.getBBox ? svg.getBBox() : {{ width: 1000, height: 700 }};
                     var rect = svg.getBoundingClientRect();
-                    var bbox = svg.getBBox ? svg.getBBox() : {{ width: 900, height: 600 }};
-                    var viewBox = svg.getAttribute("viewBox");
-                    var vbW = 0, vbH = 0;
-                    if (viewBox) {{
-                        var parts = viewBox.trim().split(/[\\s,]+/);
-                        if (parts.length === 4) {{
-                            vbW = parseFloat(parts[2]);
-                            vbH = parseFloat(parts[3]);
-                        }}
-                    }}
+                    var width = Math.ceil(rect.width || bbox.width || 1000) + 60;
+                    var height = Math.ceil(rect.height || bbox.height || 700) + 60;
 
-                    var width = Math.ceil(vbW || rect.width || bbox.width || 900) + 40;
-                    var height = Math.ceil(vbH || rect.height || bbox.height || 600) + 40;
-
-                    // Clone SVG node & attach explicit width/height/xmlns/background attributes
                     var clone = svg.cloneNode(true);
                     clone.setAttribute("width", width);
                     clone.setAttribute("height", height);
@@ -370,7 +503,6 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
                         clone.setAttribute("viewBox", "0 0 " + width + " " + height);
                     }}
                     clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-                    clone.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
                     var bg = '{background_color}';
                     var styleEl = document.createElementNS("http://www.w3.org/2000/svg", "style");
@@ -379,13 +511,6 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
 
                     var serializer = new XMLSerializer();
                     var svgString = serializer.serializeToString(clone);
-
-                    // Ensure xmlns tag is present
-                    if (!svgString.includes("xmlns=")) {{
-                        svgString = svgString.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
-                    }}
-
-                    // Create encoded SVG Data URL
                     var svgDataUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgString);
 
                     var scale = 2; // High-resolution Retina export (2x)
@@ -399,11 +524,8 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
                             canvas.height = height * scale;
                             var ctx = canvas.getContext('2d');
 
-                            // Fill background
                             ctx.fillStyle = bg;
                             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                            // Draw SVG image onto canvas scaled up
                             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
                             var pngUrl = canvas.toDataURL("image/png");
@@ -414,20 +536,14 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
                             link.click();
                             document.body.removeChild(link);
                         }} catch(canvasErr) {{
-                            console.warn("Canvas conversion notice, switching to SVG fallback:", canvasErr);
                             downloadSVG(filename);
                         }}
                     }};
 
-                    img.onerror = function(imgErr) {{
-                        console.warn("Image load notice, switching to SVG fallback:", imgErr);
-                        downloadSVG(filename);
-                    }};
-
+                    img.onerror = function() {{ downloadSVG(filename); }};
                     img.src = svgDataUrl;
 
                 }} catch(e) {{
-                    console.error("PNG Download Exception:", e);
                     downloadSVG(filename);
                 }}
             }}
@@ -436,10 +552,10 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
                 mermaid.initialize({{ 
                     startOnLoad: true, 
                     theme: '{mermaid_theme}',
-                    flowchart: {{ useMaxWidth: true, htmlLabels: false, curve: 'basis' }},
-                    sequence: {{ useMaxWidth: true, showSequenceNumbers: false }},
-                    gantt: {{ useMaxWidth: true }},
-                    er: {{ useMaxWidth: true, htmlLabels: false }},
+                    flowchart: {{ useMaxWidth: false, htmlLabels: true, curve: 'basis' }},
+                    sequence: {{ useMaxWidth: false, showSequenceNumbers: false }},
+                    gantt: {{ useMaxWidth: false }},
+                    er: {{ useMaxWidth: false, htmlLabels: true }},
                     themeVariables: {{
                         darkMode: {'true' if theme == 'dark' else 'false'},
                         background: '{background_color}',
@@ -466,7 +582,7 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
                         loopTextColor: '{text_color}',
                         noteBkgColor: '{primary_color}',
                         noteTextColor: '{text_color}',
-                        fontSize: '13px',
+                        fontSize: '14px',
                         fontFamily: 'Inter, system-ui, sans-serif'
                     }}
                 }});
@@ -474,7 +590,6 @@ def render_mermaid_in_streamlit(mermaid_code: str, element_id: str, height: int 
                 console.error("Mermaid initialization error:", e);
             }}
         </script>
-
     </body>
     </html>
     """
