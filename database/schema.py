@@ -85,7 +85,7 @@ def init_db():
         ("top_p", "0.9"),
         ("max_tokens", "4096"),
         ("theme", "light"),
-        ("execution_provider", os.getenv("EXECUTION_PROVIDER", "ollama")),
+        ("execution_provider", os.getenv("EXECUTION_PROVIDER", "groq")),
         ("chatbot_provider", "groq"),
         ("groq_api_key", os.getenv("GROQ_API_KEY", "")),
         ("groq_api_key_blueprint", os.getenv("GROQ_API_KEY_BLUEPRINT", os.getenv("GROQ_API_KEY", ""))),
@@ -95,10 +95,7 @@ def init_db():
         ("groq_model", "llama-3.3-70b-versatile")
     ]
     for key, value in default_settings:
-        if value:
-            cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)", (key, value))
-        else:
-            cursor.execute("INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)", (key, value))
+        cursor.execute("INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)", (key, value or ""))
 
 
     conn.commit()

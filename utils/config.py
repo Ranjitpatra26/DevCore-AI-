@@ -222,5 +222,5 @@ def get_execution_provider() -> str:
             return rows[0]['value']
     except Exception:
         pass
-    return os.getenv("EXECUTION_PROVIDER", "ollama")
+    return os.getenv("EXECUTION_PROVIDER", "groq")
 

@@ -164,7 +164,7 @@ def query_ollama(
         from utils.config import get_execution_provider
         exec_provider = get_execution_provider()
     except Exception:
-        exec_provider = os.getenv("EXECUTION_PROVIDER", "ollama")
+        exec_provider = os.getenv("EXECUTION_PROVIDER", "groq")
 
     config = get_generation_config()
     is_ollama_online = ensure_ollama_server_online(config.get('url', 'http://localhost:11434'))
