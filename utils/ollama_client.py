@@ -79,23 +79,40 @@ def query_groq_api_fallback(
     """Dynamically fetch active Groq API Key and query Groq Cloud API for high-speed cloud execution."""
     try:
         from database.connection import execute_query
-        target_key_name = "groq_api_key_consultation" if is_consultation else "groq_api_key_blueprint"
-        g_rows = execute_query(
-            "SELECT key, value FROM settings WHERE key IN ('groq_api_key_blueprint', 'groq_api_key_studio', 'groq_api_key_consultation', 'groq_api_key_chatbot', 'groq_api_key') AND value != ''"
-        )
+        
         groq_k = ""
-        if g_rows:
-            key_map = {r['key']: r['value'] for r in g_rows if r.get('value')}
+        # 1. Check Session State
+        try:
+            import streamlit as st
             if is_consultation:
-                groq_k = key_map.get("groq_api_key_consultation") or key_map.get("groq_api_key_chatbot") or key_map.get("groq_api_key")
+                groq_k = st.session_state.get("groq_api_key_consultation") or st.session_state.get("groq_api_key_chatbot") or st.session_state.get("groq_api_key")
             elif "studio" in str(agent_role).lower() or "implementation" in str(agent_role).lower():
-                groq_k = key_map.get("groq_api_key_studio") or key_map.get("groq_api_key_blueprint") or key_map.get("groq_api_key")
+                groq_k = st.session_state.get("groq_api_key_studio") or st.session_state.get("groq_api_key_blueprint") or st.session_state.get("groq_api_key")
             else:
-                groq_k = key_map.get("groq_api_key_blueprint") or key_map.get("groq_api_key_studio") or key_map.get("groq_api_key")
+                groq_k = st.session_state.get("groq_api_key_blueprint") or st.session_state.get("groq_api_key_studio") or st.session_state.get("groq_api_key")
+        except Exception:
+            pass
 
+        # 2. Check Database Settings Table if session state didn't return a key
+        if not groq_k:
+            g_rows = execute_query(
+                "SELECT key, value FROM settings WHERE key IN ('groq_api_key_blueprint', 'groq_api_key_studio', 'groq_api_key_consultation', 'groq_api_key_chatbot', 'groq_api_key') AND value != ''"
+            )
+            if g_rows:
+                key_map = {r['key']: r['value'].strip() for r in g_rows if r.get('value')}
+                if is_consultation:
+                    groq_k = key_map.get("groq_api_key_consultation") or key_map.get("groq_api_key_chatbot") or key_map.get("groq_api_key")
+                elif "studio" in str(agent_role).lower() or "implementation" in str(agent_role).lower():
+                    groq_k = key_map.get("groq_api_key_studio") or key_map.get("groq_api_key_blueprint") or key_map.get("groq_api_key")
+                else:
+                    groq_k = key_map.get("groq_api_key_blueprint") or key_map.get("groq_api_key_studio") or key_map.get("groq_api_key")
+
+        # 3. Check Environment Variables
         if not groq_k:
             if is_consultation:
                 groq_k = os.getenv("GROQ_API_KEY_CONSULTATION") or os.getenv("GROQ_API_KEY_CHATBOT") or os.getenv("GROQ_API_KEY") or ""
+            elif "studio" in str(agent_role).lower() or "implementation" in str(agent_role).lower():
+                groq_k = os.getenv("GROQ_API_KEY_STUDIO") or os.getenv("GROQ_API_KEY_BLUEPRINT") or os.getenv("GROQ_API_KEY") or ""
             else:
                 groq_k = os.getenv("GROQ_API_KEY_BLUEPRINT") or os.getenv("GROQ_API_KEY_STUDIO") or os.getenv("GROQ_API_KEY") or ""
 
