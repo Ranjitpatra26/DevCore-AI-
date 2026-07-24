@@ -469,7 +469,7 @@ def show_projects():
     st.html("<p style='font-size: 1.1rem; color: var(--text-secondary); margin-top: -15px;'>Inspect blueprints, preview data flow structures, render Mermaid charts, and extract deliverables.</p>")
 
     
-    # 1. Fetch available projects
+    # 1. Fetch available projects (Direct live query)
     try:
         projects = execute_query("SELECT * FROM projects ORDER BY created_at DESC")
     except Exception:
@@ -491,13 +491,19 @@ def show_projects():
     if 'active_project_id' not in st.session_state or st.session_state['active_project_id'] not in project_map:
         st.session_state['active_project_id'] = project_ids[0]
 
-    selected_proj_id = st.selectbox(
-        "Select Active Project Blueprint Workspace",
-        options=project_ids,
-        format_func=lambda pid: f"📦 {project_map[pid]['name']} ({project_map[pid]['industry']})",
-        index=project_ids.index(st.session_state['active_project_id'])
-    )
-    st.session_state['active_project_id'] = selected_proj_id
+    col_sel1, col_sel2 = st.columns([3.5, 1])
+    with col_sel1:
+        selected_proj_id = st.selectbox(
+            f"Select Active Project Blueprint Workspace ({len(projects)} Total Projects Saved)",
+            options=project_ids,
+            format_func=lambda pid: f"📦 {project_map[pid]['name']} | {project_map[pid]['industry']} ({project_map[pid].get('created_at', '')[:10]})",
+            index=project_ids.index(st.session_state['active_project_id'])
+        )
+        st.session_state['active_project_id'] = selected_proj_id
+    with col_sel2:
+        st.html("<div style='margin-top: 28px;'></div>")
+        if st.button("🔄 Refresh Projects", use_container_width=True):
+            st.rerun()
 
     project_details = project_map[selected_proj_id]
     active_id = project_details['id']
