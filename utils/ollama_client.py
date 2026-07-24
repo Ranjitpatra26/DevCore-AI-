@@ -164,16 +164,23 @@ def query_ollama(
         from utils.config import get_execution_provider
         exec_provider = get_execution_provider()
     except Exception:
-        exec_provider = os.getenv("EXECUTION_PROVIDER", "groq")
+        exec_provider = os.getenv("EXECUTION_PROVIDER", "ollama")
 
-    try:
-        has_groq_k = bool(get_any_groq_key())
-        if exec_provider == "groq" or has_groq_k:
-            groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name)
-            if groq_res:
-                return groq_res
-    except Exception as e:
-        logger.warning(f"Provider routing error: {e}")
+    config = get_generation_config()
+    is_ollama_online = ensure_ollama_server_online(config.get('url', 'http://localhost:11434'))
+
+    # 1. If provider is set to Ollama and local Ollama is running, execute via local Ollama
+    if exec_provider == "ollama" and is_ollama_online:
+        logger.info("Selected engine: Local Ollama (Online). Proceeding with local inference.")
+    # 2. Otherwise, if provider is Groq or Groq API key is present, execute via Groq Cloud API
+    elif exec_provider == "groq" or bool(get_any_groq_key()):
+        groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name)
+        if groq_res:
+            return groq_res
+    elif not is_ollama_online:
+        groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name)
+        if groq_res:
+            return groq_res
 
     # For consultation queries, reset timeout flag to ensure live LLM inference is always attempted
     if is_consultation:

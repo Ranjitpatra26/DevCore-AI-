@@ -723,12 +723,33 @@ def show_projects():
             </div>
             """)
             
-            # View Selector: Single Blueprint or All 13 Combined View
-            view_mode = st.radio(
-                "Blueprint View Mode",
-                ["Single Agent Layer", "Combined Overview (All 13 Blueprints)"],
-                horizontal=True
-            )
+            # Engine Provider Selector for Regeneration
+            try:
+                from utils.config import get_execution_provider, update_env_file
+                active_prov = get_execution_provider()
+            except Exception:
+                active_prov = "groq"
+                def update_env_file(d): pass
+
+            col_engine_sel, col_radio_view = st.columns([1.5, 2])
+            with col_engine_sel:
+                selected_engine = st.selectbox(
+                    "⚡ Active Blueprint Engine Provider:",
+                    options=["groq", "ollama"],
+                    index=0 if active_prov == "groq" else 1,
+                    format_func=lambda x: "⚡ Groq Cloud API" if x == "groq" else "🦙 Local Ollama Engine",
+                    help="Choose whether Groq Cloud API or Local Laptop Ollama executes blueprint regeneration."
+                )
+                if selected_engine != active_prov:
+                    execute_update("UPDATE settings SET value = ? WHERE key = 'execution_provider'", (selected_engine,))
+                    update_env_file({"EXECUTION_PROVIDER": selected_engine})
+
+            with col_radio_view:
+                view_mode = st.radio(
+                    "Blueprint View Mode",
+                    ["Single Agent Layer", "Combined Overview (All 13 Blueprints)"],
+                    horizontal=True
+                )
             
             if view_mode == "Single Agent Layer":
                 # Ensure pipeline order with CEO first
