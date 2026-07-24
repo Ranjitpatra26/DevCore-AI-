@@ -106,7 +106,7 @@ DEFAULT_TOP_P = 0.85
 DEFAULT_MAX_TOKENS = 8192  # Expanded 8K deep token capacity per agent (for local Ollama)
 AGENT_BLUEPRINT_MAX_TOKENS = 8192  # Deep 8K capacity for uncapped local laptop VRAM power
 IMPLEMENTATION_MAX_TOKENS = 8192  # Deep 8K capacity for Implementation Studio code generation (Ollama)
-GROQ_BLUEPRINT_MAX_TOKENS = 2048  # Optimal 2.0K token budget for Groq Free Tier (stays safely under 14.4k TPM limit)
+GROQ_BLUEPRINT_MAX_TOKENS = 8192  # Full 8K token budget for Groq Cloud API with auto rate-limit backoff retry
 CONSULTATION_SHORT_TOKENS = 1024
 CONSULTATION_LONG_TOKENS = 4096
 

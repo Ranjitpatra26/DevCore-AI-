@@ -3,6 +3,7 @@ Groq API Client for DevCore AI Assistant.
 Provides ultra-fast streaming inference using GroqCloud API (https://api.groq.com/openai/v1).
 """
 
+import time
 import json
 import requests
 from typing import List, Dict, Any, Generator, Optional
@@ -117,7 +118,7 @@ def stream_groq_response(
         "model": model,
         "messages": formatted_messages,
         "temperature": 0.3,
-        "max_tokens": 2048 if not is_chatbot else 1024,
+        "max_tokens": 8192 if not is_chatbot else 2048,
         "stream": True
     }
 
@@ -128,6 +129,16 @@ def stream_groq_response(
 
     try:
         resp = requests.post(GROQ_ENDPOINT, json=payload, headers=headers, stream=True, timeout=30)
+        
+        # If rate limited (HTTP 429), automatically retry up to 3 times with backoff delay
+        if resp.status_code == 429 or "rate_limit" in resp.text.lower():
+            for attempt in range(1, 4):
+                retry_delay = int(resp.headers.get("Retry-After", 4 * attempt))
+                time.sleep(retry_delay)
+                resp = requests.post(GROQ_ENDPOINT, json=payload, headers=headers, stream=True, timeout=35)
+                if resp.status_code == 200:
+                    break
+
         if resp.status_code == 200:
             yielded_tokens = False
             for line in resp.iter_lines():
