@@ -113,23 +113,18 @@ def query_groq_api_fallback(
                 is_chatbot=False
             ))
             res = "".join(chunks).strip()
-            if res and res.startswith("⚠️") and ("rate limit" in res.lower() or "token limit" in res.lower() or "maximum token" in res.lower() or "429" in res):
-                try:
-                    import streamlit as st
-                    st.session_state["show_groq_quota_modal"] = True
-                except Exception:
-                    pass
-            if res and not res.startswith("⚠️"):
-                logger.info(f"Successfully executed query via Groq Cloud API ({groq_m})")
+            if res:
+                if res.startswith("⚠️"):
+                    try:
+                        import streamlit as st
+                        st.session_state["show_groq_quota_modal"] = True
+                    except Exception:
+                        pass
+                logger.info(f"Executed query via Groq Cloud API ({groq_m})")
                 return sanitize_and_eliminate_placeholders(res, project_name)
     except Exception as e:
-        if "rate" in str(e).lower() or "token" in str(e).lower() or "429" in str(e):
-            try:
-                import streamlit as st
-                st.session_state["show_groq_quota_modal"] = True
-            except Exception:
-                pass
         logger.warning(f"Groq API query fallback error: {e}")
+        return f"⚠️ **Groq API Connection Error**: {str(e)}"
     return None
 
 def query_ollama(
@@ -149,18 +144,19 @@ def query_ollama(
     
     # 0. Check active execution engine provider setting
     try:
-        try:
-            from utils.config import get_execution_provider
-            exec_provider = get_execution_provider()
-        except Exception:
-            exec_provider = os.getenv("EXECUTION_PROVIDER", "ollama")
+        from utils.config import get_execution_provider
+        exec_provider = get_execution_provider()
+    except Exception:
+        exec_provider = os.getenv("EXECUTION_PROVIDER", "groq")
 
-        if exec_provider == "groq":
+    try:
+        has_groq_k = bool(get_any_groq_key())
+        if exec_provider == "groq" or has_groq_k:
             groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name)
             if groq_res:
                 return groq_res
-    except Exception:
-        pass
+    except Exception as e:
+        logger.warning(f"Provider routing error: {e}")
 
     # For consultation queries, reset timeout flag to ensure live LLM inference is always attempted
     if is_consultation:
