@@ -106,7 +106,7 @@ DEFAULT_TOP_P = 0.85
 DEFAULT_MAX_TOKENS = 8192  # Expanded 8K deep token capacity per agent
 AGENT_BLUEPRINT_MAX_TOKENS = 8192  # Deep 8K capacity for uncapped local laptop VRAM power
 IMPLEMENTATION_MAX_TOKENS = 8192  # Deep 8K capacity for Implementation Studio code generation
-GROQ_BLUEPRINT_MAX_TOKENS = 1400  # Compact, high-value 1.4K token budget for Groq Cloud API (stays safely under 14.4k TPM)
+GROQ_BLUEPRINT_MAX_TOKENS = 4096  # High-depth 4K token budget for Groq Cloud API (maximizes technical output without hitting limits)
 CONSULTATION_SHORT_TOKENS = 1024
 CONSULTATION_LONG_TOKENS = 4096
 

@@ -117,7 +117,7 @@ def stream_groq_response(
         "model": model,
         "messages": formatted_messages,
         "temperature": 0.3,
-        "max_tokens": 1400 if not is_chatbot else 1024,
+        "max_tokens": 4096 if not is_chatbot else 1500,
         "stream": True
     }
 
