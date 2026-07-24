@@ -109,7 +109,7 @@ def execute_implementation_module(*args, **kwargs) -> Dict[str, Any]:
         raw_output = query_fn(
             system_prompt=prompts["system_prompt"],
             user_prompt=prompts["user_prompt"],
-            agent_role=active_mode.get("agent_role", "backend") if isinstance(active_mode, dict) else "backend",
+            agent_role="studio",
             is_consultation=False,
             project_name=proj_name,
             override_max_tokens=smart_tokens
