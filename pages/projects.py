@@ -733,23 +733,85 @@ def show_projects():
             if view_mode == "Single Agent Layer":
                 # Ensure pipeline order with CEO first
                 roles_available = [r for r in all_13_roles if r in runs_map]
-                selected_view_role = st.selectbox(
-                    "Select Agent Blueprint Layer",
-                    options=roles_available,
-                    format_func=get_role_display_name
-                )
-                
-                active_run = runs_map[selected_view_role.lower()]
+                if not roles_available:
+                    roles_available = all_13_roles
+
+                col_role_sel, col_role_reg = st.columns([2.5, 1])
+                with col_role_sel:
+                    selected_view_role = st.selectbox(
+                        "Select Agent Blueprint Layer",
+                        options=roles_available,
+                        format_func=get_role_display_name
+                    )
+                with col_role_reg:
+                    st.html("<div style='margin-top: 28px;'></div>")
+                    regen_single_clicked = st.button(
+                        f"🔄 Regenerate {get_role_display_name(selected_view_role)}",
+                        use_container_width=True,
+                        type="secondary"
+                    )
+
+                if regen_single_clicked:
+                    with st.spinner(f"Regenerating live blueprint for {get_role_display_name(selected_view_role)} via AI Engine..."):
+                        from agents.base import run_agent
+                        state = {
+                            'project_name': project_details['name'],
+                            'description': project_details['description'],
+                            'industry': project_details['industry'],
+                            'tech_preference': project_details['tech_preference'],
+                            'budget': project_details['budget'],
+                            'timeline': project_details['timeline'],
+                            'difficulty': project_details['difficulty']
+                        }
+                        run_agent(active_id, selected_view_role, state)
+                    st.success(f"🎉 Regenerated {get_role_display_name(selected_view_role)} Blueprint!")
+                    st.rerun()
+
+                active_run = runs_map.get(selected_view_role.lower())
                 
                 st.markdown(f"### {get_role_display_name(selected_view_role)} Spec Sheet")
-                st.html(f"<div style='font-size: 0.8rem; color: var(--text-secondary); margin-top: -10px; margin-bottom: 20px;'>Generated on: {active_run['timestamp']} | Execution: {active_run['execution_time_s']}s</div>")
-                
-                if active_run['output_markdown'] and active_run['output_markdown'].strip():
-                    st.markdown(active_run['output_markdown'])
+                if active_run:
+                    st.html(f"<div style='font-size: 0.8rem; color: var(--text-secondary); margin-top: -10px; margin-bottom: 20px;'>Generated on: {active_run['timestamp']} | Execution: {active_run['execution_time_s']}s</div>")
+                    if active_run['output_markdown'] and active_run['output_markdown'].strip():
+                        st.markdown(active_run['output_markdown'])
+                    else:
+                        st.warning(f"Blueprint section for {get_role_display_name(selected_view_role)} is being generated...")
                 else:
-                    st.warning(f"Blueprint section for {get_role_display_name(selected_view_role)} is being generated...")
+                    st.info(f"Blueprint content for {get_role_display_name(selected_view_role)} has not been generated yet.")
+                    if st.button(f"⚡ Generate {get_role_display_name(selected_view_role)} Blueprint Now", type="primary"):
+                        with st.spinner(f"Generating blueprint for {get_role_display_name(selected_view_role)}..."):
+                            from agents.base import run_agent
+                            state = {
+                                'project_name': project_details['name'],
+                                'description': project_details['description'],
+                                'industry': project_details['industry'],
+                                'tech_preference': project_details['tech_preference'],
+                                'budget': project_details['budget'],
+                                'timeline': project_details['timeline'],
+                                'difficulty': project_details['difficulty']
+                            }
+                            run_agent(active_id, selected_view_role, state)
+                        st.rerun()
             else:
                 st.markdown("### Combined Technical Specification Package")
+                col_all_reg1, col_all_reg2 = st.columns([3, 1])
+                with col_all_reg2:
+                    if st.button("⚡ Regenerate ALL 13 Blueprints", type="primary", use_container_width=True):
+                        with st.spinner("Regenerating all 13 agent blueprints live via AI Engine..."):
+                            from workflow.graph import run_project_planning
+                            run_project_planning(
+                                project_id=active_id,
+                                project_name=project_details['name'],
+                                description=project_details['description'],
+                                industry=project_details['industry'],
+                                tech_preference=project_details['tech_preference'],
+                                budget=project_details['budget'],
+                                timeline=project_details['timeline'],
+                                difficulty=project_details['difficulty']
+                            )
+                        st.success("🎉 All 13 Agent Blueprints Regenerated Successfully!")
+                        st.rerun()
+
                 for role in all_13_roles:
                     role_title = get_role_display_name(role)
                     with st.expander(f"📌 {role_title} Blueprint Section", expanded=(role == "ceo")):
