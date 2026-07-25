@@ -104,13 +104,14 @@ def run_agent(project_id: str, agent_role: str, state: Dict[str, Any]) -> str:
     
     previous_context = ""
     if previous_runs:
-        previous_context = "\n--- COMPREHENSIVE BLUEPRINTS FROM PRECEDING AGENTS ---\n"
-        for run in previous_runs:
+        previous_context = "\n--- RECENT BLUEPRINTS FROM PRECEDING AGENTS ---\n"
+        # Only take the 4 most recent preceding agent outputs to stay well below Groq TPM limits
+        recent_runs = previous_runs[-4:] if len(previous_runs) > 4 else previous_runs
+        for run in recent_runs:
             role_name = get_role_display_name(run['agent_role'])
             raw_text = run.get('output_markdown', '') or ""
-            # Include up to 2500 characters per preceding agent for maximum context depth
-            output_snippet = raw_text[:2500] + ("\n... [Extended Blueprint Context]" if len(raw_text) > 2500 else "")
-            previous_context += f"### {role_name} Blueprint Summary:\n{output_snippet}\n\n"
+            output_snippet = raw_text[:800] + ("\n... [Snippet Truncated for Conciseness]" if len(raw_text) > 800 else "")
+            previous_context += f"### {role_name} Summary:\n{output_snippet}\n\n"
 
     complexity_directives = get_complexity_directives(
         difficulty=state.get('difficulty', 'Intermediate'),

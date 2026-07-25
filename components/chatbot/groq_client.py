@@ -114,11 +114,21 @@ def stream_groq_response(
             "content": msg.get("content", "")
         })
 
+    # Dynamic Token Budget Calculation to stay under Groq 12,000 TPM Limit
+    prompt_chars = sum(len(m.get("content", "")) for m in formatted_messages)
+    estimated_prompt_tokens = int(prompt_chars / 3.5)
+    
+    if is_chatbot:
+        max_tokens = 1024
+    else:
+        # Guarantee prompt_tokens + max_tokens stays under 10,500 (safely below 12,000 TPM limit)
+        max_tokens = min(4096, max(1200, 10500 - estimated_prompt_tokens))
+
     payload = {
         "model": model,
         "messages": formatted_messages,
         "temperature": 0.3,
-        "max_tokens": 8192 if not is_chatbot else 2048,
+        "max_tokens": max_tokens,
         "stream": True
     }
 
@@ -130,14 +140,20 @@ def stream_groq_response(
     try:
         resp = requests.post(GROQ_ENDPOINT, json=payload, headers=headers, stream=True, timeout=30)
         
-        # If rate limited (HTTP 429), automatically retry up to 3 times with backoff delay
-        if resp.status_code == 429 or "rate_limit" in resp.text.lower():
-            for attempt in range(1, 4):
-                retry_delay = int(resp.headers.get("Retry-After", 4 * attempt))
-                time.sleep(retry_delay)
+        # If rate limited (HTTP 429 / 413 TPM limit), attempt automatic token reduction retry
+        if resp.status_code in [413, 429] or (resp.status_code == 400 and ("tpm" in resp.text.lower() or "too large" in resp.text.lower() or "tokens per minute" in resp.text.lower())):
+            logger.info("Groq TPM / Rate limit encountered. Retrying with reduced max_tokens...")
+            payload["max_tokens"] = 1500
+            time.sleep(1)
+            resp = requests.post(GROQ_ENDPOINT, json=payload, headers=headers, stream=True, timeout=35)
+            
+            # If 70B model still hits TPM limit, attempt fallback model llama-3.1-8b-instant
+            if resp.status_code != 200 and model != "llama-3.1-8b-instant":
+                logger.info("Retrying query with fallback model llama-3.1-8b-instant...")
+                payload["model"] = "llama-3.1-8b-instant"
+                payload["max_tokens"] = 2048
+                time.sleep(1)
                 resp = requests.post(GROQ_ENDPOINT, json=payload, headers=headers, stream=True, timeout=35)
-                if resp.status_code == 200:
-                    break
 
         if resp.status_code == 200:
             yielded_tokens = False
@@ -169,17 +185,18 @@ def stream_groq_response(
             yield "⚠️ **Invalid Groq API Key**: Please update your Groq API key using the pop-up modal or in **Settings**."
             return
 
-        elif resp.status_code == 429 or "rate_limit" in resp.text.lower() or "token" in resp.text.lower():
+        elif resp.status_code == 429 and ("quota" in resp.text.lower() or "exceeded" in resp.text.lower()):
             try:
                 import streamlit as st
                 st.session_state["show_groq_quota_modal"] = True
             except Exception:
                 pass
-            yield "⚠️ **Groq API Rate / Token Limit Reached**: Maximum token limit reached on active Groq API Key. Opening update form to enter a new key..."
+            yield "⚠️ **Groq API Quota Reached**: Maximum daily quota reached on active Groq API Key. Opening update form to enter a new key..."
             return
         else:
-            err_body = resp.text[:200]
-            if "rate" in err_body.lower() or "token" in err_body.lower() or "quota" in err_body.lower():
+            err_body = resp.text[:250]
+            # Only trigger quota modal if it's explicitly a quota exhaustion error, NOT routine size errors
+            if "quota" in err_body.lower() or "exceeded your current quota" in err_body.lower():
                 try:
                     import streamlit as st
                     st.session_state["show_groq_quota_modal"] = True

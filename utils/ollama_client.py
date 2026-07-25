@@ -132,7 +132,7 @@ def query_groq_api_fallback(
             ))
             res = "".join(chunks).strip()
             if res:
-                if res.startswith("⚠️"):
+                if res.startswith("⚠️") and ("Quota" in res or "Invalid Groq API Key" in res):
                     try:
                         import streamlit as st
                         st.session_state["show_groq_quota_modal"] = True

@@ -36,9 +36,11 @@ try:
     # 2. Database Auto-Migration / Seeding
     init_db()
 
-    # Initialize session state theme if not present
+    # Initialize session state theme & modal triggers if not present
     if "theme" not in st.session_state:
         st.session_state.theme = get_current_theme()
+    if "show_groq_quota_modal" not in st.session_state:
+        st.session_state["show_groq_quota_modal"] = False
 
     # 3. Inject Centralized Design System Custom CSS Variables & Rules
     inject_design_system_css(st.session_state.theme)
