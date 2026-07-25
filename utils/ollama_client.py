@@ -117,9 +117,10 @@ def query_groq_api_fallback(
             else:
                 groq_k = os.getenv("GROQ_API_KEY_BLUEPRINT") or os.getenv("GROQ_API_KEY_STUDIO") or os.getenv("GROQ_API_KEY") or ""
 
-        if groq_k:
             groq_m_rows = execute_query("SELECT value FROM settings WHERE key = 'groq_model'")
             groq_m = groq_m_rows[0]['value'] if groq_m_rows and groq_m_rows[0]['value'] else "llama-3.3-70b-versatile"
+            if "deepseek" in str(groq_m).lower() or not groq_m:
+                groq_m = "llama-3.3-70b-versatile"
             
             from components.chatbot.groq_client import stream_groq_response
             msgs = messages_payload if messages_payload and isinstance(messages_payload, list) else [{"role": "user", "content": user_prompt}]
