@@ -74,7 +74,8 @@ def query_groq_api_fallback(
     user_prompt: str = "",
     messages_payload: Optional[List[Dict[str, str]]] = None,
     is_consultation: bool = False,
-    project_name: str = ""
+    project_name: str = "",
+    agent_role: str = "blueprint"
 ) -> Optional[str]:
     """Dynamically fetch active Groq API Key and query Groq Cloud API for high-speed cloud execution."""
     try:
@@ -174,11 +175,11 @@ def query_ollama(
         logger.info("Selected engine: Local Ollama (Online). Proceeding with local inference.")
     # 2. Otherwise, if provider is Groq or Groq API key is present, execute via Groq Cloud API
     elif exec_provider == "groq" or bool(get_any_groq_key()):
-        groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name)
+        groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name, agent_role=agent_role)
         if groq_res:
             return groq_res
     elif not is_ollama_online:
-        groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name)
+        groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name, agent_role=agent_role)
         if groq_res:
             return groq_res
 
@@ -188,7 +189,7 @@ def query_ollama(
 
     # If previous call timed out recently, check Groq API fallback first
     if not is_consultation and _OLLAMA_TIMEOUT_CACHE.get("timed_out"):
-        groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name)
+        groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name, agent_role=agent_role)
         if groq_res:
             return groq_res
         return "⚠️ **AI Engine Timeout**: Local Ollama server timed out and no active Groq API Key was found. Please check your Groq API Key in Settings."
@@ -197,7 +198,7 @@ def query_ollama(
     is_online = ensure_ollama_server_online(config['url'])
     if not is_online:
         # Local Ollama offline: check Groq API Cloud fallback
-        groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name)
+        groq_res = query_groq_api_fallback(system_prompt, user_prompt, messages_payload, is_consultation, project_name, agent_role=agent_role)
         if groq_res:
             return groq_res
         return "⚠️ **AI Connection Required**: Local Ollama server is offline and no active Groq API Key was found. Please enter your Groq API key in Settings or the top pop-up modal."
