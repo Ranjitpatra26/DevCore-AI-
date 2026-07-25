@@ -97,8 +97,6 @@ def init_db():
     for key, value in default_settings:
         cursor.execute("INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)", (key, value or ""))
 
-    # Auto-migrate decommissioned Groq models to llama-3.3-70b-versatile
-    cursor.execute("UPDATE settings SET value = 'llama-3.3-70b-versatile' WHERE key = 'groq_model' AND (value LIKE '%deepseek%' OR value LIKE '%llama3-%' OR value = '')")
 
     conn.commit()
     conn.close()

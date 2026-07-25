@@ -69,6 +69,34 @@ def reset_ollama_status():
     global _OLLAMA_TIMEOUT_CACHE
     _OLLAMA_TIMEOUT_CACHE.clear()
 
+def get_any_groq_key() -> str:
+    """Return any active Groq API key found in session state, DB, or environment variables."""
+    try:
+        import streamlit as st
+        for k in ["groq_api_key_blueprint", "groq_api_key_studio", "groq_api_key_chatbot", "groq_api_key_consultation", "groq_api_key"]:
+            v = st.session_state.get(k)
+            if v and str(v).strip():
+                return str(v).strip()
+    except Exception:
+        pass
+
+    try:
+        from database.connection import execute_query
+        rows = execute_query("SELECT value FROM settings WHERE key LIKE 'groq_api_key%' AND value != ''")
+        if rows:
+            for r in rows:
+                if r.get('value') and str(r['value']).strip():
+                    return str(r['value']).strip()
+    except Exception:
+        pass
+
+    for env_k in ["GROQ_API_KEY_BLUEPRINT", "GROQ_API_KEY_STUDIO", "GROQ_API_KEY_CHATBOT", "GROQ_API_KEY_CONSULTATION", "GROQ_API_KEY"]:
+        v = os.getenv(env_k)
+        if v and str(v).strip():
+            return str(v).strip()
+
+    return ""
+
 def query_groq_api_fallback(
     system_prompt: str,
     user_prompt: str = "",
@@ -117,10 +145,9 @@ def query_groq_api_fallback(
             else:
                 groq_k = os.getenv("GROQ_API_KEY_BLUEPRINT") or os.getenv("GROQ_API_KEY_STUDIO") or os.getenv("GROQ_API_KEY") or ""
 
+        if groq_k:
             groq_m_rows = execute_query("SELECT value FROM settings WHERE key = 'groq_model'")
             groq_m = groq_m_rows[0]['value'] if groq_m_rows and groq_m_rows[0]['value'] else "llama-3.3-70b-versatile"
-            if "deepseek" in str(groq_m).lower() or not groq_m:
-                groq_m = "llama-3.3-70b-versatile"
             
             from components.chatbot.groq_client import stream_groq_response
             msgs = messages_payload if messages_payload and isinstance(messages_payload, list) else [{"role": "user", "content": user_prompt}]

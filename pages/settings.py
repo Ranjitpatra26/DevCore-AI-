@@ -391,13 +391,14 @@ curl http://localhost:11434/api/tags
                     )
                 
                 groq_model_labels = {
-                    "llama-3.3-70b-versatile": "🧠 llama-3.3-70b-versatile — Maximum Intelligence (8,192 Output Tokens)",
                     "llama-3.1-8b-instant": "🚀 llama-3.1-8b-instant — Ultra-Fast (20,000 TPM Limit - Prevents Rate Limits)",
+                    "llama-3.3-70b-versatile": "🧠 llama-3.3-70b-versatile — Maximum Intelligence (8,192 Output Tokens)",
                     "mixtral-8x7b-32768": "📦 mixtral-8x7b-32768 — High Context Window (32,768 Context Tokens)",
+                    "deepseek-r1-distill-llama-70b": "🔬 deepseek-r1-distill-llama-70b — Deep Reasoning & Logic",
                     "gemma2-9b-it": "⚡ gemma2-9b-it — Lightweight Google Gemma Model"
                 }
 
-                groq_model_options = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768", "gemma2-9b-it"]
+                groq_model_options = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768", "deepseek-r1-distill-llama-70b", "gemma2-9b-it"]
                 groq_model_input = st.selectbox(
                     "Groq Cloud Model Selection",
                     options=groq_model_options,
