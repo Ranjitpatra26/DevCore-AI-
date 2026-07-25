@@ -603,12 +603,20 @@ def show_projects():
     st.html("<p style='font-size: 1.1rem; color: var(--text-secondary); margin-top: -15px;'>Inspect blueprints, preview data flow structures, render Mermaid charts, and extract deliverables.</p>")
 
     
-    # 1. Fetch available projects (Direct live query)
+    # 1. Fetch available projects from SQLite DB & Session State
     try:
-        projects = execute_query("SELECT * FROM projects ORDER BY created_at DESC")
+        db_projects = execute_query("SELECT * FROM projects ORDER BY created_at DESC")
     except Exception:
-        projects = []
-        
+        db_projects = []
+
+    # Merge session state created projects (ensures projects created on Streamlit Cloud session persist instantly)
+    session_projects = list(st.session_state.get('created_projects', {}).values()) if isinstance(st.session_state.get('created_projects'), dict) else []
+    
+    # Merge both sources with deduplication by ID
+    project_map = {p['id']: p for p in session_projects + db_projects}
+    projects = list(project_map.values())
+    projects.sort(key=lambda x: str(x.get('created_at', '')), reverse=True)
+    
     if not projects:
         st.html(saas_card(
             "No Projects Active",
@@ -618,8 +626,7 @@ def show_projects():
         return
 
     # Create workspace selector row with distinct project IDs and completion labels
-    project_map = {p['id']: p for p in projects}
-    project_ids = list(project_map.keys())
+    project_ids = [p['id'] for p in projects]
     
     # Session state workspace tracker
     if 'active_project_id' not in st.session_state or st.session_state['active_project_id'] not in project_map:

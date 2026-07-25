@@ -118,7 +118,7 @@ def show_new_project():
 
             project_id = str(uuid.uuid4())
             
-            # 1. Save Project in SQLite Database
+            # 1. Save Project in SQLite Database & Session State Cache
             try:
                 execute_update(
                     """
@@ -130,6 +130,24 @@ def show_new_project():
             except Exception as e:
                 st.error(f"Failed to initialize SQLite Project entry: {str(e)}")
                 return
+
+            import time
+            created_time_str = time.strftime("%Y-%m-%d %H:%M:%S")
+            if "created_projects" not in st.session_state or not isinstance(st.session_state["created_projects"], dict):
+                st.session_state["created_projects"] = {}
+            
+            st.session_state["created_projects"][project_id] = {
+                "id": project_id,
+                "name": project_name,
+                "description": description,
+                "industry": industry,
+                "tech_preference": tech_preference,
+                "budget": budget,
+                "timeline": timeline,
+                "difficulty": difficulty,
+                "model_used": exec_engine_choice,
+                "created_at": created_time_str
+            }
                 
             # 2. Parse and Index Uploaded RAG Files
             files_indexed = 0
