@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://devcore-ai.streamlit.app">
-    <img src="assets/logo.png" alt="DevCore AI Official Logo" width="180" style="filter: drop-shadow(0px 0px 12px rgba(59, 130, 246, 0.8));" />
+    <img src="assets/logo.png" alt="DevCore AI Official Logo" width="220" style="border-radius: 16px;" />
   </a>
 </p>
 
@@ -207,7 +207,7 @@ DevCore-AI-/
 │   ├── base.py                   # Base Agent Engine
 │   └── prompts.py                # Specialized Agent Prompts
 ├── assets/                       # High-Res Diagrams, Brand Logo & Hero Assets
-│   ├── logo.png                  # Official DevCore AI Logo Emblem (High Visibility)
+│   ├── logo.png                  # Official DevCore AI Branding Emblem (Dark Mode Friendly White Text)
 │   ├── hero_banner.png           # Hero Banner
 │   └── diagrams/                 # Architecture, Pipeline & Engine Diagrams
 ├── components/                   # Custom Neo-Brutalist UI Components & Modals
