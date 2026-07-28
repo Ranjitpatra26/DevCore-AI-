@@ -113,6 +113,27 @@ From executive strategy down to quality assurance, each agent is an expert train
 
 ---
 
+## 🎮 How to Use DevCore AI (Step-by-Step User Workflow)
+
+1. **Launch & Select Execution Provider**:
+   * Navigate to the **Settings** page or live app ([devcore-ai.streamlit.app](https://devcore-ai.streamlit.app)).
+   * Choose between **Cloud (Groq)** for maximum speed or **Local (Ollama)** for total data privacy.
+2. **Create a New Software Project**:
+   * Go to **New Project** tab.
+   * Input your project title, target industry, tech stack preferences, budget, and high-level project description.
+3. **(Optional) Upload RAG Context Files**:
+   * Attach existing PRD, legacy README, SRS, or specification files (PDF/DOCX/TXT).
+4. **Trigger the 13-Agent Execution Pipeline**:
+   * Click **Generate Master Blueprint**.
+   * Watch real-time agent activity indicators as each of the 13 agents synthesizes its domain-specific outputs.
+5. **Review, Consult & Customize**:
+   * Browse generated code, Mermaid diagrams, SQL schemas, and test suites in the **Dashboard**.
+   * Open the **Consultation Studio** or **Floating Assistant** to ask follow-up questions or refine specific agent outputs.
+6. **Export Your Enterprise Blueprint**:
+   * Click **Export Blueprint** to download a production-ready `.zip` package containing structured markdown files or compiled PDF report.
+
+---
+
 ## 💻 Step-by-Step Installation & Setup Guide
 
 ### 📋 Prerequisites
@@ -215,6 +236,28 @@ DevCore-AI-/
 | `GROQ_MODEL` | No | `llama-3.3-70b-versatile` | Active Groq LLM model architecture |
 | `OLLAMA_URL` | No | `http://localhost:11434` | Local Ollama endpoint |
 | `OLLAMA_MODEL` | No | `qwen3.5:9b` | Local Ollama model name |
+
+---
+
+## ❓ Frequently Asked Questions (FAQ) & Troubleshooting
+
+<details>
+<summary><b>Q1: Can I run DevCore AI 100% offline without any internet connection?</b></summary>
+<br>
+Yes! Download <a href="https://ollama.ai">Ollama</a>, pull your preferred model (e.g., <code>ollama pull qwen3.5:9b</code>), and set <code>EXECUTION_PROVIDER=ollama</code> in your settings or <code>.env</code> file.
+</details>
+
+<details>
+<summary><b>Q2: What happens if Groq API rate limits are reached?</b></summary>
+<br>
+DevCore AI includes built-in rate limit detection, exponential backoff retries, and API key quota fallback modals to ensure uninterrupted project generation.
+</details>
+
+<details>
+<summary><b>Q3: How does the RAG system process uploaded files?</b></summary>
+<br>
+Uploaded PDF/DOCX/TXT files are parsed into text chunks, stored in an SQLite embedding table, and queried via cosine similarity whenever an agent synthesizes its respective output.
+</details>
 
 ---
 
