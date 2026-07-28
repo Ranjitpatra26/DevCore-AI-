@@ -1,5 +1,11 @@
 <p align="center">
-  <img src="assets/hero_banner.png" alt="DevCore AI Banner" width="100%" style="border-radius: 12px;" />
+  <a href="https://devcore-ai.streamlit.app">
+    <img src="assets/logo.png" alt="DevCore AI Official Logo" width="180" />
+  </a>
+</p>
+
+<p align="center">
+  <img src="assets/hero_banner.png" alt="DevCore AI Hero Banner" width="100%" style="border-radius: 12px;" />
 </p>
 
 <h1 align="center">⚡ DevCore AI — Autonomous Multi-Agent Software Agency</h1>
@@ -200,9 +206,9 @@ DevCore-AI-/
 │   ├── __init__.py
 │   ├── base.py                   # Base Agent Engine
 │   └── prompts.py                # Specialized Agent Prompts
-├── assets/                       # High-Res Diagrams & Hero Assets
-│   ├── hero_banner.png
-│   ├── logo.png
+├── assets/                       # High-Res Diagrams, Brand Logo & Hero Assets
+│   ├── logo.png                  # Official DevCore AI Logo Emblem
+│   ├── hero_banner.png           # Hero Banner
 │   └── diagrams/                 # Architecture, Pipeline & Engine Diagrams
 ├── components/                   # Custom Neo-Brutalist UI Components & Modals
 │   ├── cards.py
