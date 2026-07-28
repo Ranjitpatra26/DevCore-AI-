@@ -1,8 +1,22 @@
-<p align="center">
-  <a href="https://devcore-ai.streamlit.app">
-    <img src="assets/logo_white.png" alt="DevCore AI Official Logo" width="100%" style="border-radius: 16px;" />
-  </a>
-</p>
+<div align="center">
+  <table border="0">
+    <tr style="border: none;">
+      <td width="32%" align="center" style="border: none; vertical-align: middle;">
+        <h3 align="center" style="margin:0;">🤖 13 Virtual AI Agents</h3>
+        <p align="center" style="font-size:0.9rem; margin-top:6px; color:#94A3B8;">Stateful Multi-Agent Pipeline via <b>LangGraph</b></p>
+      </td>
+      <td width="36%" align="center" style="border: none; vertical-align: middle;">
+        <a href="https://devcore-ai.streamlit.app">
+          <img src="assets/logo_white.png" alt="DevCore AI Official Logo" width="170" style="border-radius: 16px;" />
+        </a>
+      </td>
+      <td width="32%" align="center" style="border: none; vertical-align: middle;">
+        <h3 align="center" style="margin:0;">⚡ Dual Hybrid LLM Engine</h3>
+        <p align="center" style="font-size:0.9rem; margin-top:6px; color:#94A3B8;"><b>Groq Cloud</b> Speed & <b>Ollama</b> 100% Offline Privacy</p>
+      </td>
+    </tr>
+  </table>
+</div>
 
 <p align="center">
   <img src="assets/hero_banner.png" alt="DevCore AI Hero Banner" width="100%" style="border-radius: 12px;" />
@@ -208,7 +222,7 @@ DevCore-AI-/
 │   └── prompts.py                # Specialized Agent Prompts
 ├── assets/                       # High-Res Diagrams, Brand Logo & Hero Assets
 │   ├── logo.png                  # Untouched Original Project Application Logo
-│   ├── logo_white.png            # Full-Width GitHub README Logo Container with Tech Circuit Accents
+│   ├── logo_white.png            # GitHub README Dark-Mode Branding Logo (White Text & Border)
 │   ├── hero_banner.png           # Hero Banner
 │   └── diagrams/                 # Architecture, Pipeline & Engine Diagrams
 ├── components/                   # Custom Neo-Brutalist UI Components & Modals
