@@ -1,13 +1,11 @@
 <p align="center">
-  <img src="assets/hero_banner.png" alt="DevCore AI Hero Banner" width="100%" style="border-radius: 12px;" />
+  <a href="https://devcore-ai.streamlit.app">
+    <img src="assets/logo_white.png" alt="DevCore AI Official Logo" width="220" style="border-radius: 16px;" />
+  </a>
 </p>
 
 <p align="center">
-  <a href="https://devcore-ai.streamlit.app">
-    <span style="background-color: #ffffff; padding: 12px 24px; border-radius: 20px; display: inline-block; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-      <img src="assets/logo.png" alt="DevCore AI Official Logo" width="160" style="vertical-align: middle;" />
-    </span>
-  </a>
+  <img src="assets/hero_banner.png" alt="DevCore AI Hero Banner" width="100%" style="border-radius: 12px;" />
 </p>
 
 <h1 align="center">⚡ DevCore AI — Autonomous Multi-Agent Software Agency</h1>
@@ -209,7 +207,8 @@ DevCore-AI-/
 │   ├── base.py                   # Base Agent Engine
 │   └── prompts.py                # Specialized Agent Prompts
 ├── assets/                       # High-Res Diagrams, Brand Logo & Hero Assets
-│   ├── logo.png                  # Untouched Original Project Logo Emblem
+│   ├── logo.png                  # Untouched Original Project Application Logo
+│   ├── logo_white.png            # GitHub README Dark-Mode Branding Logo (White Text & Border)
 │   ├── hero_banner.png           # Hero Banner
 │   └── diagrams/                 # Architecture, Pipeline & Engine Diagrams
 ├── components/                   # Custom Neo-Brutalist UI Components & Modals
