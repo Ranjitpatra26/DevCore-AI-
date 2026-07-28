@@ -1,6 +1,12 @@
 <p align="center">
+  <img src="assets/hero_banner.png" alt="DevCore AI Hero Banner" width="100%" style="border-radius: 12px;" />
+</p>
+
+<p align="center">
   <a href="https://devcore-ai.streamlit.app">
-    <img src="assets/header_banner.png" alt="DevCore AI Official Banner" width="100%" style="border-radius: 12px;" />
+    <span style="background-color: #ffffff; padding: 12px 24px; border-radius: 20px; display: inline-block; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+      <img src="assets/logo.png" alt="DevCore AI Official Logo" width="160" style="vertical-align: middle;" />
+    </span>
   </a>
 </p>
 
@@ -56,22 +62,22 @@ From executive strategy down to quality assurance, each agent is an expert train
 
 ### 🏛️ 1. Core System Architecture
 <p align="center">
-  <img src="assets/diagrams/system_architecture.png" alt="System Architecture" width="100%" style="border-radius: 8px; border: 2px solid #333;" />
+  <img src="assets/diagrams/system_architecture.png" alt="System Architecture" width="90%" style="border-radius: 8px; border: 2px solid #333;" />
 </p>
 
 ### 🔄 2. Multi-Agent Execution Pipeline
 <p align="center">
-  <img src="assets/diagrams/agent_pipeline.png" alt="Agent Pipeline" width="100%" style="border-radius: 8px; border: 2px solid #333;" />
+  <img src="assets/diagrams/agent_pipeline.png" alt="Agent Pipeline" width="90%" style="border-radius: 8px; border: 2px solid #333;" />
 </p>
 
 ### ⚡ 3. Dual AI Execution Engine (Cloud vs. Local)
 <p align="center">
-  <img src="assets/diagrams/dual_engine.png" alt="Dual Engine" width="100%" style="border-radius: 8px; border: 2px solid #333;" />
+  <img src="assets/diagrams/dual_engine.png" alt="Dual Engine" width="90%" style="border-radius: 8px; border: 2px solid #333;" />
 </p>
 
 ### 🧠 4. RAG Knowledge Retrieval Pipeline
 <p align="center">
-  <img src="assets/diagrams/rag_retrieval.png" alt="RAG Retrieval" width="100%" style="border-radius: 8px; border: 2px solid #333;" />
+  <img src="assets/diagrams/rag_retrieval.png" alt="RAG Retrieval" width="90%" style="border-radius: 8px; border: 2px solid #333;" />
 </p>
 
 ---
@@ -203,8 +209,8 @@ DevCore-AI-/
 │   ├── base.py                   # Base Agent Engine
 │   └── prompts.py                # Specialized Agent Prompts
 ├── assets/                       # High-Res Diagrams, Brand Logo & Hero Assets
-│   ├── logo.png                  # Original Project Application Logo
-│   ├── header_banner.png         # Full-Width Master Header Banner with DEV-CORE Logo Emblem
+│   ├── logo.png                  # Untouched Original Project Logo Emblem
+│   ├── hero_banner.png           # Hero Banner
 │   └── diagrams/                 # Architecture, Pipeline & Engine Diagrams
 ├── components/                   # Custom Neo-Brutalist UI Components & Modals
 │   ├── cards.py
