@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://devcore-ai.streamlit.app">
-    <img src="assets/logo_white.png" alt="DevCore AI Official Logo" width="220" style="border-radius: 16px;" />
+    <img src="assets/logo_white.png" alt="DevCore AI Official Logo" width="100%" style="border-radius: 16px;" />
   </a>
 </p>
 
@@ -208,7 +208,7 @@ DevCore-AI-/
 │   └── prompts.py                # Specialized Agent Prompts
 ├── assets/                       # High-Res Diagrams, Brand Logo & Hero Assets
 │   ├── logo.png                  # Untouched Original Project Application Logo
-│   ├── logo_white.png            # GitHub README Dark-Mode Branding Logo (White Text & Border)
+│   ├── logo_white.png            # Full-Width GitHub README Logo Container with Tech Circuit Accents
 │   ├── hero_banner.png           # Hero Banner
 │   └── diagrams/                 # Architecture, Pipeline & Engine Diagrams
 ├── components/                   # Custom Neo-Brutalist UI Components & Modals
