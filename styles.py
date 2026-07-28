@@ -34,14 +34,16 @@ def inject_design_system_css(theme_name: str):
     import time
     ts = int(time.time())
 
-    # 2. Load styles.css static sheet from file root
-    css_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "styles.css")
+    # 2. Load styles.css static sheet from styles/ directory (or root fallback)
+    css_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "styles", "styles.css")
+    if not os.path.exists(css_file_path):
+        css_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "styles.css")
+        
     if os.path.exists(css_file_path):
         with open(css_file_path, "r", encoding="utf-8") as f:
             styles_content = f.read()
         st.html(f"<style>/* v={ts} */\n{styles_content}</style>")
     else:
-        # Fallback if path resolved incorrectly
         st.html("<style>/* CSS file missing */</style>")
 
     # 3. Load dedicated neobrutalism.css stylesheet
@@ -57,6 +59,3 @@ def inject_design_system_css(theme_name: str):
         with open(chatbot_css_path, "r", encoding="utf-8") as f:
             chatbot_css_content = f.read()
         st.html(f"<style>/* v={ts} */\n{chatbot_css_content}</style>")
-
-
-
