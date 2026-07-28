@@ -1,100 +1,245 @@
-# 🚀 DevCore AI — Multi-Agent Autonomous Software Planning Platform
+<p align="center">
+  <img src="assets/hero_banner.png" alt="DevCore AI Banner" width="100%" style="border-radius: 12px;" />
+</p>
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://devcore-ai.streamlit.app)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Framework](https://img.shields.io/badge/Orchestration-LangGraph%20%7C%20LangChain-orange.svg)](https://python.langchain.com/)
-[![LLM Provider](https://img.shields.io/badge/LLM-Groq%20%7C%20Ollama-purple.svg)](https://groq.com/)
+<h1 align="center">⚡ DevCore AI — Autonomous Multi-Agent Software Agency</h1>
 
-**DevCore AI** is a state-of-the-art multi-agent AI software engineering platform. Describe any software concept or product idea, and a virtual team of **13 specialized AI agents** collaborates to generate an enterprise-grade end-to-end software blueprint, architecture diagrams, database schemas, code templates, and deployment guides.
+<p align="center">
+  <b>Transform simple software ideas into production-ready software blueprints, architectures, schemas, and code with 13 specialized AI virtual agents working synchronously in your browser.</b>
+</p>
 
-🔗 **Live Demo**: [devcore-ai.streamlit.app](https://devcore-ai.streamlit.app)
+<p align="center">
+  <a href="https://devcore-ai.streamlit.app">
+    <img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="Live Streamlit App" />
+  </a>
+  <a href="https://github.com/Ranjitpatra26/DevCore-AI-">
+    <img src="https://img.shields.io/badge/GitHub-DevCore--AI--blue?logo=github&logoColor=white" alt="GitHub Repo" />
+  </a>
+  <a href="https://www.linkedin.com/in/ranjit-patra/">
+    <img src="https://img.shields.io/badge/LinkedIn-Ranjit%20Patra-0A66C2?logo=linkedin&logoColor=white" alt="LinkedIn Profile" />
+  </a>
+  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python Version" />
+  <img src="https://img.shields.io/badge/Orchestration-LangGraph-FF6F61?logo=langchain&logoColor=white" alt="LangGraph" />
+  <img src="https://img.shields.io/badge/LLM-Groq%20%7C%20Ollama-F34F29" alt="LLM Engine" />
+  <img src="https://img.shields.io/badge/Design-Neo--Brutalist%20SaaS-000000" alt="UI Theme" />
+  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License" />
+</p>
+
+<div align="center">
+
+🚀 **[Try the Live Web App](https://devcore-ai.streamlit.app)** &nbsp; | &nbsp; 
+📚 **[Implementation Architecture Plan](implementation_plan.md)** &nbsp; | &nbsp; 
+👨‍💻 **[Connect on LinkedIn](https://www.linkedin.com/in/ranjit-patra/)**
+
+</div>
 
 ---
 
-## 🌟 Key Features
+## 💡 Executive Summary
 
-* **🤖 13 Specialized AI Virtual Agents**: CEO, Business Analyst, Project Manager, Software Architect, UI/UX Designer, Frontend Engineer, Backend Engineer, Database Engineer, Security Engineer, DevOps Engineer, QA Engineer, Documentation Engineer, and Reviewer.
-* **⚡ Dual Execution Engine**: Seamlessly switch between lightning-fast cloud inference (**Groq Cloud Llama-3.3-70B**) and 100% offline local models (**Ollama / Qwen3.5**).
-* **📚 RAG Knowledge Retrieval**: Upload existing SRS documents, PDFs, DOCX, or markdown files to ground agent outputs in real project requirements.
-* **🎨 Custom Neo-Brutalist Dashboard**: Sleek, modern UI powered by Streamlit with custom CSS styling, dynamic agent activity cards, and interactive consultation studios.
-* **📦 Export Capabilities**: Package complete software blueprints into structured Markdown ZIP archives or compiled PDF reports.
+**DevCore AI** is an enterprise-grade, multi-agent AI software engineering platform. Rather than relying on a single general-purpose chat model to write entire applications, DevCore AI simulates a complete **13-member Virtual Software Engineering Team**. 
 
----
-
-## 🛠️ Tech Stack
-
-- **Frontend & Dashboard**: Streamlit, HTML5, Custom CSS3 (Neo-Brutalist Theme)
-- **Multi-Agent Orchestration**: LangGraph, LangChain
-- **AI / LLM Providers**: Groq API (Cloud) & Ollama (Local)
-- **Database & Persistence**: SQLite3
-- **Document Processing & RAG**: PyPDF, python-docx, Sentence Transformers / Vector Store
+From executive strategy down to quality assurance, each agent is an expert trained with hyper-specialized prompts and stateful context memory using **LangGraph**. Give DevCore AI a single prompt like `"Build an AI-powered Telehealth Platform"`, and it will autonomously synthesize:
+- Executive Strategy & Business Requirements (BRD/PRD)
+- System Architecture & Component Diagrams (Mermaid.js)
+- Database Schemas (SQL DDL & ER Diagrams)
+- Frontend & Backend Code Scaffolding
+- Security Audit & Compliance Specifications
+- DevOps Infrastructure (CI/CD, Kubernetes, Docker)
+- QA Test Suites & Master User Manuals
 
 ---
 
-## 🚀 Quick Setup & Installation Guide
+## 🎨 Visual System Architecture & Design
 
-Follow these steps to run **DevCore AI** locally on your machine:
+### 🏛️ 1. Core System Architecture
+<p align="center">
+  <img src="assets/diagrams/system_architecture.png" alt="System Architecture" width="90%" style="border-radius: 8px; border: 2px solid #333;" />
+</p>
 
-### 1. Clone the Repository
+### 🔄 2. Multi-Agent Execution Pipeline
+<p align="center">
+  <img src="assets/diagrams/agent_pipeline.png" alt="Agent Pipeline" width="90%" style="border-radius: 8px; border: 2px solid #333;" />
+</p>
+
+### ⚡ 3. Dual AI Execution Engine (Cloud vs. Local)
+<p align="center">
+  <img src="assets/diagrams/dual_engine.png" alt="Dual Engine" width="90%" style="border-radius: 8px; border: 2px solid #333;" />
+</p>
+
+### 🧠 4. RAG Knowledge Retrieval Pipeline
+<p align="center">
+  <img src="assets/diagrams/rag_retrieval.png" alt="RAG Retrieval" width="90%" style="border-radius: 8px; border: 2px solid #333;" />
+</p>
+
+---
+
+## 🤖 Meet the 13 Specialized AI Virtual Agents
+
+| # | Agent Role | Badge | Core Responsibilities | Output Deliverables |
+|:-:|:---|:---|:---|:---|
+| **1** | **CEO Agent** | `Strategic` | Vision, market feasibility, monetization, risk analysis | Executive Project Brief & Vision |
+| **2** | **Business Analyst** | `Analysis` | User personas, feature prioritization, functional requirements | Detailed PRD & Functional Specs |
+| **3** | **Project Manager** | `Management` | Agile roadmap, sprint schedules, resource estimation | WBS, Gantt & Milestone Timeline |
+| **4** | **Software Architect** | `System Design` | Technical stack selection, design patterns, microservices | High-Level Architecture & Diagrams |
+| **5** | **UI/UX Designer** | `Design` | Design system, wireframes, component hierarchy, accessibility | UX Wireframes & Style Specifications |
+| **6** | **Frontend Engineer** | `Client Code` | State management, UI implementation, API integration | React/Next.js/HTML Frontend Code |
+| **7** | **Backend Engineer** | `Server Code` | RESTful API design, controller logic, middleware | Node/Python API Server Code |
+| **8** | **Database Engineer** | `Data` | ER modeling, indexing, SQL queries, migration scripts | Relational / NoSQL Schemas (DDL) |
+| **9** | **Security Engineer** | `Cybersecurity` | Threat modeling, OAuth2/JWT auth, OWASP compliance | Security Hardening Guidelines |
+| **10**| **DevOps Engineer** | `Infrastructure` | CI/CD pipelines, Dockerization, cloud hosting configs | Docker, K8s & GitHub Actions Configs |
+| **11**| **QA Engineer** | `Testing` | Test strategy, unit test cases, integration tests, E2E | Jest/PyTest Code & Test Plans |
+| **12**| **Documentation Engineer** | `Docs` | API documentation, user manuals, installation guides | OpenAPI / Swagger Docs & User Guides |
+| **13**| **Reviewer Agent** | `Audit` | Final cross-verification, consistency audit, rating | Master Blueprint Synthesis & Score |
+
+---
+
+## 🔥 Key Technical Capabilities
+
+* **⚡ Dual-Engine Hybrid Inference**:
+  * **Cloud Mode (Groq API)**: Ultra-fast Llama-3.3-70B model execution for instantaneous responses.
+  * **Local Mode (Ollama)**: 100% private, offline execution using local models (`qwen3.5`, `llama3`, `mistral`).
+* **📚 Integrated RAG (Retrieval-Augmented Generation)**:
+  * Upload custom PDF, DOCX, TXT, or Markdown requirement documents.
+  * Extracted text is chunked, embedded, and injected directly into agent context windows.
+  * Features SQLite vector fallback for seamless zero-dependency deployment.
+* **🎨 Modern Neo-Brutalist Design System**:
+  * High-contrast, vibrant Neo-Brutalist SaaS UI custom-built with Streamlit & CSS.
+  * Interactive live agent status cards, micro-interactions, and dark/light theme switching.
+* **💬 Agent Consultation Studio & Floating Assistant**:
+  * Chat 1-on-1 with any of the 13 agents individually to request code refactoring or architectural modifications.
+* **📦 One-Click Enterprise Blueprint Export**:
+  * Export complete project blueprints into structured **Markdown ZIP archives** or single **PDF Reports**.
+
+---
+
+## 💻 Step-by-Step Installation & Setup Guide
+
+### 📋 Prerequisites
+- **Python**: Version `3.10` or higher
+- **Git**: Installed on your system
+- **Groq API Key** (Optional for Cloud Mode): Free key from [console.groq.com](https://console.groq.com)
+- **Ollama** (Optional for Offline Local Mode): Download from [ollama.ai](https://ollama.ai)
+
+---
+
+### Step 1: Clone the Repository
 ```bash
 git clone https://github.com/Ranjitpatra26/DevCore-AI-.git
 cd DevCore-AI-
 ```
 
-### 2. Create and Activate a Virtual Environment
+### Step 2: Create a Virtual Environment
 ```bash
-# Windows
+# On Windows (PowerShell / Command Prompt)
 python -m venv venv
-venv\Scripts\activate
+.\venv\Scripts\activate
 
-# macOS / Linux
+# On macOS / Linux
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Install Dependencies
+### Step 3: Install Required Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configure Environment Variables
+### Step 4: Setup Environment Variables
 Create a `.env` file in the root directory:
 ```env
+# Cloud Execution (Groq)
 GROQ_API_KEY=your_groq_api_key_here
-OLLAMA_URL=http://localhost:11434
 EXECUTION_PROVIDER=groq
+GROQ_MODEL=llama-3.3-70b-versatile
+
+# Local Execution (Ollama)
+OLLAMA_URL=http://localhost:11434
+OLLAMA_MODEL=qwen3.5:9b
 ```
 
-### 5. Launch the Application
+### Step 5: Launch the Application
 ```bash
 streamlit run app.py
 ```
-Open your browser at `http://localhost:8501` to access the application.
+Visit **`http://localhost:8501`** in your browser to launch DevCore AI.
 
 ---
 
-## 🏗️ Multi-Agent Architecture
+## 📁 Repository Structure
 
-```mermaid
-graph TD
-    User[Idea Input & Requirements] --> CEO[1. CEO Agent]
-    CEO --> BA[2. Business Analyst]
-    BA --> PM[3. Project Manager]
-    PM --> Arch[4. Software Architect]
-    Arch --> UIUX[5. UI/UX Designer]
-    UIUX --> FE[6. Frontend Engineer]
-    FE --> BE[7. Backend Engineer]
-    BE --> DB[8. Database Engineer]
-    DB --> Sec[9. Security Engineer]
-    Sec --> DevOps[10. DevOps Engineer]
-    DevOps --> QA[11. QA Engineer]
-    QA --> Doc[12. Documentation Engineer]
-    Doc --> Rev[13. Reviewer Agent]
-    Rev --> FinalOutput[Comprehensive Software Blueprint]
+```text
+DevCore-AI-/
+├── .github/
+│   └── workflows/
+│       └── keep_alive.yml         # GitHub Actions 24/7 Uptime Cron Job
+├── .streamlit/
+│   └── config.toml               # Custom Streamlit Server Settings
+├── agents/                       # 13 Virtual AI Agent Definitions & System Prompts
+│   ├── __init__.py
+│   ├── base.py                   # Base Agent Engine
+│   └── prompts.py                # Specialized Agent Prompts
+├── assets/                       # High-Res Diagrams & Hero Assets
+│   ├── hero_banner.png
+│   ├── logo.png
+│   └── diagrams/                 # Architecture, Pipeline & Engine Diagrams
+├── components/                   # Custom Neo-Brutalist UI Components & Modals
+│   ├── cards.py
+│   ├── implementation_studio.py
+│   ├── navigation.py
+│   └── chatbot/                  # Floating Chatbot & Groq/Ollama Clients
+├── database/                     # SQLite Database Schema & Persistence Manager
+│   ├── connection.py
+│   └── schema.py
+├── exports/                      # Markdown ZIP & PDF Report Generators
+├── pages/                        # Multi-Page Streamlit Routes (Dashboard, Projects, AI Team, Chat, Settings)
+├── rag/                          # Document Parser & Vector Store Engine
+├── styles/                       # Neo-Brutalist & Theme CSS Design Systems
+├── utils/                        # Context Builders, Telemetry & Consultation Engines
+├── workflow/                     # LangGraph State Machine & Pipeline Graph
+├── ai_software_company.db        # Seed SQLite Database
+├── app.py                        # Application Entry Point
+├── implementation_plan.md        # Technical Implementation & Architecture Specification
+├── requirements.txt              # Production Python Dependencies
+└── README.md                     # Project Master Documentation
 ```
 
 ---
 
-## 📄 License & Attribution
+## ⚙️ Environment Variables Reference
 
-This project is built for high-performance software engineering automation and planning. Feel free to star ⭐️ the repository and contribute!
+| Variable | Required | Default Value | Description |
+|:---|:---:|:---|:---|
+| `GROQ_API_KEY` | Optional | `""` | Groq API Key for cloud model inference |
+| `EXECUTION_PROVIDER` | Yes | `groq` | `groq` (Cloud) or `ollama` (Local Offline) |
+| `GROQ_MODEL` | No | `llama-3.3-70b-versatile` | Active Groq LLM model architecture |
+| `OLLAMA_URL` | No | `http://localhost:11434` | Local Ollama endpoint |
+| `OLLAMA_MODEL` | No | `qwen3.5:9b` | Local Ollama model name |
+
+---
+
+## 🌐 24/7 Cloud Deployment & Uptime Infrastructure
+
+DevCore AI is hosted live on **Streamlit Community Cloud**:
+👉 **[devcore-ai.streamlit.app](https://devcore-ai.streamlit.app)**
+
+To bypass Streamlit Cloud's 7-day inactivity auto-sleep policy, the repository incorporates dual automated keep-alive mechanisms:
+1. **GitHub Actions Workflow** (`.github/workflows/keep_alive.yml`): Executes an automated HTTP ping every 6 hours.
+2. **UptimeRobot Integration**: Continuous 5-minute HTTP uptime check to guarantee immediate responsiveness for visitors.
+
+---
+
+## 👨‍💻 Author & Connect
+
+**Ranjit Patra**  
+*AI Systems Architect & Full-Stack Developer*
+
+* 🌐 **Live Web Application**: [devcore-ai.streamlit.app](https://devcore-ai.streamlit.app)
+* 💼 **LinkedIn**: [Ranjit Patra](https://www.linkedin.com/in/ranjit-patra/)
+* 🐙 **GitHub**: [@Ranjitpatra26](https://github.com/Ranjitpatra26)
+
+---
+
+<p align="center">
+  <b>⭐ If you find DevCore AI useful, please consider giving this repository a Star on GitHub! ⭐</b>
+</p>
