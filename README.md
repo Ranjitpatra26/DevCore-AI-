@@ -299,7 +299,7 @@ To bypass Streamlit Cloud's 7-day inactivity auto-sleep policy, the repository i
 *AI Systems Architect & Full-Stack Developer*
 
 * 🌐 **Live Web Application**: [devcore-ai.streamlit.app](https://devcore-ai.streamlit.app)
-* 💼 **LinkedIn**: [Ranjit Patra](https://www.linkedin.com/in/ranjit-patra/)
+* 💼 **LinkedIn**: [Ranjit Patra](https://www.linkedin.com/in/ranjit-patra-b27816393)
 * 🐙 **GitHub**: [@Ranjitpatra26](https://github.com/Ranjitpatra26)
 
 ---
